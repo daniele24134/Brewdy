@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "daniele",
+    "password": null,
+    "database": "brewdy_development",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "daniele",
+    "password": null,
+    "database": "brewdy_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "daniele",
+    "password": null,
+    "database": "brewdy_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}

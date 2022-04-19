@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { BottomTabsNavigator } from './screens/BottomTabs.navigator';
 import { StatusBar } from 'react-native';
 
+
 const App: React.FC = () => {
   return (
     <NavigationContainer>
