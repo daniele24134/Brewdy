@@ -36,6 +36,7 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
+      userId: DataTypes.INTEGER,
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE
