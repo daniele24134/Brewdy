@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({Beers}) {
-      this.hasMany(Beers, { foreignKey: 'userId', as: 'beers' });
+    static associate({Beer}) {
+      this.hasMany(Beer, { foreignKey: 'userId', as: 'beers' });
       // this.hasMany(WishBeers)
       // this.hasMany(Pictures)
       // this.hasMany(Comments)
@@ -46,13 +46,6 @@ module.exports = (sequelize, DataTypes) => {
         min: 6
       }
     },
-    indexes: [
-      {
-        unique: true,
-        fields: ["username", "email"]
-      }
-    ]
-    
 
   }, 
   { sequelize, modelName: 'User',tableName: 'users'});
