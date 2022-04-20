@@ -11,6 +11,7 @@ import { BeerDetail } from './Beer.screen';
 
 
 const SearchStack = createStackNavigator();
+const RandomStack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 export const SearchStackScreen = () => (
@@ -37,13 +38,43 @@ export const SearchStackScreen = () => (
     <SearchStack.Screen name="Beer"
       component={BeerDetail}
       options={{
-        headerShown: false,
+        headerTitle: '',
         headerBackTitle: '',
+        headerStyle: {
+          backgroundColor: theme.bgDark
+        },
         headerBackTitleStyle: { color: theme.buttonColor }
       }}
     />
   </SearchStack.Navigator>
 )
+
+
+export const RandomStackScreen:React.FC = () => {
+  return (
+    <RandomStack.Navigator>
+      <RandomStack.Screen 
+        name='HomePage'
+        component={Home}
+        options={{
+          headerShown: false
+        }}
+      />
+      <RandomStack.Screen
+        name='RandomBeer'
+        component={BeerDetail}
+        options={{
+          headerTitle: '',
+          headerBackTitle: '',
+          headerStyle: {
+          backgroundColor: theme.bgDark
+        },
+          headerBackTitleStyle: { color: theme.buttonColor }
+        }}
+      />
+    </RandomStack.Navigator>
+  );
+}
 
 export const BottomTabsNavigator: React.FC = () => {
   return (
@@ -76,7 +107,7 @@ export const BottomTabsNavigator: React.FC = () => {
         }
       })}
     >
-      <BottomTabs.Screen name="Home" component={Home} />
+      <BottomTabs.Screen name="Home" component={RandomStackScreen} />
       <BottomTabs.Screen name="Search" component={SearchStackScreen} />
       <BottomTabs.Screen name="Profile" component={Profile} />
     </BottomTabs.Navigator>

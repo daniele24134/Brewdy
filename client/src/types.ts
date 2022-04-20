@@ -8,11 +8,15 @@ export type Beer = {
   abv: number,
   ibu: number,
   ebc: number,
-  ingredients: {
-    malt: Malt[],
-    hops: Hop[]
-  },
+  ingredients: Ingredients,
+
   food_pairing: string[]
+}
+
+export type Ingredients = {
+  malt: Malt[],
+  hops: Hop[],
+  yeast: string,
 }
 
 export type Malt =  {

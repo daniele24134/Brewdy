@@ -3,13 +3,21 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { PlusButton } from '../components/PlusButton';
 import { theme } from '../theme';
 import { global } from '../theme';
+import { fetchRandom } from '../services/apiService';
 
-export const Home: React.FC = () => {
+export const Home: React.FC = ({navigation}: any) => {
+
+
+  const handleRandom = async () =>{
+    const beer = await fetchRandom();
+    navigation.navigate('RandomBeer', beer)
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.mainHome}>
         <Text style={styles.title}>WELCOME USERNAME</Text>
-        <TouchableOpacity style={styles.mainButton}>
+        <TouchableOpacity onPress={handleRandom} style={styles.mainButton}>
           <Text style={styles.buttonText}>START WITH A RANDOM BEER</Text>
         </TouchableOpacity>
       </View>
