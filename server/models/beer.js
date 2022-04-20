@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull: true,
     },
+    counter: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
     tagline: {
       type: DataTypes.STRING,
       allowNull: true,

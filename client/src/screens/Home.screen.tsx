@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { PlusButton } from '../components/PlusButton';
 import { theme } from '../theme';
+import { global } from '../theme';
 
 export const Home: React.FC = () => {
   return (
@@ -13,11 +14,11 @@ export const Home: React.FC = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.logoutHeader}>
-        <TouchableOpacity style={styles.buttonLogout}>
-          <Text style={styles.buttonText}>LOGOUT</Text>
+        <TouchableOpacity style={global.button}>
+          <Text style={global.buttonText}>LOGOUT</Text>
         </TouchableOpacity>
-        <PlusButton />
       </View>
+      <PlusButton />
     </View>
   );
 };
@@ -26,19 +27,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.bgDark,
-    padding:20
+    padding: theme.padding
   },
   title: {
     color: theme.textDark,
     fontSize: 50,
     fontWeight: 'bold',
     textAlign: 'center',
+    marginBottom:100
   },
 
   mainHome: {
     flex:1,
     alignItems:'center',
-    justifyContent: 'space-around'
+    justifyContent: 'center',
+    marginBottom:100
   },
   mainButton: {
     width: 280,
@@ -54,10 +57,9 @@ const styles = StyleSheet.create({
   },
   
   logoutHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems:'center',
-    marginTop: 50
+    position: 'absolute',
+    bottom: theme.padding,
+    left: theme.padding
   },
 
   buttonLogout:{

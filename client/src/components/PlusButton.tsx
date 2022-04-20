@@ -22,5 +22,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.buttonColor,
     borderRadius: 30,
     alignItems: 'center',
+    position: 'absolute',
+    bottom: theme.padding,
+    right:theme.padding
   },
 })

@@ -1,6 +1,6 @@
 
 export type Beer = {
-  id: number,
+  bid: number,
   name: string,
   tagline: string,
   description:string,
@@ -32,3 +32,7 @@ export type Hop = {
   add: string,
   attribute: string
 }
+
+
+
+
