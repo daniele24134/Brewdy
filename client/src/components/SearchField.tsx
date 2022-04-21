@@ -19,6 +19,7 @@ export const SearchField:React.FC<SearchFieldProps> = ({name, setName, handleSea
         onChangeText={setName}
         style={styles.searchInput}
         placeholder={'Search'}
+        placeholderTextColor='#ccc'
       />
       <TouchableOpacity onPress={handleSearch} style={styles.icon}>
         <SearchIcon color='black' />
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.buttonColor,
     borderRadius: 10,
     fontSize: 20,
+    fontWeight:'600',
     padding: 20,
 
   },

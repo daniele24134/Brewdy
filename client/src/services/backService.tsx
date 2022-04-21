@@ -1,23 +1,8 @@
-import { Credentials, User } from "../types";
+import { BeerForCreate, Credentials, DbBeer, UserData } from "../types";
 
 
 const url = 'http://localhost:3003';
 
-export const fetchUser = async (): Promise<User | undefined> => {
-  try {
-    const result = await fetch(url+'/users', {
-      credentials: 'include'
-    });
-    if (result.ok) {
-      const data = await result.json();
-      return data;
-    } else {
-      return;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 type UserBody = {
   username: string,
@@ -42,8 +27,6 @@ export const createUser = async (user: UserBody) => {
 
 }
 
-
-
 export const fetchLogin = async (credentials: Credentials) => {
 
   const result = await fetch(url+'/users/login', {
@@ -58,4 +41,47 @@ export const fetchLogin = async (credentials: Credentials) => {
   if (result.ok) {
     return await result.json();
   }else return;
+}
+
+export const fetchUser = async (id: number): Promise<UserData | undefined> => {
+  const result = await fetch(url+`/users/${id}`);
+
+  if (result.ok) {
+    return result.json();
+  }else return;
+}
+
+export const addBeer = async (beer: BeerForCreate, userId: number) => {
+  const result = await fetch(url+`/beers/${userId}`, {
+    method: 'POST',
+    body: JSON.stringify(beer),
+    credentials: 'include',
+    headers: {
+      'Content-type': 'application/json'
+    }
+  });
+
+  if (result.ok) return await result.json();
+  else return
+}
+
+export const incrementCounter = async (beerId: number): Promise<DbBeer | undefined> => {
+  const result = await fetch(url +`/beers/increment/${beerId}`);
+
+  if (result.ok) return await result.json();
+  else return;
+}
+export const decrementCounter = async (beerId: number): Promise<DbBeer | undefined> => {
+  const result = await fetch(url + `/beers/decrement/${beerId}`);
+
+  if (result.ok) return await result.json();
+  else return;
+}
+
+export const removeBeer = async (beerId: number):Promise<DbBeer | undefined> => {
+  const result = await fetch(url + `/beers/${beerId}`, {
+    method: 'DELETE'
+  });
+  if (result.ok) return await result.json();
+  else return;
 }

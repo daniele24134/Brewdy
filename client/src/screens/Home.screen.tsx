@@ -8,7 +8,7 @@ import { useUserContext } from '../User.provider';
 
 export const Home: React.FC = ({navigation}: any) => {
 
-  const {logout} = useUserContext();
+  const {logout, user} = useUserContext();
 
   const handleRandom = async () =>{
     const beer = await fetchRandom();
@@ -18,7 +18,7 @@ export const Home: React.FC = ({navigation}: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.mainHome}>
-        <Text style={styles.title}>WELCOME USERNAME</Text>
+        <Text style={styles.title}>WELCOME {user?.username.toUpperCase()}</Text>
         <TouchableOpacity onPress={handleRandom} style={styles.mainButton}>
           <Text style={styles.buttonText}>START WITH A RANDOM BEER</Text>
         </TouchableOpacity>
@@ -28,7 +28,6 @@ export const Home: React.FC = ({navigation}: any) => {
           <Text style={global.buttonText}>LOGOUT</Text>
         </TouchableOpacity>
       </View>
-      <PlusButton />
     </View>
   );
 };
@@ -69,13 +68,14 @@ const styles = StyleSheet.create({
   logoutHeader: {
     position: 'absolute',
     bottom: theme.padding,
-    left: theme.padding
+    right: theme.padding
   },
 
   buttonLogout:{
     backgroundColor: theme.buttonColor,
     borderRadius: 10,
     paddingHorizontal: 20,
-    paddingVertical: 15
+    paddingVertical: 15,
+
   }
 });

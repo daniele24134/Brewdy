@@ -38,6 +38,7 @@ type UserContextType = {
   isLogged?: boolean,
   login: (userData: UserData) => void,
   logout: () => void,
+  updateUser: (newUser: UserData) => void
 }
 
 const UserContext = createContext<UserContextType>({
@@ -49,7 +50,8 @@ const UserContext = createContext<UserContextType>({
   },
   login: () => {},
   logout: () => {},
-  isLogged: false
+  isLogged: false,
+  updateUser: () => {}
 });
 
 export const UserProvider: React.FC = ({children}) => {
@@ -84,7 +86,7 @@ export const UserProvider: React.FC = ({children}) => {
 
 
   return (
-    <UserContext.Provider value={{user: user, isLogged: isLogged, login, logout}}>
+    <UserContext.Provider value={{user: user, isLogged: isLogged, login, logout, updateUser: setUser}}>
       {children}
     </UserContext.Provider>
   );

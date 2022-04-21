@@ -1,4 +1,4 @@
-import { Beer } from "./types"
+import { Beer, DbBeer } from "./types"
 
 // export type Beer = {
 //   id: number,
@@ -35,7 +35,43 @@ export const beersParser = (beers: any): Beer[] => {
   })
 }
 
+export const beerParser = (beer: Beer) => {
+  return {
+    name: beer.name,
+    tagline: beer.tagline,
+    image_url: beer.image_url,
+    abv: beer.abv,
+    ibu: beer.ibu,
+    bid: beer.bid
+  }
+}
+
 export function onlyUnique(value:any, index:number, self: any[]) {
   return self.indexOf(value) === index;
+}
 
+export function beersDrunk (beers: DbBeer[]) {
+  const result = beers.filter(b => !b.wish);
+  return result;
+}
+
+type SectionBeer = {
+  title: string,
+  data: DbBeer[]
+}
+
+export function sectionBeers (beers: DbBeer[]):SectionBeer[]  {
+  let result: SectionBeer[] = [];
+  const titles = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+  for(let t of titles) {
+    const data: DbBeer[] = [];
+    let section: SectionBeer = {title: '', data: []}
+    beers.forEach(b => {
+      const title = b!.name[0];
+      if (title === t) data.push(b);
+      section = {title: t, data: data}
+    })
+    result.push(section);
+  }
+  return result;
 }

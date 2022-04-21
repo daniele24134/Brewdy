@@ -1,14 +1,48 @@
 import React from "react";
-import { StyleSheet, Text, View, Image,ScrollView } from "react-native";
+import { StyleSheet, Text, View, Image,ScrollView, TouchableOpacity, Alert } from "react-native";
 import { IngredientList } from "../components/Ingredient";
 import {theme} from '../theme';
-import { Beer } from "../types";
-
+import { Beer, BeerForCreate } from "../types";
+import { useUserContext } from "../User.provider";
+import { beerParser } from "../utils";
+import { addBeer } from "../services/backService";
 
 
 
 export const BeerDetail:React.FC = ({route}: any) => {
   const beer: Beer = route.params;
+
+  const UserContext = useUserContext();
+  const {user, updateUser} = UserContext;
+
+
+
+  const addToBeers = async () => {
+    const newBeer = beerParser(beer);
+    const uploadedBeer = await addBeer(newBeer, user!.id);
+    updateUser({
+      ...user!,
+      beers: [uploadedBeer,...user!.beers]
+    });
+    Alert.alert('Added to your beer list');
+  }
+
+  const addToWishList = async () => {
+    const newBeer = beerParser(beer);
+    const uploadedBeer = await addBeer({...newBeer, wish: true}, user!.id);
+    updateUser({
+      ...user!,
+      beers: [uploadedBeer, ...user!.beers]
+    });
+    Alert.alert('Added to your wish list');
+  }
+
+  const isInTheBeerList = () => {
+    return user?.beers.some(b => (b.bid === beer.bid && !b.wish));
+  }
+
+  
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.detailHeader}>
@@ -22,7 +56,7 @@ export const BeerDetail:React.FC = ({route}: any) => {
 
             <View style={{marginRight:20}}>
               <Text style={[styles.textColor]}>ABV</Text>
-              <Text style={[styles.textColor]}>{beer.abv}</Text>
+              <Text style={[styles.textColor]}>{beer.abv}%</Text>
             </View>
 
             <View style={{marginRight:20}}>
@@ -31,6 +65,20 @@ export const BeerDetail:React.FC = ({route}: any) => {
             </View>
 
           </View>
+
+          <View style={{flexDirection:'row', marginTop: 20}}>
+            <TouchableOpacity style={styles.button} onPress={addToBeers}>
+              <Text style={{color: theme.textDark, fontWeight:'700'}}>
+                Drink
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={addToWishList}>
+              <Text style={{color: theme.textDark, fontWeight:'700'}}>
+                Wish
+              </Text>
+            </TouchableOpacity>
+          </View>
+
         </View>
 
       </View>
@@ -100,5 +148,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
     color: theme.buttonColor
+  },
+  button: {
+    width: 45,
+    height:45,
+    backgroundColor: theme.buttonColor,
+    borderRadius:25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 15
   }
 });

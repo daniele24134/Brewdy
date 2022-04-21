@@ -12,9 +12,16 @@ export type Beer = {
   food_pairing: string[]
 }
 
-export type User = {
+// export type User = {
+//   username: string,
+//   email:string,
+//   beers: DbBeer[]
+// }
+
+export type UserData = {
   username: string,
-  email:string,
+  email: string,
+  id: number,
   beers: DbBeer[]
 }
 
@@ -26,8 +33,18 @@ export type DbBeer = {
   image_url: string,
   abv: number,
   ibu: number,
-  ebc: number,
+  bid: number,
   userId: number,
+  id: number
+}
+
+export type BeerForCreate = {
+  name: string,
+  tagline: string,
+  image_url: string,
+  abv: number,
+  ibu: number,
+  wish?:boolean
 }
 
 

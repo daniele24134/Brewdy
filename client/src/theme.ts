@@ -9,11 +9,7 @@ export const theme = {
   header: '#202124',
   buttonColor: '#53A2BE',
   padding: 30,
-  buttonText: {
-    fontSize: 26,
-    color: '#F2F2F2',
-    textAlign: 'center'
-  },
+  
 }
 
 export const global = StyleSheet.create({
@@ -27,5 +23,11 @@ export const global = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 20,
     paddingVertical: 15
+  },
+  titleH2: {
+    color: theme.textDark,
+    fontSize: 24,
+    fontWeight: '600',
+    marginVertical: 10
   }
 })

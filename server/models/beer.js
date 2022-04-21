@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     counter: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      defaultValue: 1
     },
     tagline: {
       type: DataTypes.STRING,
@@ -35,14 +35,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     abv: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: true,
     },
     ibu: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    ebc: {
+    bid: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },

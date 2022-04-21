@@ -8,7 +8,7 @@ import { HomeIcon, SearchIcon, UserIcon } from '../components/Icons';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SearchBeerList } from './SearchBeerList.screen';
 import { BeerDetail } from './Beer.screen';
-
+import { BeerList } from './BeerList.screen';
 
 const SearchStack = createStackNavigator();
 const RandomStack = createStackNavigator();
@@ -76,6 +76,34 @@ export const RandomStackScreen:React.FC = () => {
   );
 }
 
+
+const BeerListStack = createStackNavigator();
+
+const BeerListStackScreen: React.FC = () => {
+  return (
+    <BeerListStack.Navigator>
+      <BeerListStack.Screen name="User" component={Profile}
+        options={{
+          headerShown: false
+        }}
+      />
+      <BeerListStack.Screen name="BeerList" 
+        component={BeerList} 
+        options={{
+          headerTitle: '',
+          headerBackTitle: '',
+          headerStyle: {
+            backgroundColor: theme.bgDark
+          },
+          headerBackTitleStyle: { color: theme.buttonColor }
+        }}
+      />
+    </BeerListStack.Navigator>
+
+  );
+}
+
+
 export const BottomTabsNavigator: React.FC = () => {
   return (
     <BottomTabs.Navigator
@@ -84,12 +112,15 @@ export const BottomTabsNavigator: React.FC = () => {
           backgroundColor: theme.header,
         },
         headerTitleStyle: {
-          color: theme.textDark,
-          fontSize:24
+          color: theme.buttonColor,
+          fontSize:30,
+          marginBottom: 10,
+          fontWeight: 'bold'
         },
         tabBarStyle:{
           backgroundColor: theme.header,
         },
+        headerTitle: 'Brewdy',
 
         tabBarActiveTintColor: theme.buttonColor,
         tabBarInactiveTintColor: theme.bgLight,
@@ -109,7 +140,7 @@ export const BottomTabsNavigator: React.FC = () => {
     >
       <BottomTabs.Screen name="Home" component={RandomStackScreen} />
       <BottomTabs.Screen name="Search" component={SearchStackScreen} />
-      <BottomTabs.Screen name="Profile" component={Profile} />
+      <BottomTabs.Screen name="Profile" component={BeerListStackScreen} />
     </BottomTabs.Navigator>
   );
 };

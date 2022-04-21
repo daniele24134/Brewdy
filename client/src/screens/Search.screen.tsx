@@ -101,6 +101,7 @@ export const Search: React.FC = ({navigation}: any) => {
           value={food}
           onChangeText={setFood}
           placeholder={'Pairing'}
+          placeholderTextColor='#ccc'
         />
       </View>
 
@@ -109,7 +110,6 @@ export const Search: React.FC = ({navigation}: any) => {
           <Text style={global.buttonText}>Search</Text>
         </TouchableOpacity>
       </View>
-      <PlusButton/>
     </View>
   );
 };
@@ -151,10 +151,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 20,
     padding: 20,
+    fontWeight:'600',
   },
   submit: {
     position:'absolute',
     bottom: theme.padding,
-    left: theme.padding
+    right: theme.padding,
   }
 });
