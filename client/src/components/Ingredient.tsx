@@ -54,7 +54,7 @@ export const IngredientList: React.FC<IngredientListProps> = ({ingredients, titl
 const styles = StyleSheet.create({
   ingContainer:{
     width: '30%',
-    alignItems: 'center'
+    alignItems: 'flex-start'
   },
   ingTitle: {
     marginBottom: 10,

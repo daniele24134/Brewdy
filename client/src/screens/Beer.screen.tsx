@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, Image,ScrollView, TouchableOpacity, Alert } from "react-native";
 import { IngredientList } from "../components/Ingredient";
 import {theme} from '../theme';
-import { Beer, BeerForCreate } from "../types";
+import { Beer, BeerForCreate, DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
 import { beerParser } from "../utils";
-import { addBeer } from "../services/backService";
+import { addBeer, removeBeer } from "../services/backService";
+import { EmptyBeer, EmptyHeart, FullBeer, FullHeart } from "../components/Icons";
 
 
 
@@ -14,34 +15,68 @@ export const BeerDetail:React.FC = ({route}: any) => {
 
   const UserContext = useUserContext();
   const {user, updateUser} = UserContext;
-
+  const [isInBeerList, setIsInBeerList] = useState(isInTheBeerList());
+  const [isInWishList, setIsInWishList] = useState(isInTheWishList());
+  const [DbBeer, setDbBeer] = useState<DbBeer>();
+  const [WishDbBeer, setWishDbBeer] = useState<DbBeer>();
 
 
   const addToBeers = async () => {
     const newBeer = beerParser(beer);
-    const uploadedBeer = await addBeer(newBeer, user!.id);
-    updateUser({
-      ...user!,
-      beers: [uploadedBeer,...user!.beers]
-    });
-    Alert.alert('Added to your beer list');
+    if (!isInBeerList) {
+      const uploadedBeer = await addBeer(newBeer, user!.id);
+      setDbBeer(uploadedBeer);
+      updateUser({
+        ...user!,
+        beers: [uploadedBeer,...user!.beers]
+      });
+      setIsInBeerList(prev => !prev);
+      Alert.alert('Added to your beer list');
+    } else {
+      if (DbBeer) removeBeer(DbBeer.id);
+      const filteredBeers = user!.beers.filter(b => b.id !== DbBeer!.id);
+      updateUser({
+        ...user!,
+        beers: filteredBeers
+      });
+      setDbBeer(undefined);
+      setIsInBeerList(prev => !prev);
+      Alert.alert('Removed from your beer list');
+    }
   }
 
   const addToWishList = async () => {
     const newBeer = beerParser(beer);
-    const uploadedBeer = await addBeer({...newBeer, wish: true}, user!.id);
-    updateUser({
-      ...user!,
-      beers: [uploadedBeer, ...user!.beers]
-    });
-    Alert.alert('Added to your wish list');
+    if (!isInWishList) {
+      const uploadedBeer = await addBeer({...newBeer, wish: true}, user!.id);
+      setWishDbBeer(uploadedBeer);
+      updateUser({
+        ...user!,
+        beers: [uploadedBeer, ...user!.beers]
+      });
+      setIsInWishList(prev => !prev);
+      Alert.alert('Added to your wish list');
+    } else {
+      if (WishDbBeer) removeBeer(WishDbBeer.id);
+      const filteredBeers = user!.beers.filter(b => b.id !== WishDbBeer!.id);
+      updateUser({
+        ...user!,
+        beers: filteredBeers
+      });
+      setWishDbBeer(undefined);
+      setIsInWishList(prev => !prev);
+      Alert.alert('Removed from the wish list');
+    }
   }
 
-  const isInTheBeerList = () => {
-    return user?.beers.some(b => (b.bid === beer.bid && !b.wish));
+  function isInTheBeerList () {
+    return user!.beers.some(b => (b.bid === beer.bid && !b.wish));
   }
 
-  
+  function isInTheWishList () {
+    return user!.beers.some(b => (b.bid === beer.bid && b.wish));
+  }
+
 
   return (
     <ScrollView style={styles.container}>
@@ -68,14 +103,18 @@ export const BeerDetail:React.FC = ({route}: any) => {
 
           <View style={{flexDirection:'row', marginTop: 20}}>
             <TouchableOpacity style={styles.button} onPress={addToBeers}>
-              <Text style={{color: theme.textDark, fontWeight:'700'}}>
-                Drink
-              </Text>
+                { isInBeerList ?
+                  <FullBeer color={'#fff'}/> :
+                  <EmptyBeer color={ '#fff' }/>
+                }
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={addToWishList}>
-              <Text style={{color: theme.textDark, fontWeight:'700'}}>
-                Wish
-              </Text>
+                {
+                  isInWishList ?
+                  <FullHeart size={43} color={'red'}/> :
+                  <EmptyHeart color={'#ddd'} size={43}/>
+                  
+                }
             </TouchableOpacity>
           </View>
 
@@ -150,12 +189,6 @@ const styles = StyleSheet.create({
     color: theme.buttonColor
   },
   button: {
-    width: 45,
-    height:45,
-    backgroundColor: theme.buttonColor,
-    borderRadius:25,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 15
+    marginRight: 15,
   }
 });
