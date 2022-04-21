@@ -8,12 +8,10 @@ import { useUserContext } from '../User.provider';
 export const Profile: React.FC = () => {
 
   const UserContext = useUserContext();
-  console.warn(UserContext)
-
 
   return (
     <View style={styles.container}>
-      <Text>Profile {UserContext.username}</Text>
+      <Text>Profile {UserContext.user?.email}</Text>
     </View>
   );
 };

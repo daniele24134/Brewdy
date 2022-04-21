@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Pressable } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Pressable, Alert } from "react-native";
 import { theme, global } from "../theme";
 import { SignInput } from '../components/Input';
 import { fetchLogin } from "../services/backService";
@@ -14,11 +14,12 @@ export const Signin:React.FC = ({navigation}: any) => {
 
   const handleLogin = async () => {
 
-    const result = await fetchLogin({email, password})
+    const result = await fetchLogin({email, password});
+
     if (result) {
-      login();
+      login(result);
     } else {
-      console.warn('did not logged')
+      Alert.alert('username/password not correct');
     }
 
   }

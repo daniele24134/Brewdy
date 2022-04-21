@@ -1,13 +1,29 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Pressable } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Pressable, Alert } from "react-native";
 import { theme, global } from "../theme";
 import { SignInput } from '../components/Input';
+import { createUser } from "../services/backService";
+import { useUserContext } from "../User.provider";
 
 export const Signup: React.FC = ({ navigation }: any) => {
 
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useUserContext();
+
+  const handleCreate = async () => {
+    if (password.length < 6) {
+      Alert.alert('Password must be longer than 6 characters');
+    } else {
+      const result = await createUser({email, username, password});
+      if (result) {
+        login(result);
+      } else {
+        Alert.alert('Something went wrong');
+      }
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -29,7 +45,7 @@ export const Signup: React.FC = ({ navigation }: any) => {
         placeholder={'PASSWORD'}
       />
 
-      <TouchableOpacity style={[global.button, styles.loginButton]}>
+      <TouchableOpacity onPress={handleCreate} style={[global.button, styles.loginButton]}>
         <Text style={{ color: theme.textDark, fontWeight: '700' }}>SIGN UP</Text>
       </TouchableOpacity>
 

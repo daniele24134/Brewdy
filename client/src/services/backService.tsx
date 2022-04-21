@@ -10,7 +10,6 @@ export const fetchUser = async (): Promise<User | undefined> => {
     });
     if (result.ok) {
       const data = await result.json();
-      console.warn('I AM HERE', data)
       return data;
     } else {
       return;
@@ -18,6 +17,29 @@ export const fetchUser = async (): Promise<User | undefined> => {
   } catch (error) {
     console.log(error);
   }
+}
+
+type UserBody = {
+  username: string,
+  email: string, 
+  password:string
+}
+
+export const createUser = async (user: UserBody) => {
+
+  const result = await fetch(url + '/users/create', {
+    method: 'POST',
+    body: JSON.stringify(user),
+    credentials: 'include',
+    headers: {
+      'Content-type': 'application/json'
+    }
+  });
+  
+  if (result.ok) {
+    return await result.json();
+  } else return;
+
 }
 
 
@@ -33,5 +55,7 @@ export const fetchLogin = async (credentials: Credentials) => {
     }
   });
 
-  return result.ok;
+  if (result.ok) {
+    return await result.json();
+  }else return;
 }

@@ -9,7 +9,6 @@ export type Beer = {
   ibu: number,
   ebc: number,
   ingredients: Ingredients,
-
   food_pairing: string[]
 }
 
@@ -60,19 +59,4 @@ export type Hop = {
 export type Credentials = {
   email: string,
   password: string
-}
-
-export interface Cookie {
-  name: string;
-  value: string;
-  path?: string;
-  domain?: string;
-  version?: string;
-  expires?: string;
-  secure?: boolean;
-  httpOnly?: boolean;
-}
-
-export interface Cookies {
-  [key: string]: Cookie;
 }
