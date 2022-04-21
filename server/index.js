@@ -13,6 +13,9 @@ const corsConfig = {
   // origin: 'http://localhost:3000'
 };
 
+app.use(cors(corsConfig));
+
+app.use(express.json());
 app.use(session({
   name: 'sid',
   saveUninitialized: false,
@@ -24,8 +27,7 @@ app.use(session({
   },
 }));
 
-app.use(cors(corsConfig));
-app.use(express.json());
+
 app.use(router);
 
 app.get('*', (req, res) => {

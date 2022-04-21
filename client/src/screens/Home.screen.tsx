@@ -4,9 +4,11 @@ import { PlusButton } from '../components/PlusButton';
 import { theme } from '../theme';
 import { global } from '../theme';
 import { fetchRandom } from '../services/apiService';
+import { useUserContext } from '../User.provider';
 
 export const Home: React.FC = ({navigation}: any) => {
 
+  const {logout} = useUserContext();
 
   const handleRandom = async () =>{
     const beer = await fetchRandom();
@@ -22,7 +24,7 @@ export const Home: React.FC = ({navigation}: any) => {
         </TouchableOpacity>
       </View>
       <View style={styles.logoutHeader}>
-        <TouchableOpacity style={global.button}>
+        <TouchableOpacity style={global.button} onPress={logout}>
           <Text style={global.buttonText}>LOGOUT</Text>
         </TouchableOpacity>
       </View>

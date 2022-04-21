@@ -5,6 +5,7 @@ const saltRounds = 10;
 const show = async (req, res) => {
   try {
     const {id} = req.session.sid;
+    console.log('SESSION ID',id)
     const user = await User.findByPk(id, {include: 'beers'});
     
     res.send(user);
@@ -17,6 +18,7 @@ const show = async (req, res) => {
 const create = async (req, res) => {
   try {
     const {username, email, password} = req.body;
+    if (password.length < 6) throw new Error('passwrod must be at least 6 characters')
     const passwordDigest = await bcrypt.hash(password, saltRounds);
     const user = await User.create({ username, email, password: passwordDigest });
     req.session.sid = user.id;
@@ -32,8 +34,9 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({where:{ email }, include: 'beers'});
+
     if (user) {
-      const result = bcrypt.compare(password, user.password);
+      const result = await bcrypt.compare(password, user.password);
       try {
         if (result) {
           req.session.sid = user.id;
