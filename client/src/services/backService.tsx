@@ -152,3 +152,15 @@ export const createComment = (body: any):Promise<Comment> => {
   })
 }
 
+export const deleteComment = (id: number, userId: number) => {
+  return fetch(url + `/comments/${id}/users/${userId}`, {
+    method: 'DELETE'
+  }).then( res => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res);
+    }
+  });
+}
+

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {StyleSheet, Text, View, ScrollView, Alert, TextInput, Pressable} from 'react-native';
-import { createComment, getBeerByBid, getComments } from "../services/backService";
+import { createComment, deleteComment, getBeerByBid, getComments } from "../services/backService";
 import { theme } from "../theme";
 import { Comment, DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
+import { CommentItem } from "./CommentItem";
 
 type CommentSectionProps = {
   bid: number
@@ -25,6 +26,15 @@ export const CommentSection:React.FC<CommentSectionProps> = ({bid}) => {
     )
   },[]);
 
+  const removeComment = (id: number, userId: number) => {
+    deleteComment(id, userId).then(
+      (data) => {
+        setComments(prev => prev.filter(c => c.id !== data.id));
+      },
+      (e:any) => {Alert.alert('Not authorized to delete this comment')}
+    )
+  }
+
   const addComment = () => {
     if (newComment.length === 0) return;
     const commentToAdd = {body: newComment, beerId: bid, userId: user!.id };
@@ -40,10 +50,10 @@ export const CommentSection:React.FC<CommentSectionProps> = ({bid}) => {
   return (
 
     <View style={styles.container}>
-      <Text>Comments</Text>
-      <ScrollView>
+      <Text style={styles.commentSectionTitle}>Comments</Text>
+      <ScrollView style={styles.commentSection}>
         {comments.map(comment => (
-          <Text key={comment.id}>{comment.body}</Text>
+          <CommentItem key={comment.id} comment={comment} removeComment={removeComment}/>
         ))}
       </ScrollView>
       <View style={styles.sendComment}>
@@ -67,6 +77,19 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 30
   },
+  commentSectionTitle: {
+    marginBottom: 10,
+    fontSize: 20,
+    fontWeight: '600',
+    color: theme.buttonColor
+  },
+  commentSection: {
+    borderColor: theme.bluebg,
+    borderWidth:2,
+    borderRadius:10,
+
+    marginBottom: 10,
+  },
   commentInput: {
     backgroundColor: theme.bluebg,
     color: theme.textDark,
@@ -81,7 +104,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     justifyContent: 'center',
     alignItems: 'center',
-
+    marginBottom: 0
   },
   sendButton:{
     height: 30,

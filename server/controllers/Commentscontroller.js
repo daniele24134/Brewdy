@@ -3,7 +3,8 @@ const {Comment} = require('../models');
 const create = async (req, res) => {
   try {
     const {userId, beerId, body} = req.body;
-    const comment = await Comment.create({ userId, beerId, body });
+    const {id} = await Comment.create({ userId, beerId, body });
+    const comment = await Comment.findByPk(id, {include: 'user'});
     res.send(comment);
   } catch (error) {
     console.error(error);
@@ -26,7 +27,7 @@ const deleteComment = async (req, res) => {
   try {
     const {userId, id} = req.params;
     const comment = await Comment.findByPk(id);
-    if (comment.userId === userId) {
+    if (comment.userId === Number(userId)) {
       await comment.destroy();
       res.send(comment);
     } else {
