@@ -5,7 +5,7 @@ import {theme} from '../theme';
 import { Beer, BeerForCreate, DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
 import { beerParser } from "../utils";
-import { addBeer, getBeerByBid, removeBeer } from "../services/backService";
+import { addBeer, getBeerByBid, removeBeer, toggleWish } from "../services/backService";
 import { EmptyBeer, EmptyHeart, FullBeer, FullHeart } from "../components/Icons";
 
 
@@ -25,9 +25,14 @@ export const BeerDetail:React.FC = ({route}: any) => {
   const [WishDbBeer, setWishDbBeer] = useState<DbBeer>(); // The Wish beer in the DB
 
   useEffect(() => {
-    BeerByBid().then(data => {
-      setDbBeer(data);
-    }).catch(e => console.warn(JSON.parse(e)) )
+    getBeerByBid(beer.bid).then(data => {
+      if (data) {
+        data.wish ? setWishDbBeer(data) : setDbBeer(data);
+      } else {
+        console.log('no data')
+      }
+    }).catch(e => console.log(JSON.parse(e)) );
+
   },[]);
 
   useEffect(() => {
@@ -36,30 +41,49 @@ export const BeerDetail:React.FC = ({route}: any) => {
   }, [user]);
 
 
-  async function BeerByBid () {
-    const result =  await getBeerByBid(beer.bid);
-    if (result){
-      return result
-    }
-  }
-
-
   const toggleToBeers = async () => {
-    const newBeer = beerParser(beer);
     if (!isInBeerList) { // add if it's not in the list
+      const newBeer = beerParser(beer);
+      
+      if (WishDbBeer) {
+        let uploadedBeer = await toggleWish(WishDbBeer.id);
 
-      const uploadedBeer = await addBeer(newBeer, user!.id); // add the beer to the DB
+        if (uploadedBeer) {
+          setIsInWishList(prev => !prev);
+          setIsInBeerList(prev => !prev);
 
-      setDbBeer(uploadedBeer); // set the state
-      updateUser({ // update the user beers
-        ...user!,
-        beers: [uploadedBeer, ...user!.beers]
-      });
+          const filteredBeers = user!.beers.map(b => {
+            if (b.bid === uploadedBeer!.bid) {
+              return uploadedBeer!;
+            } else return b;
+          });
 
-      setIsInBeerList(prev => !prev); // change the icon
-      if (isInWishList) toggleToWishList();
+          updateUser({
+            ...user!,
+            beers: filteredBeers
+          }); // updating the user context 
+  
+          setWishDbBeer(undefined);
 
-      // Alert.alert('Added to your beer list');
+        }
+
+      } else {
+
+        let uploadedBeer = await addBeer(newBeer, user!.id); // add the beer to the DB
+        if (uploadedBeer) {
+          setDbBeer(uploadedBeer); // set the state
+          updateUser({ // update the user beers
+            ...user!, beers: [uploadedBeer, ...user!.beers]
+          });
+          setIsInBeerList(prev => !prev); // change the icon
+  
+        }
+      }
+
+        // if (isInWishList) toggleToWishList();
+  
+        // Alert.alert('Added to your beer list');
+
     } else { // remove otherwise
       if (DbBeer) {
         removeBeer(DbBeer.id); // removing from the DB
@@ -79,8 +103,8 @@ export const BeerDetail:React.FC = ({route}: any) => {
 
 
   const toggleToWishList = async () => {
-    const newBeer = beerParser(beer);
     if (!isInWishList) { // add if it's not in the list
+      const newBeer = beerParser(beer);
       const uploadedBeer = await addBeer({...newBeer, wish: true}, user!.id);
       setWishDbBeer(uploadedBeer);
       updateUser({

@@ -9,6 +9,7 @@ export const theme = {
   header: '#202124',
   buttonColor: '#53A2BE',
   padding: 30,
+  bluebg: '#1b5e7b'
   
 }
 

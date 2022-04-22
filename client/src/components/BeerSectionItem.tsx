@@ -45,15 +45,16 @@ export const BeerSectionItem:React.FC<BeerSectionProps> = ( {item, increment, de
 const styles = StyleSheet.create({
   sectionItem: {
     padding: 15,
-    backgroundColor: theme.bgLight,
+    backgroundColor: theme.bluebg,
     fontSize: 16,
     fontWeight: '600',
-    marginBottom:1
+    marginBottom:1,
+    color: theme.textDark
   },
   sectionItemOpen: {
     width: '100%',
     height: 100,
-    backgroundColor: theme.bgLight,
+    backgroundColor: theme.bluebg,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -63,7 +64,8 @@ const styles = StyleSheet.create({
     fontSize: 18, 
     marginLeft: 20,
     fontWeight: '600',
-    width: '60%'
+    width: '60%',
+    color: theme.textDark
   },
   img: {
     width: 20,
@@ -74,9 +76,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginRight: 20,
-    marginLeft: 10,
+    marginLeft: 0,
     justifyContent: 'space-between',
-    width: 80
   },
   counterButton: {
     width: 30,
@@ -93,6 +94,9 @@ const styles = StyleSheet.create({
   },
   counterNumber: {
     fontSize: 24,
-    fontWeight: '600'
+    fontWeight: '600',
+    color: theme.textDark,
+    width: 30,
+    textAlign:'center'
   }
 })

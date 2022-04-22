@@ -94,10 +94,15 @@ const BeerListStackScreen: React.FC = () => {
       <BeerListStack.Screen name="BeerList" 
         component={BeerList} 
         options={{
-          headerTitle: '',
+          headerTitle: 'Beer List',
           headerBackTitle: '',
           headerStyle: {
             backgroundColor: theme.bgDark
+          },
+          headerTitleStyle:{
+            fontWeight: '600',
+            color: theme.textDark,
+            fontSize: 24
           },
           headerBackTitleStyle: { color: theme.buttonColor },
           animationTypeForReplace: 'pop'
@@ -106,7 +111,12 @@ const BeerListStackScreen: React.FC = () => {
       <BeerListStack.Screen name="WishList"
         component={WishList}
         options={{
-          headerTitle: '',
+          headerTitle: 'Wish List',
+          headerTitleStyle:{
+            fontWeight: '600',
+            color: theme.textDark,
+            fontSize: 24
+          },
           headerBackTitle: '',
           headerStyle: {
             backgroundColor: theme.bgDark

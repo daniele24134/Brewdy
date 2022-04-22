@@ -18,14 +18,21 @@ export const createUser = async (user: UserBody) => {
     headers: {
       'Content-type': 'application/json'
     }
-  }).then(result => {
+  }).then(res => {
+    if (res.status < 400) {
+      return res;
+    } else {
+      return Promise.reject(res);
+    }
+  })
+  .then(result => {
     return result.json();
   })
   .then(data => {
     return data;
   })
   .catch(e => {
-    console.warn(e);
+    console.log(JSON.parse(e));
   });
 }
 
@@ -38,17 +45,30 @@ export const fetchLogin = async (credentials: Credentials) => {
     headers: {
       'Content-type': 'application/json'
     }
+  }).then(res => {
+    if (res.status < 400) {
+      return res;
+    } else {
+      return Promise.reject(res);
+    }
   })
   .then(result => result.json())
   .then(data => data)
-  .catch(e => console.warn(e));
+  .catch(e => console.log(JSON.parse(e)));
 }
 
 export const fetchUser = async (id: number): Promise<UserData | undefined> => {
-  return fetch(url+`/users/${id}`)
+  return fetch(url + `/users/${id}`)
+  .then(res => {
+    if (res.status < 400) {
+      return res;
+    } else {
+      return Promise.reject(res);
+    }
+  })
     .then(result => result.json())
     .then(data => data)
-    .catch(e => console.warn(e));
+    .catch(e => console.log(JSON.parse(e)));
 } // TODO maybe remove
 
 export const addBeer = async (beer: BeerForCreate, userId: number) => {
@@ -60,48 +80,87 @@ export const addBeer = async (beer: BeerForCreate, userId: number) => {
     headers: {
       'Content-type': 'application/json'
     }
+  }).then(res => {
+    if (res.status < 400) {
+      return res;
+    } else {
+      return Promise.reject(res);
+    }
   })
     .then(result => result.json())
     .then(data => data)
-    .catch(e => console.warn(e));
+    .catch(e => console.log(JSON.parse(e)));
 }
 
 
 export const getBeerByBid = async (bid: number): Promise<DbBeer | undefined>  => {
   return fetch(url + `/beers/${bid}`)
+  .then(res => {
+    if (res.status < 400) {
+      return res;
+    } else {
+      return Promise.reject(res);
+    }
+  })
     .then(result => result.json())
     .then(data => data)
-    .catch(e => console.warn(e));
+    .catch(e => console.log(JSON.parse(e)));
 }
 
 
-
 export const incrementCounter = async (beerId: number): Promise<DbBeer | undefined> => {
-  return fetch(url +`/beers/increment/${beerId}`)
+  return fetch(url + `/beers/increment/${beerId}`)
+  .then(res => {
+    if (res.status < 400) {
+      return res;
+    } else {
+      return Promise.reject(res);
+    }
+  })
     .then(result => result.json())
     .then(data => data)
-    .catch(e => console.warn(e));
+    .catch(e => console.log(JSON.parse(e)));
 }
 
 export const decrementCounter = async (beerId: number): Promise<DbBeer | undefined> => {
   return fetch(url + `/beers/decrement/${beerId}`)
+  .then(res => {
+    if (res.status < 400) {
+      return res;
+    } else {
+      return Promise.reject(res);
+    }
+  })
     .then(result => result.json())
     .then(data => data)
-    .catch(e => console.warn(e));
+    .catch(e => console.log(JSON.parse(e)));
 }
 
 export const removeBeer = async (beerId: number):Promise<DbBeer | undefined> => {
   return fetch(url + `/beers/${beerId}`, {
     method: 'DELETE'
+  }).then(res => {
+    if (res.status < 400) {
+      return res;
+    } else {
+      return Promise.reject(res);
+    }
   })
     .then(result => result.json())
     .then(data => data)
-    .catch(e => console.warn(e));
+    .catch(e => console.log(JSON.parse(e)));
 }
 
 export const toggleWish = async (beerId: number):Promise<DbBeer | undefined> => {
-  return fetch(url+`/beers/toggleWish/${beerId}`)
+  return fetch(url + `/beers/toggleWish/${beerId}`)
+  .then(res => {
+    if (res.status < 400) {
+      return res;
+    } else {
+      return Promise.reject(res);
+    }
+  })
     .then(result => result.json())
     .then(data => data)
-    .catch(e => console.warn(e));
+    .catch(e => console.log(JSON.parse(e)));
 }
