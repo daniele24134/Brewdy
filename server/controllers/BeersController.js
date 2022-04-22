@@ -9,7 +9,7 @@ const create = async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    res.status(500).send(error.message);
+    res.status(500).send('Not created');
   }
 }
 
@@ -22,10 +22,22 @@ const destroy = async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    res.status(500).send(error.message);
+    res.status(500).send('Not destroyed');
   }
 }
 
+const toggleWish = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const beer = Beer.findByPk(id);
+    beer.wish = !beer.wish;
+    await beer.save();
+    res.send(beer);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Not toggled')
+  }
+}
 
 
 const increment = async (req, res) => {
@@ -36,7 +48,7 @@ const increment = async (req, res) => {
     res.send(beer);
   } catch (error) {
     console.error(error);
-    res.status(500).send(error.message);
+    res.status(500).send('Not incremented');
   }
 }
 
@@ -48,7 +60,7 @@ const decrement = async (req, res) => {
     res.send(beer);
   } catch (error) {
     console.error(error);
-    res.status(500).send(error.message);
+    res.status(500).send('Not decremented');
   }
 }
 
