@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, SectionList } from "react-native";
 import { BeerSectionItem } from "../components/BeerSectionItem";
-import { decrementCounter, incrementCounter, removeBeer } from "../services/backService";
+import { decrementCounter, incrementCounter, removeBeer, toggleWish } from "../services/backService";
 import { theme } from "../theme";
 import { DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
@@ -15,14 +15,29 @@ export const WishList: React.FC = () => {
   const [beers, setBeers] = useState(user!.beers);
   const [sectionData, setSectionData] = useState(sectionBeers(wishBeers(beers)));
 
+  const toggle = async (beerId: number) => {
+    const updatedBeer = await toggleWish(beerId);
+
+    
+
+    if (updatedBeer){
+      const filteredBeers = beers.filter(b => b.id !== updatedBeer.id);
+      updateUser({
+        ...user!,
+        beers: filteredBeers
+      });
+    }
+
+  }
   
 
   useEffect(() => {
     setSectionData(sectionBeers(wishBeers(beers)));
-    const newUser = { ...user!, beers: beers }
+  }, [beers]);
 
-    updateUser(newUser);
-  }, [beers])
+  useEffect(() => {
+    setBeers(user!.beers);
+  }, [user])
 
 
 
@@ -33,7 +48,7 @@ export const WishList: React.FC = () => {
           sections={sectionData}
           // stickySectionHeadersEnabled={false}
           renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-          renderItem={({ item }) => <WishBeerSectionItem item={item}/>}
+          renderItem={({ item }) => <WishBeerSectionItem toggle={toggle} item={item}/>}
           keyExtractor={(item) => String(item!.bid)}
         /> :
         <View style={{ marginTop: '50%' }}>

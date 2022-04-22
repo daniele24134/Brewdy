@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: theme.bgLight,
     fontSize: 16,
-
+    fontWeight: '600',
     marginBottom:1
   },
   sectionItemOpen: {

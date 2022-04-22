@@ -21,14 +21,10 @@ export const createUser = async (user: UserBody) => {
   }).then(result => {
     if (result.ok) {
       return result.json();
-    } else return;
+    }
   }).catch(e => {
     console.warn(e);
-  })
-
-  
-  
-  
+  });
 }
 
 export const fetchLogin = async (credentials: Credentials) => {
@@ -97,6 +93,16 @@ export const removeBeer = async (beerId: number):Promise<DbBeer | undefined> => 
   const result = await fetch(url + `/beers/${beerId}`, {
     method: 'DELETE'
   });
+  if (result.ok) return await result.json();
+  else {
+    console.warn(result);
+    return;
+  };
+}
+
+export const toggleWish = async (beerId: number):Promise<DbBeer | undefined> => {
+  const result = await fetch(url+`/beers/toggleWish/${beerId}`);
+
   if (result.ok) return await result.json();
   else {
     console.warn(result);

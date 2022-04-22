@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image,ScrollView, TouchableOpacity, Alert } from "react-native";
 import { IngredientList } from "../components/Ingredient";
 import {theme} from '../theme';
@@ -11,7 +11,9 @@ import { EmptyBeer, EmptyHeart, FullBeer, FullHeart } from "../components/Icons"
 
 
 export const BeerDetail:React.FC = ({route}: any) => {
-  const beer: Beer = route.params;
+  const beerFromRoute: Beer = route.params;
+
+  const [beer, setBeer] = useState(beerFromRoute)
 
   const UserContext = useUserContext();
   const {user, updateUser} = UserContext; // user state
@@ -21,6 +23,12 @@ export const BeerDetail:React.FC = ({route}: any) => {
 
   const [DbBeer, setDbBeer] = useState<DbBeer>(); // the beer in the DB
   const [WishDbBeer, setWishDbBeer] = useState<DbBeer>(); // The Wish beer in the DB
+
+
+  useEffect(() => {
+    setIsInBeerList(isInTheBeerList());
+    setIsInWishList(isInTheWishList());
+  }, [user])
 
 
   const toggleToBeers = async () => {
@@ -66,17 +74,19 @@ export const BeerDetail:React.FC = ({route}: any) => {
       setIsInWishList(prev => !prev);
       // Alert.alert('Added to your wish list');
     } else { // remove otherwis
-      if (WishDbBeer) removeBeer(WishDbBeer.id); // removing from the DB
+      if (WishDbBeer) {
+        removeBeer(WishDbBeer.id); // removing from the DB
 
-      const filteredBeers = user!.beers.filter(b => b.id !== WishDbBeer!.id);
-      updateUser({
-        ...user!,
-        beers: filteredBeers
-      }); // updating the user context 
-
-      setWishDbBeer(undefined);
-      setIsInWishList(prev => !prev);
-      // Alert.alert('Removed from the wish list');
+        const filteredBeers = user!.beers.filter(b => b.id !== WishDbBeer!.id);
+        updateUser({
+          ...user!,
+          beers: filteredBeers
+        }); // updating the user context 
+      
+        setWishDbBeer(undefined);
+        setIsInWishList(prev => !prev);
+        // Alert.alert('Removed from the wish list');
+      }
     }
   }
 

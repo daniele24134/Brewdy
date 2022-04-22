@@ -65,12 +65,13 @@ type SectionBeer = {
 
 export function sectionBeers (beers: DbBeer[]):SectionBeer[]  {
   let result: SectionBeer[] = [];
-  const titles = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+  const titles = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","Others"];
   for(let t of titles) {
     const data: DbBeer[] = [];
     let section: SectionBeer = {title: '', data: []}
     beers.forEach(b => {
       const title = b!.name[0];
+      if (t === 'Others' && !titles.includes(title)) data.push(b);
       if (title === t) data.push(b);
       section = {title: t, data: data}
     })

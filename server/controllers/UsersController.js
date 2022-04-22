@@ -26,7 +26,7 @@ const create = async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    res.status(500).send(error.message);
+    res.status(500).send('this account already exists');
   }
 }
 

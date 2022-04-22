@@ -14,5 +14,6 @@ router.post('/beers/:userId', BeersController.create);
 router.get('/beers/increment/:id', BeersController.increment);
 router.get('/beers/decrement/:id', BeersController.decrement);
 router.delete('/beers/:id', BeersController.destroy);
+router.get('/beers/toggleWish/:id', BeersController.toggleWish);
 
 module.exports = router;

@@ -29,7 +29,7 @@ const destroy = async (req, res) => {
 const toggleWish = async (req, res) => {
   try {
     const {id} = req.params;
-    const beer = Beer.findByPk(id);
+    const beer = await Beer.findByPk(id);
     beer.wish = !beer.wish;
     await beer.save();
     res.send(beer);
@@ -64,4 +64,4 @@ const decrement = async (req, res) => {
   }
 }
 
-module.exports = {create, destroy, increment, decrement};
+module.exports = {create, destroy, increment, decrement, toggleWish};

@@ -2,15 +2,23 @@ import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { theme } from "../theme";
 import { DbBeer } from "../types";
+import { EmptyBeer, FullBeer } from "./Icons";
 
 type BeerSectionProps = {
-  item: DbBeer
+  item: DbBeer,
+  toggle: (beerId:number) => void
 }
 
-export const WishBeerSectionItem: React.FC<BeerSectionProps> = ({ item }) => {
+export const WishBeerSectionItem: React.FC<BeerSectionProps> = ({ item, toggle }) => {
 
   const [open, setOpen] = React.useState(false);
+  const [wish, setWish] = React.useState(true);
 
+
+  const toggleBeer = () => {
+    setWish(prev => !prev);
+    setTimeout(() => {toggle(item.id);}, 500);
+  }
 
   return (
     <>{
@@ -20,7 +28,12 @@ export const WishBeerSectionItem: React.FC<BeerSectionProps> = ({ item }) => {
           <Text style={styles.sectionTextOpen}>{item.name} {item.abv}%</Text>
           <View style={styles.counter}>
 
-            
+            <Pressable onPress={toggleBeer} style={{marginLeft:20}}>
+              {wish ? 
+              <EmptyBeer color="#000" /> :
+              <FullBeer color="#000"/>
+              }
+            </Pressable>
 
           </View>
         </Pressable> :
@@ -37,7 +50,7 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: theme.bgLight,
     fontSize: 16,
-
+    fontWeight:'600',
     marginBottom: 1
   },
   sectionItemOpen: {
