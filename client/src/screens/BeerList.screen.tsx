@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, SectionList } from "react-native";
+import { StyleSheet, Text, View, SectionList, Alert } from "react-native";
 import { BeerSectionItem } from "../components/BeerSectionItem";
 import { decrementCounter, incrementCounter, removeBeer } from "../services/backService";
 import { theme } from "../theme";
@@ -15,18 +15,25 @@ export const BeerList:React.FC = () => {
   const [sectionData, setSectionData] = useState(sectionBeers(beersDrunk(beers)));
 
   const increment = async(id: number) => {
-    const newBeer = await incrementCounter(id);
-    if (newBeer) {
-      const newBeers = beers.map(b => {
-          if (b.id === newBeer.id) return newBeer;
-          else return b;
-        });
+    const newBeer = incrementCounter(id);
 
-      updateUser({
-        ...user!,
-        beers: newBeers
-      });
-    }
+    newBeer.then(
+      (data: DbBeer) => {
+        if (data) {
+          const newBeers = beers.map(b => {
+            if (b.id === data!.id) return data;
+            else return b;
+          });
+
+          updateUser({
+            ...user!,
+            beers: newBeers
+          });
+        }
+        
+      },
+      (e:any) => {Alert.alert('Not incremented correctly')}
+    )
   }
 
   useEffect(()=>{
@@ -37,30 +44,40 @@ export const BeerList:React.FC = () => {
     setBeers(user!.beers);
   }, [user])
 
-  const decrement = async(id: number, counter: number) => {
+  const decrement = async (id: number, counter: number) => {
     if (counter > 1) {
-      const newBeer = await decrementCounter(id);
-      if (newBeer) {
-        const newBeers = beers.map(b => {
-          if (b.id === newBeer.id) return newBeer;
-          else return b;
-        });
+      const newBeer = decrementCounter(id);
+      newBeer.then(
+        (data: DbBeer) => {
+          if (data) {
+            const newBeers = beers.map(b => {
+              if (b.id === data!.id) return data;
+              else return b;
+            });
 
-        updateUser({
-          ...user!,
-          beers: newBeers
-        });
-      }
+            updateUser({
+              ...user!,
+              beers: newBeers
+            });
+          }
+
+        },
+        (e: any) => { Alert.alert('Not decremented correctly') }
+      )
 
     } else {
-      const removedBeer = await removeBeer(id);
-      if (removedBeer) {
-        const newBeers = beers.filter(b => b.id !== removedBeer.id);
-        updateUser({
-          ...user!,
-          beers: newBeers
-        });
-      }
+      const removedBeer = removeBeer(id);
+      removedBeer.then(
+        (data: DbBeer) => {
+          const newBeers = beers.filter(b => b.id !== data.id);
+          updateUser({
+            ...user!,
+            beers: newBeers
+          });
+        },
+        (e: any) => {Alert.alert('Not removed correctly')}
+      )
+
     }
   }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, SectionList } from "react-native";
+import { StyleSheet, Text, View, SectionList, Alert } from "react-native";
 import { BeerSectionItem } from "../components/BeerSectionItem";
-import { decrementCounter, incrementCounter, removeBeer, toggleWish } from "../services/backService";
+import { toggleWish } from "../services/backService";
 import { theme } from "../theme";
 import { DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
@@ -15,23 +15,24 @@ export const WishList: React.FC = () => {
   const [beers, setBeers] = useState(user!.beers);
   const [sectionData, setSectionData] = useState(sectionBeers(wishBeers(beers)));
 
-  const toggle = async (beerId: number) => {
-    const updatedBeer = await toggleWish(beerId);
+  const toggle = (beerId: number) => {
+    const updatedBeer = toggleWish(beerId);
 
-    
+    updatedBeer.then(
+      (data:DbBeer) => {
+        const updatedBeers = beers.map(b => {
+          if (b.id === data.id) {
+            return data
+          } else return b;
 
-    if (updatedBeer){
-      const updatedBeers = beers.map(b => {
-        if( b.id === updatedBeer.id) {
-          return updatedBeer
-        } else return b;
-       
-      });
-      updateUser({
-        ...user!,
-        beers: updatedBeers
-      });
-    }
+        });
+        updateUser({
+          ...user!,
+          beers: updatedBeers
+        });
+      },
+      (e:any) => {Alert.alert('Not toggled correctly')}
+    )
 
   }
   

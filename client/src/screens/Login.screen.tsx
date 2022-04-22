@@ -4,6 +4,7 @@ import { theme, global } from "../theme";
 import { SignInput } from '../components/Input';
 import { fetchLogin } from "../services/backService";
 import { useUserContext } from "../User.provider";
+import { UserData } from "../types";
 
 export const Signin:React.FC = ({navigation}: any) => {
   const {login} = useUserContext();
@@ -14,14 +15,16 @@ export const Signin:React.FC = ({navigation}: any) => {
 
   const handleLogin = async () => {
 
-    const result = await fetchLogin({email, password});
+    const result = fetchLogin({email, password});
 
-    if (result) {
-      login(result);
-    } else {
-      Alert.alert('username/password not correct');
-    }
-
+    result.then(
+      (data: UserData) => {
+        login(data);
+      },
+      (e: any) => {
+        if (e) Alert.alert('Username/Password not correct');
+      }
+    )
   }
 
   return (

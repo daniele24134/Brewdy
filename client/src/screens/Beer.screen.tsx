@@ -25,14 +25,13 @@ export const BeerDetail:React.FC = ({route}: any) => {
   const [WishDbBeer, setWishDbBeer] = useState<DbBeer>(); // The Wish beer in the DB
 
   useEffect(() => {
-    getBeerByBid(beer.bid).then(data => {
-      if (data) {
-        data.wish ? setWishDbBeer(data) : setDbBeer(data);
-      } else {
-        console.log('no data')
-      }
-    }).catch(e => console.log(JSON.parse(e)) );
-
+    getBeerByBid(beer.bid)
+    .then(
+      data => {
+        data!.wish ? setWishDbBeer(data) : setDbBeer(data);
+      },
+      (e:any) => {}
+    )
   },[]);
 
   useEffect(() => {
@@ -69,15 +68,20 @@ export const BeerDetail:React.FC = ({route}: any) => {
 
       } else {
 
-        let uploadedBeer = await addBeer(newBeer, user!.id); // add the beer to the DB
-        if (uploadedBeer) {
-          setDbBeer(uploadedBeer); // set the state
-          updateUser({ // update the user beers
-            ...user!, beers: [uploadedBeer, ...user!.beers]
-          });
-          setIsInBeerList(prev => !prev); // change the icon
-  
-        }
+        let uploadedBeer = addBeer(newBeer, user!.id); // add the beer to the DB
+
+        uploadedBeer.then(
+          (data: DbBeer) => {
+            setDbBeer(data);
+            updateUser({ // update the user beers
+              ...user!, beers: [data, ...user!.beers]
+            });
+            setIsInBeerList(prev => !prev);
+          },
+          (e:any) => {
+            Alert.alert('Beer not added correctly')
+          }
+        )
       }
 
         // if (isInWishList) toggleToWishList();
@@ -105,14 +109,20 @@ export const BeerDetail:React.FC = ({route}: any) => {
   const toggleToWishList = async () => {
     if (!isInWishList) { // add if it's not in the list
       const newBeer = beerParser(beer);
-      const uploadedBeer = await addBeer({...newBeer, wish: true}, user!.id);
-      setWishDbBeer(uploadedBeer);
-      updateUser({
-        ...user!,
-        beers: [uploadedBeer, ...user!.beers]
-      });
-      setIsInWishList(prev => !prev);
-      // Alert.alert('Added to your wish list');
+      const uploadedBeer = addBeer({...newBeer, wish: true}, user!.id);
+
+      uploadedBeer.then(
+        (data:DbBeer) => {
+          setWishDbBeer(data);
+          updateUser({
+            ...user!,
+            beers: [data, ...user!.beers]
+          });
+          setIsInWishList(prev => !prev);
+        },
+        (e:any) => {Alert.alert('Not added correctly in the wish list')}
+      )
+
     } else { // remove otherwis
       if (WishDbBeer) {
         removeBeer(WishDbBeer.id); // removing from the DB

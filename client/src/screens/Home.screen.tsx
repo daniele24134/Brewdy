@@ -1,17 +1,23 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
 import { theme } from '../theme';
 import { global } from '../theme';
 import { fetchRandom } from '../services/apiService';
 import { useUserContext } from '../User.provider';
+import { beersParser } from '../utils';
 
 export const Home: React.FC = ({navigation}: any) => {
 
   const {logout, user} = useUserContext();
 
   const handleRandom = async () =>{
-    const beer = await fetchRandom();
-    navigation.navigate('RandomBeer', beer)
+    fetchRandom().then(
+      (data) => {
+        const beer = beersParser(data)[0]
+        navigation.navigate('RandomBeer', beer)
+      },
+      (e:any) => {Alert.alert('Random beer not found')}
+    )
   }
 
   return (

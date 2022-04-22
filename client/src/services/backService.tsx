@@ -19,21 +19,11 @@ export const createUser = async (user: UserBody) => {
       'Content-type': 'application/json'
     }
   }).then(res => {
-    if (res.status < 400) {
-      return res;
-    } else {
-      return Promise.reject(res);
-    }
+    if (res.ok) {
+      return res.json()
+    } else return Promise.reject(res);
   })
-  .then(result => {
-    return result.json();
-  })
-  .then(data => {
-    return data;
-  })
-  .catch(e => {
-    console.log(JSON.parse(e));
-  });
+  
 }
 
 export const fetchLogin = async (credentials: Credentials) => {
@@ -45,31 +35,20 @@ export const fetchLogin = async (credentials: Credentials) => {
     headers: {
       'Content-type': 'application/json'
     }
-  }).then(res => {
-    if (res.status < 400) {
-      return res;
-    } else {
-      return Promise.reject(res);
-    }
   })
-  .then(result => result.json())
-  .then(data => data)
-  .catch(e => console.log(JSON.parse(e)));
+    .then(res => {
+      if (res.ok) {
+        return res.json()
+      } else return Promise.reject(res);
+    })
 }
 
-export const fetchUser = async (id: number): Promise<UserData | undefined> => {
+export const fetchUser = async (id: number): Promise<UserData> => {
   return fetch(url + `/users/${id}`)
   .then(res => {
-    if (res.status < 400) {
-      return res;
-    } else {
-      return Promise.reject(res);
-    }
+    return Promise.reject(res);
   })
-    .then(result => result.json())
-    .then(data => data)
-    .catch(e => console.log(JSON.parse(e)));
-} // TODO maybe remove
+}
 
 export const addBeer = async (beer: BeerForCreate, userId: number) => {
 
@@ -81,86 +60,66 @@ export const addBeer = async (beer: BeerForCreate, userId: number) => {
       'Content-type': 'application/json'
     }
   }).then(res => {
-    if (res.status < 400) {
-      return res;
-    } else {
-      return Promise.reject(res);
-    }
+    if (res.ok) {
+      return res.json()
+    } else return Promise.reject(res);
   })
-    .then(result => result.json())
-    .then(data => data)
-    .catch(e => console.log(JSON.parse(e)));
 }
 
 
-export const getBeerByBid = async (bid: number): Promise<DbBeer | undefined>  => {
+export const getBeerByBid = async (bid: number): Promise<DbBeer>  => {
   return fetch(url + `/beers/${bid}`)
   .then(res => {
-    if (res.status < 400) {
-      return res;
+    if (res.ok) {
+      return res.json();
     } else {
       return Promise.reject(res);
     }
   })
-    .then(result => result.json())
-    .then(data => data)
-    .catch(e => console.log(JSON.parse(e)));
 }
 
 
-export const incrementCounter = async (beerId: number): Promise<DbBeer | undefined> => {
+export const incrementCounter = async (beerId: number): Promise<DbBeer> => {
   return fetch(url + `/beers/increment/${beerId}`)
   .then(res => {
-    if (res.status < 400) {
-      return res;
+    if (res.ok) {
+      return res.json();
     } else {
       return Promise.reject(res);
     }
   })
-    .then(result => result.json())
-    .then(data => data)
-    .catch(e => console.log(JSON.parse(e)));
 }
 
-export const decrementCounter = async (beerId: number): Promise<DbBeer | undefined> => {
+export const decrementCounter = (beerId: number): Promise<DbBeer> => {
   return fetch(url + `/beers/decrement/${beerId}`)
   .then(res => {
     if (res.status < 400) {
-      return res;
+      return res.json();
     } else {
       return Promise.reject(res);
     }
-  })
-    .then(result => result.json())
-    .then(data => data)
-    .catch(e => console.log(JSON.parse(e)));
+  });
 }
 
-export const removeBeer = async (beerId: number):Promise<DbBeer | undefined> => {
+export const removeBeer = (beerId: number): Promise<DbBeer> => {
   return fetch(url + `/beers/${beerId}`, {
     method: 'DELETE'
   }).then(res => {
-    if (res.status < 400) {
-      return res;
+    if (res.ok) {
+      return res.json();
     } else {
       return Promise.reject(res);
     }
-  })
-    .then(result => result.json())
-    .then(data => data)
-    .catch(e => console.log(JSON.parse(e)));
+  });
 }
 
-export const toggleWish = async (beerId: number):Promise<DbBeer | undefined> => {
+export const toggleWish = (beerId: number):Promise<DbBeer> => {
   return fetch(url + `/beers/toggleWish/${beerId}`)
   .then(res => {
-    if (res.status < 400) {
-      return res;
+    if (res.ok) {
+      return res.json();
     } else {
       return Promise.reject(res);
     }
   })
-    .then(result => result.json())
-    .then(data => data)
-    .catch(e => console.log(JSON.parse(e)));
 }

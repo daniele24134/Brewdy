@@ -4,6 +4,7 @@ import { theme, global } from "../theme";
 import { SignInput } from '../components/Input';
 import { createUser } from "../services/backService";
 import { useUserContext } from "../User.provider";
+import { UserData } from "../types";
 
 export const Signup: React.FC = ({ navigation }: any) => {
 
@@ -13,17 +14,29 @@ export const Signup: React.FC = ({ navigation }: any) => {
   const { login } = useUserContext();
 
   const handleCreate = async () => {
-    if (password.length < 6) {
-      Alert.alert('Password must be longer than 6 characters');
-    } else {
-      const result = await createUser({email, username, password});
 
-      if (result) {
-        login(result);
+    if (email && username && password) {
+      if (password.length < 6) {
+        Alert.alert('Password must be longer than 6 characters');
       } else {
-        Alert.alert('This account already exists');
+        const result = createUser({email, username, password});
+
+        result.then(
+          (data: UserData) => {
+            login(data);
+          },
+          (e: any) => {
+            if (e) Alert.alert('This account already exists');
+          }
+        )
       }
+
+    } else {
+      Alert.alert('All fields are required');
     }
+
+
+
   }
 
   return (

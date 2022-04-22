@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
-import { Text, View, StyleSheet, Image, TouchableOpacity, FlatList } from "react-native";
+import { Text, View, StyleSheet, Image, TouchableOpacity, FlatList, Alert } from "react-native";
 import { theme } from "../theme";
 import { fetchQuery } from "../services/apiService";
 import { Beer } from "../types";
 import { BeerItem } from "../components/BeerItem";
+import { beersParser } from "../utils";
 
 
 
@@ -25,18 +26,13 @@ export const SearchBeerList: React.FC = ({route, navigation}: any) => {
     if (food) url += `&food=${food}`;
 
     // console.warn({ abv, ibu, color, food })
-    const query = async () => {
-      const beersResult = await fetchQuery(url)
-      if (beersResult) {
-        setBeers(beersResult)
-      } else {
-
-      }
-    };
-
-    query();
-    
-
+    const beersResult = fetchQuery(url);
+    beersResult.then(
+      (data) => {
+        setBeers(beersParser(data));
+      },
+      (e:any) => {Alert.alert('Beers not fetched correctly')}
+    )
   },[]);
 
   const navigateToBeer = (beer: Beer) => {
