@@ -4,7 +4,7 @@ const create = async (req, res) => {
   try {
     const {userId} = req.params;
     const {name, counter, tagline, abv, ibu, wish, image_url,bid } = req.body;
-    const beer = await Beer.create({ name, counter, tagline, abv, ibu, wish, image_url, userId, bid });
+    const beer = await Beer.create({ name, counter, tagline, abv, ibu, wish, image_url, userId: Number(userId), bid });
     res.send(beer);
 
   } catch (error) {

@@ -2,6 +2,7 @@ const { User } = require('../models');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+
 const show = async (req, res) => {
   try {
     const {id} = req.params;
@@ -21,7 +22,7 @@ const create = async (req, res) => {
     
     const passwordDigest = await bcrypt.hash(password, saltRounds);
     const user = await User.create({ username, email, password: passwordDigest });
-    res.send({ id: user.id, username: user.username, email: user.email, beers: user.beers });
+    res.send({ id: user.id, username: user.username, email: user.email, beers: [] });
 
   } catch (error) {
     console.error(error);

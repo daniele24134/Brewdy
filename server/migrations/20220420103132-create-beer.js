@@ -33,7 +33,7 @@ module.exports = {
         allowNull: true,
       },
       ibu: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: true,
       },
       bid: {

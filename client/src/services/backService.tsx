@@ -11,20 +11,24 @@ type UserBody = {
 }
 
 export const createUser = async (user: UserBody) => {
-
-  const result = await fetch(url + '/users/create', {
+ return fetch(url + '/users/create', {
     method: 'POST',
     body: JSON.stringify(user),
     credentials: 'include',
     headers: {
       'Content-type': 'application/json'
     }
-  });
-  
-  if (result.ok) {
-    return await result.json();
-  } else return;
+  }).then(result => {
+    if (result.ok) {
+      return result.json();
+    } else return;
+  }).catch(e => {
+    console.warn(e);
+  })
 
+  
+  
+  
 }
 
 export const fetchLogin = async (credentials: Credentials) => {
@@ -52,6 +56,7 @@ export const fetchUser = async (id: number): Promise<UserData | undefined> => {
 }
 
 export const addBeer = async (beer: BeerForCreate, userId: number) => {
+
   const result = await fetch(url+`/beers/${userId}`, {
     method: 'POST',
     body: JSON.stringify(beer),
@@ -62,20 +67,30 @@ export const addBeer = async (beer: BeerForCreate, userId: number) => {
   });
 
   if (result.ok) return await result.json();
-  else return
+
+  else {
+    console.warn(result);
+    return;
+  };
 }
 
 export const incrementCounter = async (beerId: number): Promise<DbBeer | undefined> => {
   const result = await fetch(url +`/beers/increment/${beerId}`);
 
   if (result.ok) return await result.json();
-  else return;
+  else {
+    console.warn(result);
+    return;
+  };
 }
 export const decrementCounter = async (beerId: number): Promise<DbBeer | undefined> => {
   const result = await fetch(url + `/beers/decrement/${beerId}`);
 
   if (result.ok) return await result.json();
-  else return;
+  else {
+    console.warn(result);
+    return;
+  };
 }
 
 export const removeBeer = async (beerId: number):Promise<DbBeer | undefined> => {
@@ -83,5 +98,8 @@ export const removeBeer = async (beerId: number):Promise<DbBeer | undefined> => 
     method: 'DELETE'
   });
   if (result.ok) return await result.json();
-  else return;
+  else {
+    console.warn(result);
+    return;
+  };
 }

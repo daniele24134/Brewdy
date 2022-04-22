@@ -51,8 +51,11 @@ export function onlyUnique(value:any, index:number, self: any[]) {
 }
 
 export function beersDrunk (beers: DbBeer[]) {
-  const result = beers.filter(b => !b.wish);
-  return result;
+  return beers.filter(b => !b.wish);
+}
+
+export function wishBeers(beers: DbBeer[]) {
+  return beers.filter(b => b.wish);
 }
 
 type SectionBeer = {

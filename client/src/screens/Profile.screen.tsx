@@ -40,12 +40,15 @@ export const Profile: React.FC = ({navigation}: any) => {
       </ScrollView>
 
       <View style={styles.buttons}>
+
         <TouchableOpacity onPress={() => navigation.navigate('BeerList')} style={[global.button ,styles.beersButton]}>
           <Text style={{color: theme.textDark, fontSize: 22, fontWeight: '600'}}>Beers</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[global.button ,styles.wishButton]}>
+
+        <TouchableOpacity onPress={() => navigation.navigate('WishList')} style={[global.button ,styles.wishButton]}>
           <Text style={{color: theme.textDark, fontSize: 22, fontWeight: '600'}}>Wish List</Text>
         </TouchableOpacity>
+        
       </View>
     </View>
   );

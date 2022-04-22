@@ -17,10 +17,11 @@ export const Signup: React.FC = ({ navigation }: any) => {
       Alert.alert('Password must be longer than 6 characters');
     } else {
       const result = await createUser({email, username, password});
+
       if (result) {
         login(result);
       } else {
-        Alert.alert('Something went wrong');
+        Alert.alert('This account already exists');
       }
     }
   }

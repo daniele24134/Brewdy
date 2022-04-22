@@ -14,40 +14,49 @@ export const BeerDetail:React.FC = ({route}: any) => {
   const beer: Beer = route.params;
 
   const UserContext = useUserContext();
-  const {user, updateUser} = UserContext;
-  const [isInBeerList, setIsInBeerList] = useState(isInTheBeerList());
-  const [isInWishList, setIsInWishList] = useState(isInTheWishList());
-  const [DbBeer, setDbBeer] = useState<DbBeer>();
-  const [WishDbBeer, setWishDbBeer] = useState<DbBeer>();
+  const {user, updateUser} = UserContext; // user state
+
+  const [isInBeerList, setIsInBeerList] = useState(isInTheBeerList()); // boolean state for list 
+  const [isInWishList, setIsInWishList] = useState(isInTheWishList()); // boolean state for list
+
+  const [DbBeer, setDbBeer] = useState<DbBeer>(); // the beer in the DB
+  const [WishDbBeer, setWishDbBeer] = useState<DbBeer>(); // The Wish beer in the DB
 
 
-  const addToBeers = async () => {
+  const toggleToBeers = async () => {
     const newBeer = beerParser(beer);
-    if (!isInBeerList) {
-      const uploadedBeer = await addBeer(newBeer, user!.id);
-      setDbBeer(uploadedBeer);
-      updateUser({
+    if (!isInBeerList) { // add if it's not in the list
+
+      const uploadedBeer = await addBeer(newBeer, user!.id); // add the beer to the DB
+
+      setDbBeer(uploadedBeer); // set the state
+      updateUser({ // update the user beers
         ...user!,
-        beers: [uploadedBeer,...user!.beers]
+        beers: [uploadedBeer, ...user!.beers]
       });
-      setIsInBeerList(prev => !prev);
-      Alert.alert('Added to your beer list');
-    } else {
-      if (DbBeer) removeBeer(DbBeer.id);
+
+      setIsInBeerList(prev => !prev); // change the icon
+      if (isInWishList) toggleToWishList();
+
+      // Alert.alert('Added to your beer list');
+    } else { // remove otherwise
+      if (DbBeer) removeBeer(DbBeer.id); // removing from the DB
+
       const filteredBeers = user!.beers.filter(b => b.id !== DbBeer!.id);
       updateUser({
         ...user!,
         beers: filteredBeers
-      });
+      }); // updating the user context 
+
       setDbBeer(undefined);
       setIsInBeerList(prev => !prev);
-      Alert.alert('Removed from your beer list');
+      // Alert.alert('Removed from your beer list');
     }
   }
 
-  const addToWishList = async () => {
+  const toggleToWishList = async () => {
     const newBeer = beerParser(beer);
-    if (!isInWishList) {
+    if (!isInWishList) { // add if it's not in the list
       const uploadedBeer = await addBeer({...newBeer, wish: true}, user!.id);
       setWishDbBeer(uploadedBeer);
       updateUser({
@@ -55,19 +64,22 @@ export const BeerDetail:React.FC = ({route}: any) => {
         beers: [uploadedBeer, ...user!.beers]
       });
       setIsInWishList(prev => !prev);
-      Alert.alert('Added to your wish list');
-    } else {
-      if (WishDbBeer) removeBeer(WishDbBeer.id);
+      // Alert.alert('Added to your wish list');
+    } else { // remove otherwis
+      if (WishDbBeer) removeBeer(WishDbBeer.id); // removing from the DB
+
       const filteredBeers = user!.beers.filter(b => b.id !== WishDbBeer!.id);
       updateUser({
         ...user!,
         beers: filteredBeers
-      });
+      }); // updating the user context 
+
       setWishDbBeer(undefined);
       setIsInWishList(prev => !prev);
-      Alert.alert('Removed from the wish list');
+      // Alert.alert('Removed from the wish list');
     }
   }
+
 
   function isInTheBeerList () {
     return user!.beers.some(b => (b.bid === beer.bid && !b.wish));
@@ -76,6 +88,26 @@ export const BeerDetail:React.FC = ({route}: any) => {
   function isInTheWishList () {
     return user!.beers.some(b => (b.bid === beer.bid && b.wish));
   }
+
+  const WishIcon = !isInBeerList ? (
+    <TouchableOpacity style={styles.button} onPress={toggleToWishList}>
+      {
+        isInWishList ?
+          <FullHeart size={40} color={'red'} /> :
+          <EmptyHeart color={'#ddd'} size={40} />
+
+      }
+    </TouchableOpacity>
+  ) : undefined;
+
+  const BeerIcon = (
+  <TouchableOpacity style={styles.button} onPress={toggleToBeers}>
+    {isInBeerList ?
+      <FullBeer color={'#fff'} /> :
+      <EmptyBeer color={'#fff'} />
+    }
+  </TouchableOpacity>
+  );
 
 
   return (
@@ -102,20 +134,9 @@ export const BeerDetail:React.FC = ({route}: any) => {
           </View>
 
           <View style={{flexDirection:'row', marginTop: 20}}>
-            <TouchableOpacity style={styles.button} onPress={addToBeers}>
-                { isInBeerList ?
-                  <FullBeer color={'#fff'}/> :
-                  <EmptyBeer color={ '#fff' }/>
-                }
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={addToWishList}>
-                {
-                  isInWishList ?
-                  <FullHeart size={43} color={'red'}/> :
-                  <EmptyHeart color={'#ddd'} size={43}/>
-                  
-                }
-            </TouchableOpacity>
+            {BeerIcon}
+
+            {WishIcon}
           </View>
 
         </View>

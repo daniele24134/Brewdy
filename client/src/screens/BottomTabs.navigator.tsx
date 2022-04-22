@@ -9,6 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SearchBeerList } from './SearchBeerList.screen';
 import { BeerDetail } from './Beer.screen';
 import { BeerList } from './BeerList.screen';
+import { WishList } from './WishList.screen';
 
 const SearchStack = createStackNavigator();
 const RandomStack = createStackNavigator();
@@ -32,7 +33,8 @@ export const SearchStackScreen = () => (
           backgroundColor: theme.bgDark
         },
         headerBackTitle: '',
-        headerBackTitleStyle: {color: theme.buttonColor}
+        headerBackTitleStyle: {color: theme.buttonColor},
+        animationTypeForReplace: 'pop'
       }}
     />
     <SearchStack.Screen name="Beer"
@@ -43,7 +45,8 @@ export const SearchStackScreen = () => (
         headerStyle: {
           backgroundColor: theme.bgDark
         },
-        headerBackTitleStyle: { color: theme.buttonColor }
+        headerBackTitleStyle: { color: theme.buttonColor },
+        animationTypeForReplace: 'pop'
       }}
     />
   </SearchStack.Navigator>
@@ -67,9 +70,10 @@ export const RandomStackScreen:React.FC = () => {
           headerTitle: '',
           headerBackTitle: '',
           headerStyle: {
-          backgroundColor: theme.bgDark
+          backgroundColor: theme.bgDark,
         },
-          headerBackTitleStyle: { color: theme.buttonColor }
+        animationTypeForReplace: 'pop',
+        headerBackTitleStyle: { color: theme.buttonColor }
         }}
       />
     </RandomStack.Navigator>
@@ -81,7 +85,7 @@ const BeerListStack = createStackNavigator();
 
 const BeerListStackScreen: React.FC = () => {
   return (
-    <BeerListStack.Navigator>
+    <BeerListStack.Navigator defaultScreenOptions={{}}>
       <BeerListStack.Screen name="User" component={Profile}
         options={{
           headerShown: false
@@ -95,7 +99,20 @@ const BeerListStackScreen: React.FC = () => {
           headerStyle: {
             backgroundColor: theme.bgDark
           },
-          headerBackTitleStyle: { color: theme.buttonColor }
+          headerBackTitleStyle: { color: theme.buttonColor },
+          animationTypeForReplace: 'pop'
+        }}
+      />
+      <BeerListStack.Screen name="WishList"
+        component={WishList}
+        options={{
+          headerTitle: '',
+          headerBackTitle: '',
+          headerStyle: {
+            backgroundColor: theme.bgDark
+          },
+          headerBackTitleStyle: { color: theme.buttonColor },
+          animationTypeForReplace: 'pop'
         }}
       />
     </BeerListStack.Navigator>
@@ -124,6 +141,7 @@ export const BottomTabsNavigator: React.FC = () => {
 
         tabBarActiveTintColor: theme.buttonColor,
         tabBarInactiveTintColor: theme.bgLight,
+        tabBarItemStyle: {marginTop:10, height: 45},
 
         tabBarIcon: ({color, size}) => {
           if(route.name === 'Home') {

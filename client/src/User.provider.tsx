@@ -1,6 +1,6 @@
 import React, {createContext, useEffect, useState} from "react";
 import { fetchUser } from "./services/backService";
-import { DbBeer, User } from "./types";
+import { DbBeer } from "./types";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
