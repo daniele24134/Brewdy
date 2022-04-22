@@ -77,3 +77,13 @@ export type Credentials = {
   email: string,
   password: string
 }
+
+
+export type Comment = {
+  body: string, 
+  beerId: number,
+  id: number,
+  userId: number,
+  user: UserData,
+  creadeted_at: string
+}

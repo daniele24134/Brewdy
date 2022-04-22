@@ -1,4 +1,4 @@
-import { BeerForCreate, Credentials, DbBeer, UserData } from "../types";
+import { BeerForCreate, Comment, Credentials, DbBeer, UserData } from "../types";
 
 
 const url = 'http://localhost:3003';
@@ -123,3 +123,32 @@ export const toggleWish = (beerId: number):Promise<DbBeer> => {
     }
   })
 }
+
+export const getComments = (beerId: number):Promise<Comment[]> => {
+  return fetch(url+`/comments/${beerId}`)
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject(res);
+      }
+    })
+}
+
+export const createComment = (body: any):Promise<Comment> => {
+  return fetch(url+ '/comments', {
+    method: 'POST',
+    body: JSON.stringify(body),
+    credentials: 'include',
+    headers: {
+      'Content-type': 'application/json'
+    }
+  }).then(res => {
+    if(res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res);
+    }
+  })
+}
+

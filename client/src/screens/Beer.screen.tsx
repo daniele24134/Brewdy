@@ -7,6 +7,7 @@ import { useUserContext } from "../User.provider";
 import { beerParser } from "../utils";
 import { addBeer, getBeerByBid, removeBeer, toggleWish } from "../services/backService";
 import { EmptyBeer, EmptyHeart, FullBeer, FullHeart } from "../components/Icons";
+import { CommentSection } from "../components/CommentSection";
 
 
 
@@ -195,7 +196,6 @@ export const BeerDetail:React.FC = ({route}: any) => {
 
           <View style={{flexDirection:'row', marginTop: 20}}>
             {BeerIcon}
-
             {WishIcon}
           </View>
 
@@ -205,6 +205,7 @@ export const BeerDetail:React.FC = ({route}: any) => {
       <View style={styles.description}>
         <Text style={[styles.textColor]}>{beer.description}</Text>
       </View>
+
       <View style={styles.ingredientsList}>
         {Object.keys(beer.ingredients).map(title => (
           <IngredientList key={title} 
@@ -212,11 +213,15 @@ export const BeerDetail:React.FC = ({route}: any) => {
             title={title}
           />
         ))}
-
       </View>
-      <Text style={[styles.foodTitle]}>Food Pairing</Text>
-      <Text style={[styles.textColor,{marginBottom: 100}]}>{beer.food_pairing.join(', ')}</Text>
 
+      <Text style={[styles.foodTitle]}>Food Pairing</Text>
+      <Text style={[styles.textColor]}>{beer.food_pairing.join(', ')}</Text>
+
+      <View style={{ marginBottom: 100}}>
+
+        <CommentSection bid={beer.bid}/>
+      </View>
     </ScrollView>
   );
 }
