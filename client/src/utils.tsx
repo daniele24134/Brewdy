@@ -1,3 +1,4 @@
+
 import { Beer, DbBeer } from "./types"
 
 // export type Beer = {
@@ -62,6 +63,8 @@ type SectionBeer = {
   title: string,
   data: DbBeer[]
 }
+
+
 
 export function sectionBeers (beers: DbBeer[]):SectionBeer[]  {
   let result: SectionBeer[] = [];

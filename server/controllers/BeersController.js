@@ -13,6 +13,17 @@ const create = async (req, res) => {
   }
 }
 
+const getByBid = async (req, res) => {
+  try {
+    const { bid } = req.params;
+    const beer = await Beer.findOne({where: {bid}});
+    res.send(beer);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Not Found');
+  }
+}
+
 const destroy = async (req, res) => {
   try {
     const {id} = req.params;
@@ -64,4 +75,4 @@ const decrement = async (req, res) => {
   }
 }
 
-module.exports = {create, destroy, increment, decrement, toggleWish};
+module.exports = {create, destroy, increment, decrement, toggleWish, getByBid};

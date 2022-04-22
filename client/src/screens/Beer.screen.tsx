@@ -5,7 +5,7 @@ import {theme} from '../theme';
 import { Beer, BeerForCreate, DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
 import { beerParser } from "../utils";
-import { addBeer, removeBeer } from "../services/backService";
+import { addBeer, getBeerByBid, removeBeer } from "../services/backService";
 import { EmptyBeer, EmptyHeart, FullBeer, FullHeart } from "../components/Icons";
 
 
@@ -21,14 +21,27 @@ export const BeerDetail:React.FC = ({route}: any) => {
   const [isInBeerList, setIsInBeerList] = useState(isInTheBeerList()); // boolean state for list 
   const [isInWishList, setIsInWishList] = useState(isInTheWishList()); // boolean state for list
 
-  const [DbBeer, setDbBeer] = useState<DbBeer>(); // the beer in the DB
+  const [DbBeer, setDbBeer] = useState<DbBeer | undefined>(); // the beer in the DB
   const [WishDbBeer, setWishDbBeer] = useState<DbBeer>(); // The Wish beer in the DB
 
+  useEffect(() => {
+    BeerByBid().then(data => {
+      setDbBeer(data);
+    }).catch(e => console.warn(JSON.parse(e)) )
+  },[]);
 
   useEffect(() => {
     setIsInBeerList(isInTheBeerList());
     setIsInWishList(isInTheWishList());
-  }, [user])
+  }, [user]);
+
+
+  async function BeerByBid () {
+    const result =  await getBeerByBid(beer.bid);
+    if (result){
+      return result
+    }
+  }
 
 
   const toggleToBeers = async () => {
@@ -48,19 +61,22 @@ export const BeerDetail:React.FC = ({route}: any) => {
 
       // Alert.alert('Added to your beer list');
     } else { // remove otherwise
-      if (DbBeer) removeBeer(DbBeer.id); // removing from the DB
+      if (DbBeer) {
+        removeBeer(DbBeer.id); // removing from the DB
 
-      const filteredBeers = user!.beers.filter(b => b.id !== DbBeer!.id);
-      updateUser({
-        ...user!,
-        beers: filteredBeers
-      }); // updating the user context 
+        const filteredBeers = user!.beers.filter(b => b.id !== DbBeer!.id);
+        updateUser({
+          ...user!,
+          beers: filteredBeers
+        }); // updating the user context 
 
-      setDbBeer(undefined);
-      setIsInBeerList(prev => !prev);
-      // Alert.alert('Removed from your beer list');
+        setDbBeer(undefined);
+        setIsInBeerList(prev => !prev);
+        // Alert.alert('Removed from your beer list');
+      }
     }
   }
+
 
   const toggleToWishList = async () => {
     const newBeer = beerParser(beer);
@@ -82,7 +98,7 @@ export const BeerDetail:React.FC = ({route}: any) => {
           ...user!,
           beers: filteredBeers
         }); // updating the user context 
-      
+
         setWishDbBeer(undefined);
         setIsInWishList(prev => !prev);
         // Alert.alert('Removed from the wish list');

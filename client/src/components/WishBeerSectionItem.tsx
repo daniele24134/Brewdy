@@ -18,6 +18,7 @@ export const WishBeerSectionItem: React.FC<BeerSectionProps> = ({ item, toggle }
   const toggleBeer = () => {
     setWish(prev => !prev);
     setTimeout(() => {toggle(item.id);}, 500);
+    
   }
 
   return (

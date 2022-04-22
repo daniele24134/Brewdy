@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ScrollView, Touchable, TouchableOpacity } from 'react-native';
-import { fetchUser } from '../services/backService';
 import { global, theme } from '../theme';
 import { useUserContext } from '../User.provider';
 import { beersDrunk } from '../utils';

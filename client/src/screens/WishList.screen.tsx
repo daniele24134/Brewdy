@@ -21,10 +21,15 @@ export const WishList: React.FC = () => {
     
 
     if (updatedBeer){
-      const filteredBeers = beers.filter(b => b.id !== updatedBeer.id);
+      const updatedBeers = beers.map(b => {
+        if( b.id === updatedBeer.id) {
+          return updatedBeer
+        } else return b;
+       
+      });
       updateUser({
         ...user!,
-        beers: filteredBeers
+        beers: updatedBeers
       });
     }
 

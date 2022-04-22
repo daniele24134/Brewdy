@@ -11,6 +11,7 @@ module.exports = {
       name: {
         type: DataTypes.STRING,
         allowNull: true,
+        unique: true
       },
       counter: {
         type: DataTypes.INTEGER,

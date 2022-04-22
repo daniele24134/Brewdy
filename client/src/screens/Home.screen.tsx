@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { PlusButton } from '../components/PlusButton';
 import { theme } from '../theme';
 import { global } from '../theme';
 import { fetchRandom } from '../services/apiService';

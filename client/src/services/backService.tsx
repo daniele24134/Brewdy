@@ -19,93 +19,89 @@ export const createUser = async (user: UserBody) => {
       'Content-type': 'application/json'
     }
   }).then(result => {
-    if (result.ok) {
-      return result.json();
-    }
-  }).catch(e => {
+    return result.json();
+  })
+  .then(data => {
+    return data;
+  })
+  .catch(e => {
     console.warn(e);
   });
 }
 
 export const fetchLogin = async (credentials: Credentials) => {
 
-  const result = await fetch(url+'/users/login', {
+  return fetch(url+'/users/login', {
     method: 'POST',
     body: JSON.stringify(credentials),
     credentials: 'include',
     headers: {
       'Content-type': 'application/json'
     }
-  });
-
-  if (result.ok) {
-    return await result.json();
-  }else return;
+  })
+  .then(result => result.json())
+  .then(data => data)
+  .catch(e => console.warn(e));
 }
 
 export const fetchUser = async (id: number): Promise<UserData | undefined> => {
-  const result = await fetch(url+`/users/${id}`);
-
-  if (result.ok) {
-    return result.json();
-  }else return;
-}
+  return fetch(url+`/users/${id}`)
+    .then(result => result.json())
+    .then(data => data)
+    .catch(e => console.warn(e));
+} // TODO maybe remove
 
 export const addBeer = async (beer: BeerForCreate, userId: number) => {
 
-  const result = await fetch(url+`/beers/${userId}`, {
+  return fetch(url+`/beers/${userId}`, {
     method: 'POST',
     body: JSON.stringify(beer),
     credentials: 'include',
     headers: {
       'Content-type': 'application/json'
     }
-  });
-
-  if (result.ok) return await result.json();
-
-  else {
-    console.warn(result);
-    return;
-  };
+  })
+    .then(result => result.json())
+    .then(data => data)
+    .catch(e => console.warn(e));
 }
+
+
+export const getBeerByBid = async (bid: number): Promise<DbBeer | undefined>  => {
+  return fetch(url + `/beers/${bid}`)
+    .then(result => result.json())
+    .then(data => data)
+    .catch(e => console.warn(e));
+}
+
+
 
 export const incrementCounter = async (beerId: number): Promise<DbBeer | undefined> => {
-  const result = await fetch(url +`/beers/increment/${beerId}`);
-
-  if (result.ok) return await result.json();
-  else {
-    console.warn(result);
-    return;
-  };
+  return fetch(url +`/beers/increment/${beerId}`)
+    .then(result => result.json())
+    .then(data => data)
+    .catch(e => console.warn(e));
 }
-export const decrementCounter = async (beerId: number): Promise<DbBeer | undefined> => {
-  const result = await fetch(url + `/beers/decrement/${beerId}`);
 
-  if (result.ok) return await result.json();
-  else {
-    console.warn(result);
-    return;
-  };
+export const decrementCounter = async (beerId: number): Promise<DbBeer | undefined> => {
+  return fetch(url + `/beers/decrement/${beerId}`)
+    .then(result => result.json())
+    .then(data => data)
+    .catch(e => console.warn(e));
 }
 
 export const removeBeer = async (beerId: number):Promise<DbBeer | undefined> => {
-  const result = await fetch(url + `/beers/${beerId}`, {
+  return fetch(url + `/beers/${beerId}`, {
     method: 'DELETE'
-  });
-  if (result.ok) return await result.json();
-  else {
-    console.warn(result);
-    return;
-  };
+  })
+    .then(result => result.json())
+    .then(data => data)
+    .catch(e => console.warn(e));
 }
 
 export const toggleWish = async (beerId: number):Promise<DbBeer | undefined> => {
-  const result = await fetch(url+`/beers/toggleWish/${beerId}`);
-
-  if (result.ok) return await result.json();
-  else {
-    console.warn(result);
-    return;
-  };
+  return fetch(url+`/beers/toggleWish/${beerId}`)
+    .then(result => result.json())
+    .then(data => data)
+    .catch(e => console.warn(e));
 }
