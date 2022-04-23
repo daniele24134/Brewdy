@@ -26,11 +26,11 @@ export const Profile: React.FC = ({navigation}: any) => {
 
   useEffect(()=> {
     setPercent(getPercent());
-  },[])
+  },[user]);
 
   useEffect(() => {
     setData(getData(percent));
-  },[percent])
+  },[percent]);
 
   return (
     <View style={styles.container}>
