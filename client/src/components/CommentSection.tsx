@@ -5,6 +5,7 @@ import { theme } from "../theme";
 import { Comment, DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
 import { CommentItem } from "./CommentItem";
+import { SendIcon } from "./Icons";
 
 type CommentSectionProps = {
   bid: number
@@ -43,7 +44,7 @@ export const CommentSection:React.FC<CommentSectionProps> = ({bid}) => {
         setComments(prev => [...prev, data]);
         setNewComment('');
       },
-      (e:any) => {Alert.alert('Comment not created')}
+      (e:any) => {Alert.alert('Your comment is too long')}
     )
   }
 
@@ -65,7 +66,7 @@ export const CommentSection:React.FC<CommentSectionProps> = ({bid}) => {
           placeholderTextColor={'rgba(250,250,250,0.4)'}
         />
         <Pressable style={styles.sendButton} onPress={addComment}>
-          <Text style={styles.sendText}>Send</Text>
+          <SendIcon size={25}/>
         </Pressable>
       </View>
       
@@ -75,27 +76,29 @@ export const CommentSection:React.FC<CommentSectionProps> = ({bid}) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30
+    marginTop: 40,
+    alignItems: 'center'
   },
   commentSectionTitle: {
     marginBottom: 10,
     fontSize: 20,
     fontWeight: '600',
-    color: theme.buttonColor
+    color: theme.buttonColor,
+    alignSelf:'flex-start'
   },
   commentSection: {
     borderColor: theme.bluebg,
     borderWidth:2,
     borderRadius:10,
-
+    width: '100%',
     marginBottom: 10,
   },
   commentInput: {
     backgroundColor: theme.bluebg,
     color: theme.textDark,
     width: '90%',
-    height: 30,
-    padding: 10,
+    height: 45,
+    padding: 15,
     borderRadius: 5,
     fontSize:16,
     marginRight: 10
@@ -104,18 +107,16 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 0
+    marginBottom: 0,
+    width: 300,
   },
   sendButton:{
-    height: 30,
+    height: 45,
+    width: 45,
     backgroundColor: theme.buttonColor,
-    borderRadius: 5,
+    borderRadius: 35,
     alignItems: 'center',
     justifyContent:'center',
-    paddingHorizontal:10,
-  },
-  sendText: {
-    fontWeight: '600',
-    color: theme.textDark
+    paddingHorizontal:15,
   }
 })

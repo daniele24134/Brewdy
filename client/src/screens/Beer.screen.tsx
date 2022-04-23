@@ -46,26 +46,46 @@ export const BeerDetail:React.FC = ({route}: any) => {
       const newBeer = beerParser(beer);
       
       if (WishDbBeer) {
-        let uploadedBeer = await toggleWish(WishDbBeer.id);
+        let uploadedBeer = toggleWish(WishDbBeer.id);
 
-        if (uploadedBeer) {
-          setIsInWishList(prev => !prev);
-          setIsInBeerList(prev => !prev);
+        // if (uploadedBeer) {
+        //   setIsInWishList(prev => !prev);
+        //   setIsInBeerList(prev => !prev);
 
-          const filteredBeers = user!.beers.map(b => {
-            if (b.bid === uploadedBeer!.bid) {
-              return uploadedBeer!;
-            } else return b;
-          });
+        //   const filteredBeers = user!.beers.map(b => {
+        //     if (b.bid === uploadedBeer!.bid) {
+        //       return uploadedBeer!;
+        //     } else return b;
+        //   });
 
-          updateUser({
-            ...user!,
-            beers: filteredBeers
-          }); // updating the user context 
+        //   updateUser({
+        //     ...user!,
+        //     beers: filteredBeers
+        //   }); // updating the user context 
   
-          setWishDbBeer(undefined);
+        //   setWishDbBeer(undefined);
 
-        }
+        // }
+        uploadedBeer.then(
+          (data: DbBeer) => {
+            setIsInWishList(prev => !prev);
+            setIsInBeerList(prev => !prev);
+
+            const filteredBeers = user!.beers.map(b => {
+              if (b.bid === data!.bid) {
+                return data!;
+              } else return b;
+            });
+
+            updateUser({
+              ...user!,
+              beers: filteredBeers
+            }); // updating the user context 
+
+            setWishDbBeer(undefined);
+          },
+          (e: any) => { Alert.alert('Not able to toggle') }
+        )
 
       } else {
 
@@ -122,7 +142,7 @@ export const BeerDetail:React.FC = ({route}: any) => {
           setIsInWishList(prev => !prev);
         },
         (e:any) => {Alert.alert('Not added correctly in the wish list')}
-      )
+      );
 
     } else { // remove otherwis
       if (WishDbBeer) {

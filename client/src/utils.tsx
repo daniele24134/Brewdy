@@ -80,5 +80,5 @@ export function sectionBeers (beers: DbBeer[]):SectionBeer[]  {
     })
     result.push(section);
   }
-  return result;
+  return result.filter(section => section.data.length > 0);
 }

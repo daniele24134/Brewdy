@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { theme } from "../theme";
 import { Comment } from "../types";
 import { UserProvider, useUserContext } from "../User.provider";
+import { TrashIcon } from "./Icons";
 
 type CommentItemProps = {
   comment: Comment,
@@ -24,7 +25,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({comment, removeComment}
         <Text style={styles.commentUser}>{comment.user.username}:</Text>
         {comment.user.id === user!.id ? 
           <Pressable onPress={handleDelete}>
-            <Text style={styles.deleteButton}>x</Text>
+            <TrashIcon size={20}/>
           </Pressable>: undefined
         }
       </View>
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   },
   commentBody: {
     color: theme.textDark,
-    fontSize: 16,
+    fontSize: 14,
     width: '100%'
   },
   deleteButton: {

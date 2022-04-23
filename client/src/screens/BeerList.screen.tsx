@@ -42,7 +42,7 @@ export const BeerList:React.FC = () => {
 
   useEffect(()=> {
     setBeers(user!.beers);
-  }, [user])
+  }, [user]);
 
   const decrement = async (id: number, counter: number) => {
     if (counter > 1) {
