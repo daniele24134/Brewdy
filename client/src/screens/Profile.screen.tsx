@@ -3,13 +3,34 @@ import { StyleSheet, View, Text, ScrollView, Touchable, TouchableOpacity } from 
 import { global, theme } from '../theme';
 import { useUserContext } from '../User.provider';
 import { beersDrunk } from '../utils';
-
-
+import { VictoryLabel, VictoryPie } from 'victory-native';
 
 export const Profile: React.FC = ({navigation}: any) => {
-
   const UserContext = useUserContext();
-  const {user} = UserContext;
+  const { user } = UserContext;
+
+  const getPercent = () => {
+    return (100 * beersDrunk(user!.beers).length) / 325;
+    // return (100 * 300) / 325;
+  }
+
+  const getData = (percent: number) => {
+    return [
+      { x: percent, y: percent }, 
+      { x: 0, y: 100 - percent }
+    ];
+  }
+  
+  const [percent, setPercent] = useState(0);
+  const [data, setData] = useState(getData(percent));
+
+  useEffect(()=> {
+    setPercent(getPercent());
+  },[])
+
+  useEffect(() => {
+    setData(getData(percent));
+  },[percent])
 
   return (
     <View style={styles.container}>
@@ -23,32 +44,54 @@ export const Profile: React.FC = ({navigation}: any) => {
         <Text style={[styles.subtitle, global.semibold]}>{beersDrunk(user!.beers).length}</Text>
         <Text style={[styles.username, global.medium]}>{' '}brewdog beers</Text>
       </View>
+      <ScrollView>
+        <View style={styles.pieContainer}>
+          <Text style={styles.percentage}>{Math.round(percent)}%</Text>
+          <VictoryPie
+            animate={{
+              duration: 2000
+            }}
+            radius={100}
+            width={300} height={300}
+            data={data}
+            innerRadius={120}
+            cornerRadius={0}
+            labels={() => ''}
+            style={{ labels: { fill: "white", fontSize: 30 } }}
+            colorScale={[
+              '#397D23',
+              theme.header
+            ]}
 
-      <Text style={[global.titleH2, global.bold]}>Photos</Text>
-      <ScrollView horizontal={true} style={styles.photosList}>
-        <View style={styles.photo}></View>
-        <View style={styles.photo}></View>
-        <View style={styles.photo}></View>
-        <View style={styles.photo}></View>
-        <View style={styles.photo}></View>
-        <View style={styles.photo}></View>
-        <View style={styles.photo}></View>
-        <View style={styles.photo}></View>
-        <View style={styles.photo}></View>
-        <View style={styles.photo}></View>
+          />
+        </View>
+
+        <Text style={[global.titleH2, global.bold]}>Photos</Text>
+        <ScrollView horizontal={true} style={styles.photosList}>
+          <View style={styles.photo}></View>
+          <View style={styles.photo}></View>
+          <View style={styles.photo}></View>
+          <View style={styles.photo}></View>
+          <View style={styles.photo}></View>
+          <View style={styles.photo}></View>
+          <View style={styles.photo}></View>
+          <View style={styles.photo}></View>
+          <View style={styles.photo}></View>
+          <View style={styles.photo}></View>
+        </ScrollView>
+
+        <View style={styles.buttons}>
+
+          <TouchableOpacity onPress={() => navigation.navigate('BeerList')} style={[global.button ,styles.beersButton]}>
+            <Text style={[styles.buttonText, global.bold]}>Beers</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => navigation.navigate('WishList')} style={[global.button ,styles.wishButton]}>
+            <Text style={[styles.buttonText, global.bold]}>Wish List</Text>
+          </TouchableOpacity>
+          
+        </View>
       </ScrollView>
-
-      <View style={styles.buttons}>
-
-        <TouchableOpacity onPress={() => navigation.navigate('BeerList')} style={[global.button ,styles.beersButton]}>
-          <Text style={[styles.buttonText, global.bold]}>Beers</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => navigation.navigate('WishList')} style={[global.button ,styles.wishButton]}>
-          <Text style={[styles.buttonText, global.bold]}>Wish List</Text>
-        </TouchableOpacity>
-        
-      </View>
     </View>
   );
 };
@@ -58,6 +101,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.bgDark,
     padding: 20
+  },
+  pieContainer: {
+    alignItems: 'center',
+    width: 300,
+    height: 300,
+    alignSelf: 'center',
+    position: 'relative'
+  },
+  percentage: {
+    position: 'absolute',
+    fontSize: 50,
+    color: theme.buttonColor,
+    top: 120
   },
   profileImg: {
     width: 100,
@@ -72,14 +128,12 @@ const styles = StyleSheet.create({
   profileInit: {
     fontSize: 60,
     color: theme.textDark,
-
   },
   username: {
     textAlign: 'center',
     marginTop: 10,
     color: theme.textDark,
     fontSize: 16,
-    
   },
   subtitle: {
     textAlign: 'center',
