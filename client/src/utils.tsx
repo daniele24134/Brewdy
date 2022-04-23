@@ -1,26 +1,7 @@
-
-import { Beer, DbBeer } from "./types"
-
-// export type Beer = {
-//   id: number,
-//   name: string,
-//   tagline: string,
-//   description: string,
-//   image_url: string,
-//   abv: number,
-//   ibu: number,
-//   ebc: number,
-//   ingredients: {
-//     malt: Malt[],
-//     hops: Hop[]
-//   },
-//   food_pairing: string[]
-// }
-
-
+import { Beer, DbBeer } from "./types";
 
 export const beersParser = (beers: any): Beer[] => {
-  return beers.map((b:any)  => {
+  return beers.map((b: any) => {
     return {
       bid: b.id,
       name: b.name,
@@ -31,10 +12,10 @@ export const beersParser = (beers: any): Beer[] => {
       ibu: b.ibu,
       ebc: b.ebc,
       ingredients: b.ingredients,
-      food_pairing: b.food_pairing
-    }
-  })
-}
+      food_pairing: b.food_pairing,
+    };
+  });
+};
 
 export const beerParser = (beer: Beer) => {
   return {
@@ -43,11 +24,11 @@ export const beerParser = (beer: Beer) => {
     image_url: beer.image_url,
     abv: beer.abv,
     ibu: beer.ibu,
-    bid: beer.bid
-  }
-}
+    bid: beer.bid,
+  };
+};
 
-export function onlyUnique(value:any, index:number, self: any[]) {
+export function onlyUnique (value: any, index: number, self: any[]) {
   return self.indexOf(value) === index;
 }
 
@@ -55,20 +36,48 @@ export function beersDrunk (beers: DbBeer[]) {
   return beers.filter(b => !b.wish);
 }
 
-export function wishBeers(beers: DbBeer[]) {
+export function wishBeers (beers: DbBeer[]) {
   return beers.filter(b => b.wish);
 }
 
 type SectionBeer = {
-  title: string,
-  data: DbBeer[]
-}
+  title: string;
+  data: DbBeer[];
+};
 
 
 
 export function sectionBeers (beers: DbBeer[]):SectionBeer[]  {
   let result: SectionBeer[] = [];
-  const titles = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","Others"];
+  const titles = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+    "Others"
+  ];
   for(let t of titles) {
     const data: DbBeer[] = [];
     let section: SectionBeer = {title: '', data: []}
