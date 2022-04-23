@@ -12,9 +12,9 @@ import { CommentSection } from "../components/CommentSection";
 
 
 export const BeerDetail:React.FC = ({route}: any) => {
-  const beerFromRoute: Beer = route.params;
+  const beer: Beer = route.params;
 
-  const [beer, setBeer] = useState(beerFromRoute)
+  // const [beer, setBeer] = useState(beerFromRoute)
 
   const UserContext = useUserContext();
   const {user, updateUser} = UserContext; // user state
@@ -31,7 +31,7 @@ export const BeerDetail:React.FC = ({route}: any) => {
       data => {
         data!.wish ? setWishDbBeer(data) : setDbBeer(data);
       },
-      (e:any) => {console.log('This beer is not in the db')}
+      () => {}
     )
   },[]);
 
@@ -55,13 +55,14 @@ export const BeerDetail:React.FC = ({route}: any) => {
                 return data!;
               } else return b;
             });
+            setDbBeer(data);
+            setWishDbBeer(undefined);
 
             updateUser({
               ...user!,
               beers: filteredBeers
             }); // updating the user context 
 
-            setWishDbBeer(undefined);
           },
           (e: any) => { Alert.alert('Not able to toggle') }
         )

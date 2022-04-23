@@ -19,7 +19,7 @@ export const Profile: React.FC = ({navigation}: any) => {
 
   const abvData = Object.entries(groupBy(user?.beers, getAbv)).map(
     ([key, value]) => ({
-      x: `${key}%`,
+      x: `${key}%  `,
       y: value.length
     })
   );
@@ -54,7 +54,8 @@ export const Profile: React.FC = ({navigation}: any) => {
           <Text style={styles.percentage}>{Math.round(percent)}%</Text>
           <VictoryPie
             animate={{
-              duration: 2000
+              duration: 2000,
+              onLoad: { duration: 1000 }
             }}
             radius={100}
             width={300} height={300}
@@ -98,34 +99,25 @@ export const Profile: React.FC = ({navigation}: any) => {
           <View style={styles.photo}></View>
         </ScrollView>
 
-        <View style={{alignItems:'center', marginTop: 20}}>
-          <VictoryChart 
-            containerComponent={<VictoryZoomContainer zoomDimension="x" />}
+        <View style={{marginTop: 40}}>
+          <Text style={[global.bold, global.titleH2, {marginBottom:0}]}>Statistic ABV</Text>
+          <VictoryChart
             defaultAxes={{}}
             theme={chartTheme}
-            width={380}
-            domainPadding={20}
+            domainPadding={{x:5}}
             padding={40}
+            width={370}
+            height={400}
           >
-            <VictoryLabel 
-              text="ABV Statistic" 
-              x={55} 
-              y={20} 
-              textAnchor="middle"
-            />
-            <VictoryAxis style={{
-              grid: { stroke: "none" },
-            }}/>
-            <VictoryAxis dependentAxis style={{
-              grid: { stroke: "none" },
-            }}/>
-            <VictoryBar 
+            <VictoryAxis style={{ grid: { stroke: "none" } }}/>
+            <VictoryAxis dependentAxis/>
+            <VictoryBar horizontal
               data={abvData}
               style={{ 
                 data: { 
                   fill: theme.buttonColor,
-                  stroke: "white",
-                  strokeWidth: 0.2
+                  stroke: "black",
+                  strokeWidth: 1.2
                 },
               }}
               alignment="middle"
