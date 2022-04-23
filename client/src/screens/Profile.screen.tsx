@@ -14,17 +14,17 @@ export const Profile: React.FC = ({navigation}: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.profileImg}>
-          <Text style={styles.profileInit}>{UserContext.user?.username[0].toUpperCase()}</Text>
+          <Text style={[styles.profileInit, global.bold]}>{UserContext.user?.username[0].toUpperCase()}</Text>
       </View>
 
-      <Text style={styles.username}>{UserContext.user?.username}</Text>
+      <Text style={[styles.username, global.bold]}>{UserContext.user?.username}</Text>
       <View style={{flexDirection: 'row', justifyContent:'center', alignItems: 'baseline', marginBottom: 20}}>
-        <Text style={styles.username}>You got{' '}</Text>
-        <Text style={styles.subtitle}>{beersDrunk(user!.beers).length}</Text>
-        <Text style={styles.username}>{' '}brewdog beers</Text>
+        <Text style={[styles.username, global.medium]}>You got{' '}</Text>
+        <Text style={[styles.subtitle, global.semibold]}>{beersDrunk(user!.beers).length}</Text>
+        <Text style={[styles.username, global.medium]}>{' '}brewdog beers</Text>
       </View>
 
-      <Text style={global.titleH2}>Photos</Text>
+      <Text style={[global.titleH2, global.bold]}>Photos</Text>
       <ScrollView horizontal={true} style={styles.photosList}>
         <View style={styles.photo}></View>
         <View style={styles.photo}></View>
@@ -41,11 +41,11 @@ export const Profile: React.FC = ({navigation}: any) => {
       <View style={styles.buttons}>
 
         <TouchableOpacity onPress={() => navigation.navigate('BeerList')} style={[global.button ,styles.beersButton]}>
-          <Text style={{color: theme.textDark, fontSize: 22, fontWeight: '600'}}>Beers</Text>
+          <Text style={[styles.buttonText, global.bold]}>Beers</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate('WishList')} style={[global.button ,styles.wishButton]}>
-          <Text style={{color: theme.textDark, fontSize: 22, fontWeight: '600'}}>Wish List</Text>
+          <Text style={[styles.buttonText, global.bold]}>Wish List</Text>
         </TouchableOpacity>
         
       </View>
@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
   },
   profileInit: {
     fontSize: 60,
-    fontWeight: '500',
     color: theme.textDark,
 
   },
@@ -87,8 +86,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: theme.buttonColor,
     fontSize: 16,
-    fontWeight: '600'
-
   },
   photosList: {
     width: '100%',
@@ -109,6 +106,10 @@ const styles = StyleSheet.create({
     width:150,
     alignItems:'center',
     paddingVertical: 20
+  },
+  buttonText:{
+    color: theme.textDark, 
+    fontSize: 22,
   },
   buttons: { 
     flexDirection: 'row', 

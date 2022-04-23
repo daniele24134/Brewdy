@@ -44,7 +44,7 @@ export const SearchBeerList: React.FC = ({route, navigation}: any) => {
       {beers.length ? 
         <FlatList
           data={beers}
-          // keyExtractor={item => item.bid}
+          keyExtractor={(item: Beer) => String(item.bid)}
           renderItem={({item}) => (
             <BeerItem beer={item} navigateToBeer={navigateToBeer}/>
           )}

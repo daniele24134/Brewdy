@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import { theme } from "../theme";
+import { theme, global } from "../theme";
 import { Beer } from "../types";
 
 type BeerItemProps = {
@@ -15,9 +15,9 @@ export const BeerItem: React.FC<BeerItemProps> = ({beer, navigateToBeer}: BeerIt
     <TouchableOpacity style={styles.beerItem} onPress={()=> navigateToBeer(beer)}>
       <Image style={styles.img} source={{ uri: beer.image_url }}></Image>
       <View style={{ marginLeft: 20 }}>
-        <Text style={[{ color: theme.textDark }, styles.beerName]}>{beer.name}</Text>
-        <Text style={[{ color: theme.textDark }]}>{beer.tagline}</Text>
-        <Text style={[{ color: theme.textDark }]}>{beer.abv}% {' - '} {beer.ibu} IBU</Text>
+        <Text style={[{ color: theme.textDark }, styles.beerName, global.bold]}>{beer.name}</Text>
+        <Text style={[{ color: theme.textDark }, global.semibold]}>{beer.tagline}</Text>
+        <Text style={[{ color: theme.textDark }, global.medium]}>{beer.abv}% {' - '} {beer.ibu} IBU</Text>
       </View>
     </TouchableOpacity>
   );
@@ -42,12 +42,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.3)',
-
-
   },
   beerName: {
     fontSize: 20,
-    fontWeight: 'bold',
-
+    maxWidth: '95%'
   }
 })

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, SectionList, Alert } from "react-native";
 import { BeerSectionItem } from "../components/BeerSectionItem";
 import { decrementCounter, incrementCounter, removeBeer } from "../services/backService";
-import { theme } from "../theme";
+import { theme, global } from "../theme";
 import { DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
 import { beersDrunk, sectionBeers } from "../utils";
@@ -88,13 +88,13 @@ export const BeerList:React.FC = () => {
       <SectionList
         sections={sectionData}
         // stickySectionHeadersEnabled={false}
-        renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+        renderSectionHeader={({ section }) => <Text style={[styles.sectionHeader, global.bold]}>{section.title}</Text>}
         renderItem={({ item }) => <BeerSectionItem decrement={decrement} increment={increment} item={item} />}
         keyExtractor={(item) => String(item!.bid)}
       /> : 
       <View style={{marginTop:'50%'}}>
-        <Text style={styles.textNobeer}>No beer in the beer list yet.</Text>
-        <Text style={styles.textNobeer}>Start searching for a beer.</Text>
+        <Text style={[styles.textNobeer, global.bold]}>No beer in the beer list yet.</Text>
+        <Text style={[styles.textNobeer, global.bold]}>Start searching for a beer.</Text>
       </View>
       }
     </View>

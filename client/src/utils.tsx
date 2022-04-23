@@ -28,15 +28,15 @@ export const beerParser = (beer: Beer) => {
   };
 };
 
-export function onlyUnique (value: any, index: number, self: any[]) {
+export function onlyUnique(value: any, index: number, self: any[]) {
   return self.indexOf(value) === index;
 }
 
-export function beersDrunk (beers: DbBeer[]) {
+export function beersDrunk(beers: DbBeer[]) {
   return beers.filter(b => !b.wish);
 }
 
-export function wishBeers (beers: DbBeer[]) {
+export function wishBeers(beers: DbBeer[]) {
   return beers.filter(b => b.wish);
 }
 
@@ -45,9 +45,7 @@ type SectionBeer = {
   data: DbBeer[];
 };
 
-
-
-export function sectionBeers (beers: DbBeer[]):SectionBeer[]  {
+export function sectionBeers(beers: DbBeer[]): SectionBeer[] {
   let result: SectionBeer[] = [];
   const titles = [
     "A",
@@ -76,17 +74,18 @@ export function sectionBeers (beers: DbBeer[]):SectionBeer[]  {
     "X",
     "Y",
     "Z",
-    "Others"
+    "Others",
   ];
-  for(let t of titles) {
+
+  for (let t of titles) {
     const data: DbBeer[] = [];
-    let section: SectionBeer = {title: '', data: []}
+    let section: SectionBeer = { title: "", data: [] };
     beers.forEach(b => {
       const title = b!.name[0];
-      if (t === 'Others' && !titles.includes(title)) data.push(b);
+      if (t === "Others" && !titles.includes(title)) data.push(b);
       if (title === t) data.push(b);
-      section = {title: t, data: data}
-    })
+      section = { title: t, data: data };
+    });
     result.push(section);
   }
   return result.filter(section => section.data.length > 0);

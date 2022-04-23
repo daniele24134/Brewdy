@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {StyleSheet, Text, View, ScrollView, Alert, TextInput, Pressable} from 'react-native';
 import { createComment, deleteComment, getBeerByBid, getComments } from "../services/backService";
-import { theme } from "../theme";
+import { global, theme } from "../theme";
 import { Comment, DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
 import { CommentItem } from "./CommentItem";
@@ -51,7 +51,7 @@ export const CommentSection:React.FC<CommentSectionProps> = ({bid}) => {
   return (
 
     <View style={styles.container}>
-      <Text style={styles.commentSectionTitle}>Comments</Text>
+      <Text style={[styles.commentSectionTitle, global.bold]}>Comments</Text>
       <ScrollView style={styles.commentSection}>
         {comments.map(comment => (
           <CommentItem key={comment.id} comment={comment} removeComment={removeComment}/>
@@ -59,7 +59,7 @@ export const CommentSection:React.FC<CommentSectionProps> = ({bid}) => {
       </ScrollView>
       <View style={styles.sendComment}>
         <TextInput
-          style={styles.commentInput}
+          style={[styles.commentInput, global.semibold]}
           value={newComment}
           onChangeText={setNewComment}
           placeholder={'Write a comment...'}
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.bluebg,
     color: theme.textDark,
     width: '90%',
-    height: 45,
+    height: 50,
     padding: 15,
     borderRadius: 5,
     fontSize:16,
@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
     width: 300,
   },
   sendButton:{
-    height: 45,
-    width: 45,
+    height: 48,
+    width: 48,
     backgroundColor: theme.buttonColor,
     borderRadius: 35,
     alignItems: 'center',

@@ -33,7 +33,10 @@ export const SearchStackScreen = () => (
           backgroundColor: theme.bgDark
         },
         headerBackTitle: '',
-        headerBackTitleStyle: {color: theme.buttonColor},
+        headerBackTitleStyle: {
+          color: theme.buttonColor,
+          fontFamily: theme.fontRegular
+        },
         animationTypeForReplace: 'pop'
       }}
     />
@@ -45,7 +48,10 @@ export const SearchStackScreen = () => (
         headerStyle: {
           backgroundColor: theme.bgDark
         },
-        headerBackTitleStyle: { color: theme.buttonColor },
+        headerBackTitleStyle: { 
+          color: theme.buttonColor,
+          fontFamily: theme.fontRegular
+        },
         animationTypeForReplace: 'pop'
       }}
     />
@@ -73,7 +79,10 @@ export const RandomStackScreen:React.FC = () => {
           backgroundColor: theme.bgDark,
         },
         animationTypeForReplace: 'pop',
-        headerBackTitleStyle: { color: theme.buttonColor }
+        headerBackTitleStyle: { 
+          color: theme.buttonColor,
+          fontFamily: theme.fontRegular
+        }
         }}
       />
     </RandomStack.Navigator>
@@ -97,14 +106,18 @@ const BeerListStackScreen: React.FC = () => {
           headerTitle: 'Beer List',
           headerBackTitle: '',
           headerStyle: {
-            backgroundColor: theme.bgDark
+            backgroundColor: theme.bgDark,
           },
           headerTitleStyle:{
             fontWeight: '600',
             color: theme.textDark,
-            fontSize: 24
+            fontSize: 24,
+            fontFamily: theme.fontBold
           },
-          headerBackTitleStyle: { color: theme.buttonColor },
+          headerBackTitleStyle: { 
+            color: theme.buttonColor,
+            fontFamily: theme.fontRegular
+          },
           animationTypeForReplace: 'pop'
         }}
       />
@@ -115,13 +128,17 @@ const BeerListStackScreen: React.FC = () => {
           headerTitleStyle:{
             fontWeight: '600',
             color: theme.textDark,
-            fontSize: 24
+            fontSize: 24,
+            fontFamily: theme.fontBold
           },
           headerBackTitle: '',
           headerStyle: {
             backgroundColor: theme.bgDark
           },
-          headerBackTitleStyle: { color: theme.buttonColor },
+          headerBackTitleStyle: { 
+            color: theme.buttonColor,
+            fontFamily: theme.fontRegular
+          },
           animationTypeForReplace: 'pop'
         }}
       />
@@ -142,10 +159,13 @@ export const BottomTabsNavigator: React.FC = () => {
           color: theme.buttonColor,
           fontSize:30,
           marginBottom: 10,
-          fontWeight: 'bold'
+          fontFamily: theme.fontBold
         },
         tabBarStyle:{
           backgroundColor: theme.header,
+        },
+        tabBarLabelStyle: {
+          fontFamily: theme.fontSemiBold
         },
         headerTitle: 'Brewdy',
 

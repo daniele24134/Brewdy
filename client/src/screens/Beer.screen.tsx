@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image,ScrollView, TouchableOpacity, Alert } from "react-native";
 import { IngredientList } from "../components/Ingredient";
-import {theme} from '../theme';
-import { Beer, BeerForCreate, DbBeer } from "../types";
+import { theme, global } from '../theme';
+import { Beer, DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
 import { beerParser } from "../utils";
 import { addBeer, getBeerByBid, removeBeer, toggleWish } from "../services/backService";
@@ -48,24 +48,6 @@ export const BeerDetail:React.FC = ({route}: any) => {
       if (WishDbBeer) {
         let uploadedBeer = toggleWish(WishDbBeer.id);
 
-        // if (uploadedBeer) {
-        //   setIsInWishList(prev => !prev);
-        //   setIsInBeerList(prev => !prev);
-
-        //   const filteredBeers = user!.beers.map(b => {
-        //     if (b.bid === uploadedBeer!.bid) {
-        //       return uploadedBeer!;
-        //     } else return b;
-        //   });
-
-        //   updateUser({
-        //     ...user!,
-        //     beers: filteredBeers
-        //   }); // updating the user context 
-  
-        //   setWishDbBeer(undefined);
-
-        // }
         uploadedBeer.then(
           (data: DbBeer) => {
             setIsInWishList(prev => !prev);
@@ -104,11 +86,6 @@ export const BeerDetail:React.FC = ({route}: any) => {
           }
         )
       }
-
-        // if (isInWishList) toggleToWishList();
-  
-        // Alert.alert('Added to your beer list');
-
     } else { // remove otherwise
       if (DbBeer) {
         removeBeer(DbBeer.id); // removing from the DB
@@ -197,19 +174,19 @@ export const BeerDetail:React.FC = ({route}: any) => {
         <Image style={styles.img} source={{ uri: beer.image_url }}></Image>
 
         <View style={{width: 220}}>
-          <Text style={[styles.beerName,styles.textColor]}>{beer.name}</Text>
-          <Text style={[styles.beerTagline, styles.textColor]}>{beer.tagline}</Text>
+          <Text style={[styles.beerName,styles.textColor, global.bold]}>{beer.name}</Text>
+          <Text style={[styles.beerTagline, styles.textColor, global.semibold]}>{beer.tagline}</Text>
 
           <View style={styles.info}>
 
             <View style={{marginRight:20}}>
-              <Text style={[styles.textColor]}>ABV</Text>
-              <Text style={[styles.textColor]}>{beer.abv}%</Text>
+              <Text style={[styles.textColor, global.bold,{color: theme.buttonColor}]}>ABV</Text>
+              <Text style={[styles.textColor, global.medium]}>{beer.abv}%</Text>
             </View>
 
             <View style={{marginRight:20}}>
-              <Text style={[styles.textColor]}>IBU</Text>
-              <Text style={[styles.textColor]}>{beer.ibu}</Text>
+              <Text style={[styles.textColor, global.bold,{color: theme.buttonColor}]}>IBU</Text>
+              <Text style={[styles.textColor, global.medium]}>{beer.ibu}</Text>
             </View>
 
           </View>
@@ -223,7 +200,7 @@ export const BeerDetail:React.FC = ({route}: any) => {
 
       </View>
       <View style={styles.description}>
-        <Text style={[styles.textColor]}>{beer.description}</Text>
+        <Text style={[styles.textColor, global.medium,]}>{beer.description}</Text>
       </View>
 
       <View style={styles.ingredientsList}>
@@ -235,8 +212,8 @@ export const BeerDetail:React.FC = ({route}: any) => {
         ))}
       </View>
 
-      <Text style={[styles.foodTitle]}>Food Pairing</Text>
-      <Text style={[styles.textColor]}>{beer.food_pairing.join(', ')}</Text>
+      <Text style={[styles.foodTitle, global.bold]}>Food Pairing</Text>
+      <Text style={[styles.textColor, global.medium]}>{beer.food_pairing.join(', ')}</Text>
 
       <View style={{ marginBottom: 100}}>
 
@@ -272,7 +249,6 @@ const styles = StyleSheet.create({
   },
   beerName: {
     fontSize: 30,
-    fontWeight: '700',
   },
   beerTagline: {
     fontSize: 18,
@@ -292,7 +268,6 @@ const styles = StyleSheet.create({
   foodTitle:{
     marginBottom: 10,
     fontSize: 20,
-    fontWeight: '600',
     color: theme.buttonColor
   },
   button: {

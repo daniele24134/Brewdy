@@ -34,14 +34,11 @@ export const Signup: React.FC = ({ navigation }: any) => {
     } else {
       Alert.alert('All fields are required');
     }
-
-
-
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.loginTitle}>Create Account</Text>
+      <Text style={[styles.loginTitle, global.bold]}>Create Account</Text>
       <SignInput
         value={username}
         setValue={setUsername}
@@ -60,13 +57,13 @@ export const Signup: React.FC = ({ navigation }: any) => {
       />
 
       <TouchableOpacity onPress={handleCreate} style={[global.button, styles.loginButton]}>
-        <Text style={{ color: theme.textDark, fontWeight: '700' }}>SIGN UP</Text>
+        <Text style={[global.bold,styles.text]}>SIGN UP</Text>
       </TouchableOpacity>
 
       <View style={styles.redirect}>
-        <Text style={{ color: theme.textDark }}>Already have an account? </Text>
+        <Text style={[global.semibold,styles.text]}>Already have an account? </Text>
         <Pressable onPress={() => navigation.goBack()}>
-          <Text style={{ color: theme.buttonColor, fontWeight: '700' }}> Sign in</Text>
+          <Text style={[global.bold,styles.signInButton]}> Sign in</Text>
         </Pressable>
       </View>
     </View>
@@ -83,7 +80,6 @@ const styles = StyleSheet.create({
   loginTitle: {
     color: theme.buttonColor,
     fontSize: 40,
-    fontWeight: '700',
     marginTop: '50%',
     marginBottom: 30
   },
@@ -96,5 +92,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     marginTop: '70%'
+  },
+  text: {
+    fontSize: 15,
+    color: theme.textDark
+  },
+  signInButton: {
+    fontSize: 15,
+    color: theme.buttonColor
   }
 });

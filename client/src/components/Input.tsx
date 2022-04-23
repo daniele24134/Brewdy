@@ -35,7 +35,7 @@ export const SignInput: React.FC<SignInputProps> = ({value, setValue, placeholde
         undefined}
 
       <TextInput
-        style={styles.inputField}
+        style={pressed ? styles.inputFieldOnFocus : styles.inputField}
         placeholder={placeholder}
         onFocus={() => setPressed(true)}
         onBlur={() => setPressed(false)}
@@ -44,7 +44,6 @@ export const SignInput: React.FC<SignInputProps> = ({value, setValue, placeholde
         placeholderTextColor='#ccc'
         autoCapitalize='none'
         secureTextEntry={isPassword}
-        
       />
     </View>
 
@@ -61,15 +60,21 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 15,
     borderRadius: 10,
-    color: theme.textDark,
-    fontSize: 14,
-    fontWeight: '600',
     flexDirection:'row',
     alignItems:'center'
   },
   inputField: {
     height: 45,
     width: '100%',
+    fontFamily: theme.fontSemiBold,
+    fontSize: 15,
+    color: theme.textDark
+  },
+  inputFieldOnFocus: {
+    height: 45,
+    width: '100%',
+    fontFamily: theme.fontSemiBold,
+    fontSize: 15
   },
   focus: {
     backgroundColor: theme.bgLight,

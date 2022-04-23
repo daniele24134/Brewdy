@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-import { theme } from "../theme";
+import { global, theme } from "../theme";
 import { DbBeer } from "../types";
 
 type BeerSectionProps = {
@@ -19,23 +19,23 @@ export const BeerSectionItem:React.FC<BeerSectionProps> = ( {item, increment, de
       open ? 
     <Pressable onPress={()=> setOpen(prev => !prev)} style={[styles.sectionItemOpen]}>
       <Image style={styles.img} source={{ uri: item.image_url }}></Image>
-      <Text style={styles.sectionTextOpen}>{item.name} {item.abv}%</Text>
+      <Text style={[styles.sectionTextOpen, global.bold]}>{item.name} {item.abv}%</Text>
       <View style={styles.counter}>
 
         <Pressable onPress={() => decrement(item.id, item.counter)} style={[styles.counterButton, styles.decCounter]}>
-          <Text>-</Text>
+          <Text style={global.bold}>-</Text>
         </Pressable>
 
-        <Text style={styles.counterNumber}>{item.counter}</Text>
+        <Text style={[styles.counterNumber, global.bold]}>{item.counter}</Text>
 
         <Pressable onPress={()=> increment(item.id)} style={[styles.counterButton, styles.incCounter]}>
-          <Text>+</Text>
+          <Text style={global.bold}>+</Text>
         </Pressable>
 
       </View>
     </Pressable>:
       <Pressable onPress={()=> setOpen(prev => !prev)}>
-        <Text style={styles.sectionItem}>{item.name}</Text>
+        <Text style={[styles.sectionItem, global.semibold]}>{item.name}</Text>
       </Pressable>
     }</>
   );
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   decCounter:{
-    backgroundColor: 'pink'
+    backgroundColor: theme.pinkbg,
   },
   incCounter: {
     backgroundColor: theme.buttonColor

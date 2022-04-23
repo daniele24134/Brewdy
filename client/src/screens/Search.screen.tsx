@@ -70,22 +70,22 @@ export const Search: React.FC = ({navigation}: any) => {
     <View style={styles.container}>
       <SearchField name={name} setName={setName} handleSearch={handleSearch}/>
 
-      <Text style={styles.title}>Filters</Text>
+      <Text style={[styles.title, global.bold]}>Filters</Text>
 
       <View style={styles.filter}>
-        <Text style={styles.filterText}>Abv</Text>
-        <Text style={styles.sliderText}>{abv}%</Text>
+        <Text style={[styles.filterText, global.semibold]}>Abv</Text>
+        <Text style={[styles.sliderText, global.semibold]}>{abv}%</Text>
         <Slider val={abv} setVal={setAbv} min={0} max={54} step={1}/>
       </View>
 
       <View style={styles.filter}>
-        <Text style={styles.filterText}>Ibu</Text>
-        <Text style={styles.sliderText}>{ibu}</Text>
+        <Text style={[styles.filterText, global.semibold]}>Ibu</Text>
+        <Text style={[styles.sliderText, global.semibold]}>{ibu}</Text>
         <Slider val={ibu} setVal={setIbu} min={1} max={1155} step={10}/>
       </View>
 
       <View style={styles.filter}>
-        <Text style={styles.filterText}>Color</Text>
+        <Text style={[styles.filterText, global.semibold]}>Color</Text>
         <View style={{flexDirection: 'row'}}>
           <Color isPressed={(isPressed === 'yellow')} toggleColor={toggleColor} nameColor='yellow' color='#FDC426'/>
           <Color isPressed={(isPressed === 'orange')} toggleColor={toggleColor} nameColor='orange' color='#D0752C'/>
@@ -95,9 +95,9 @@ export const Search: React.FC = ({navigation}: any) => {
       </View>
 
       <View style={styles.filter}>
-        <Text style={styles.filterText}>Food</Text>
+        <Text style={[styles.filterText, global.semibold]}>Food</Text>
         <TextInput
-          style={styles.foodSearch}
+          style={[styles.foodSearch, global.semibold]}
           value={food}
           onChangeText={setFood}
           placeholder={'Pairing'}
@@ -107,7 +107,7 @@ export const Search: React.FC = ({navigation}: any) => {
 
       <View style={styles.submit}>
         <TouchableOpacity onPress={handleSearch} style={global.button}>
-          <Text style={global.buttonText}>Search</Text>
+          <Text style={[global.buttonText, global.bold]}>Search</Text>
         </TouchableOpacity>
       </View>
     </View>

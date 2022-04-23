@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
-import { theme } from "../theme";
+import { global, theme } from "../theme";
 import { Hop, Ingredients, Malt } from "../types";
 import {onlyUnique} from '../utils';
 
@@ -28,14 +28,14 @@ export const IngredientList: React.FC<IngredientListProps> = ({ingredients, titl
 
   return (
   <View style={styles.ingContainer}>
-    <Text style={styles.ingTitle}>{title}</Text>
+    <Text style={[styles.ingTitle, global.bold]}>{title}</Text>
     {
       Array.isArray(ing) ?
 
       ing.map(it=> it.name).filter(onlyUnique).map((item, i) => (
         <View key={i} style={styles.dotContainer}>
           <View style={styles.dot}></View>
-          <Text style={styles.text}>
+          <Text style={[styles.text, global.medium]}>
             {item}
           </Text>
         </View>
@@ -43,7 +43,7 @@ export const IngredientList: React.FC<IngredientListProps> = ({ingredients, titl
 
       <View style={styles.dotContainer}>
         <View style={styles.dot}></View>
-        <Text style={styles.text}>{ing}</Text>
+        <Text style={[styles.text, global.medium]}>{ing}</Text>
       </View>
     }
   </View>
@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
   ingTitle: {
     marginBottom: 10,
     fontSize: 20,
-    fontWeight: '600',
     color: theme.buttonColor,
   },
   text: {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { theme } from "../theme";
+import { global, theme } from "../theme";
 import { Comment } from "../types";
 import { UserProvider, useUserContext } from "../User.provider";
 import { TrashIcon } from "./Icons";
@@ -22,14 +22,14 @@ export const CommentItem: React.FC<CommentItemProps> = ({comment, removeComment}
   return (
     <View style={styles.commentItem}>
       <View style={styles.commentWithButton}>
-        <Text style={styles.commentUser}>{comment.user.username}:</Text>
+        <Text style={[styles.commentUser, global.semibold]}>{comment.user.username}:</Text>
         {comment.user.id === user!.id ? 
           <Pressable onPress={handleDelete}>
             <TrashIcon size={20}/>
           </Pressable>: undefined
         }
       </View>
-      <Text style={styles.commentBody}>{comment.body}</Text>
+      <Text style={[styles.commentBody, global.medium]}>{comment.body}</Text>
     </View>
   );
 }

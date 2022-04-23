@@ -5,7 +5,7 @@ const create = async (req, res) => {
     const {userId} = req.params;
     const {name, counter, tagline, abv, ibu, wish, image_url,bid } = req.body;
     const beer = await Beer.create({ name, counter, tagline, abv, ibu, wish, image_url, userId: Number(userId), bid });
-    res.send(beer);
+    res.status(201).send(beer);
 
   } catch (error) {
     console.error(error);

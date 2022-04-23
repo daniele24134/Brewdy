@@ -2,7 +2,7 @@ require('dotenv').config();
 const { sequelize, User, Post } = require('./models');
 const cors = require('cors');
 const express = require('express');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3003;
 const SECRET = process.env.SECRET_KEY || 'cat';
 const router = require('./router');
 const session = require('express-session');

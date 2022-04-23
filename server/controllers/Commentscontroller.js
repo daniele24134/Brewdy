@@ -5,7 +5,7 @@ const create = async (req, res) => {
     const {userId, beerId, body} = req.body;
     const {id} = await Comment.create({ userId, beerId, body });
     const comment = await Comment.findByPk(id, {include: 'user'});
-    res.send(comment);
+    res.status(201).send(comment);
   } catch (error) {
     console.error(error);
     res.status(500).send(error);

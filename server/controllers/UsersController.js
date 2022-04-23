@@ -22,7 +22,7 @@ const create = async (req, res) => {
     
     const passwordDigest = await bcrypt.hash(password, saltRounds);
     const user = await User.create({ username, email, password: passwordDigest });
-    res.send({ id: user.id, username: user.username, email: user.email, beers: [] });
+    res.status(201).send({ id: user.id, username: user.username, email: user.email, beers: [] });
 
   } catch (error) {
     console.error(error);
@@ -47,7 +47,7 @@ const login = async (req, res) => {
         console.log(error);
         res.status(401).send(error.message);
       }
-    } else throw new Error('email/passoword incorrect');
+    } else throw new Error('email/password incorrect');
   } catch (error) {
     console.error(error);
     res.status(401).send(error.message);

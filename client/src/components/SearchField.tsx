@@ -1,7 +1,7 @@
 import React from "react";
 import { View,TouchableOpacity, StyleSheet, TextInput } from "react-native";
 import { SearchIcon } from "./Icons";
-import { theme } from "../theme";
+import { theme,global } from "../theme";
 
 type SearchFieldProps = {
   name: string,
@@ -17,7 +17,7 @@ export const SearchField:React.FC<SearchFieldProps> = ({name, setName, handleSea
       <TextInput
         value={name}
         onChangeText={setName}
-        style={styles.searchInput}
+        style={[styles.searchInput, global.semibold]}
         placeholder={'Search'}
         placeholderTextColor='#ccc'
       />
@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.buttonColor,
     borderRadius: 10,
     fontSize: 20,
-    fontWeight:'600',
     padding: 20,
 
   },

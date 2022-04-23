@@ -70,7 +70,7 @@ export type Credentials = {
 };
 
 export type Comment = {
-  body: string; 
+  body: string;
   beerId: number;
   id: number;
   userId: number;

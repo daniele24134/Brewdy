@@ -29,8 +29,8 @@ export const Signin:React.FC = ({navigation}: any) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.loginTitle}>Login</Text>
-      <Text style={styles.loginSubtitle}>Please sign in to continue.</Text>
+      <Text style={[styles.loginTitle, global.bold]}>Login</Text>
+      <Text style={[styles.loginSubtitle, global.semibold]}>Please sign in to continue.</Text>
       <SignInput 
         value={email} 
         setValue={setEmail}
@@ -44,13 +44,13 @@ export const Signin:React.FC = ({navigation}: any) => {
       />
       
       <TouchableOpacity onPress={handleLogin} style={[global.button,styles.loginButton]}>
-        <Text style={{color: theme.textDark, fontWeight: '700'}}>LOGIN</Text>
+        <Text style={[styles.loginButtonText, global.bold]}>LOGIN</Text>
       </TouchableOpacity>
 
       <View style={styles.redirect}>
-        <Text style={{color:theme.textDark}}>Don't have an account? </Text>
+        <Text style={[styles.loginButtonText, global.semibold]}>Don't have an account? </Text>
         <Pressable onPress={() => navigation.navigate('Signup')}>
-          <Text style={{ color: theme.buttonColor, fontWeight: '700'}}> Sign up</Text>
+          <Text style={[global.bold, styles.signUpButton]}> Sign up</Text>
           </Pressable>
       </View>
     </View>
@@ -67,12 +67,15 @@ const styles = StyleSheet.create({
   loginTitle: {
     color: theme.buttonColor,
     fontSize: 40,
-    fontWeight: '700',
+
     marginTop: '60%',
     marginBottom:5
   },
   loginSubtitle:{
-    fontSize: 16, color: theme.textDark, marginBottom: 30
+    fontSize: 16, 
+    color: theme.textDark, 
+    marginBottom: 30,
+
   },
   loginButton: {
     alignSelf: 'flex-end',
@@ -83,5 +86,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     marginTop: '70%'
+  },
+  loginButtonText: {
+    color: theme.textDark,
+    fontSize: 15
+  },
+  signUpButton:{
+    color: theme.buttonColor,
+    fontSize: 15
   }
 });

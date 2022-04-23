@@ -23,14 +23,14 @@ export const Home: React.FC = ({navigation}: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.mainHome}>
-        <Text style={styles.title}>WELCOME {user?.username.toUpperCase()}</Text>
+        <Text style={[styles.title, global.bold]}>WELCOME {user?.username.toUpperCase()}</Text>
         <TouchableOpacity onPress={handleRandom} style={styles.mainButton}>
-          <Text style={styles.buttonText}>START WITH A RANDOM BEER</Text>
+          <Text style={[styles.buttonText, global.semibold]}>START WITH A RANDOM BEER</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.logoutHeader}>
         <TouchableOpacity style={global.button} onPress={logout}>
-          <Text style={global.buttonText}>LOGOUT</Text>
+          <Text style={[global.buttonText, global.bold]}>LOGOUT</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -41,39 +41,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.bgDark,
-    padding: theme.padding
+    padding: theme.padding,
   },
   title: {
     color: theme.textDark,
     fontSize: 50,
-    fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom:100
+    marginBottom:100,
   },
 
   mainHome: {
     flex:1,
     alignItems:'center',
     justifyContent: 'center',
-    marginBottom:100
+    marginBottom:100,
   },
   mainButton: {
     width: 280,
     backgroundColor: theme.buttonColor,
     borderRadius: 10,
     paddingHorizontal: 20,
-    paddingVertical:30
+    paddingVertical:30,
   },
   buttonText: {
     fontSize:26,
     color: theme.textDark,
-    textAlign:'center'
+    textAlign:'center',
   },
   
   logoutHeader: {
     position: 'absolute',
     bottom: theme.padding,
-    right: theme.padding
+    right: theme.padding,
   },
 
   buttonLogout:{
@@ -81,6 +80,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 20,
     paddingVertical: 15,
-
-  }
+  },
 });

@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-import { theme } from "../theme";
+import { global, theme } from "../theme";
 import { DbBeer } from "../types";
 import { EmptyBeer, FullBeer } from "./Icons";
 
@@ -26,8 +26,8 @@ export const WishBeerSectionItem: React.FC<BeerSectionProps> = ({ item, toggle }
       open ?
         <Pressable onPress={() => setOpen(prev => !prev)} style={[styles.sectionItemOpen]}>
           <Image style={styles.img} source={{ uri: item.image_url }}></Image>
-          <Text style={styles.sectionTextOpen}>{item.name} {item.abv}%</Text>
-          <View style={styles.counter}>
+          <Text style={[styles.sectionTextOpen, global.bold]}>{item.name} {item.abv}%</Text>
+          <View style={styles.toggleBeer}>
 
             <Pressable onPress={toggleBeer} style={{marginLeft:20}}>
               {wish ? 
@@ -39,7 +39,7 @@ export const WishBeerSectionItem: React.FC<BeerSectionProps> = ({ item, toggle }
           </View>
         </Pressable> :
         <Pressable onPress={() => setOpen(prev => !prev)}>
-          <Text style={styles.sectionItem}>{item.name}</Text>
+          <Text style={[styles.sectionItem, global.semibold]}>{item.name}</Text>
         </Pressable>
     }</>
   );
@@ -49,24 +49,22 @@ export const WishBeerSectionItem: React.FC<BeerSectionProps> = ({ item, toggle }
 const styles = StyleSheet.create({
   sectionItem: {
     padding: 15,
-    backgroundColor: theme.bgLight,
     fontSize: 16,
-    fontWeight:'600',
-    marginBottom: 1
+    marginBottom: 1,
+    backgroundColor: theme.pinkbg,
   },
   sectionItemOpen: {
     width: '100%',
     height: 100,
-    backgroundColor: theme.bgLight,
+    backgroundColor: theme.pinkbg,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
   sectionTextOpen: {
     fontSize: 18,
     marginLeft: 20,
-    fontWeight: '600',
     width: '60%'
   },
   img: {
@@ -74,7 +72,7 @@ const styles = StyleSheet.create({
     height: 70,
     marginLeft: 10
   },
-  counter: {
+  toggleBeer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginRight: 20,
@@ -82,21 +80,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: 80
   },
-  counterButton: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  decCounter: {
-    backgroundColor: 'pink'
-  },
-  incCounter: {
-    backgroundColor: theme.buttonColor
-  },
-  counterNumber: {
-    fontSize: 24,
-    fontWeight: '600'
-  }
+
+
 })
