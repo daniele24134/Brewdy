@@ -17,6 +17,22 @@ export const theme = {
   fontSemiBold: "Quicksand-SemiBold",
 };
 
+export const chartTheme = {
+  grid: {
+    fill: "none",
+    stroke: "none",
+    pointerEvents: "painted"
+  },
+  axis: {
+    fill: "transparent",
+    style: {
+      tickLabels: {
+        fill: 'white',
+      },
+    },
+  },
+};
+
 export const global = StyleSheet.create({
   buttonText: {
     fontSize: 26,

@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ScrollView, Touchable, TouchableOpacity } from 'react-native';
-import { global, theme } from '../theme';
+import { global, theme, chartTheme } from '../theme';
 import { useUserContext } from '../User.provider';
-import { beersDrunk } from '../utils';
-import { VictoryLabel, VictoryPie } from 'victory-native';
+import { beersDrunk, getAbv, getData, getPercent } from '../utils';
+import { 
+  VictoryBar, 
+  VictoryPie, 
+  VictoryChart, 
+  VictoryLabel, 
+  VictoryAxis,
+  VictoryZoomContainer
+} from 'victory-native';
+import { groupBy } from 'lodash';
 
 export const Profile: React.FC = ({navigation}: any) => {
   const UserContext = useUserContext();
   const { user } = UserContext;
 
-  const getPercent = () => {
-    return (100 * beersDrunk(user!.beers).length) / 325;
-    // return (100 * 300) / 325;
-  }
-
-  const getData = (percent: number) => {
-    return [
-      { x: percent, y: percent }, 
-      { x: 0, y: 100 - percent }
-    ];
-  }
-  
+  const abvData = Object.entries(groupBy(user?.beers, getAbv)).map(
+    ([key, value]) => ({
+      x: `${key}%`,
+      y: value.length
+    })
+  );
+ 
   const [percent, setPercent] = useState(0);
   const [data, setData] = useState(getData(percent));
 
   useEffect(()=> {
-    setPercent(getPercent());
+    setPercent(getPercent(user!));
   },[user]);
 
   useEffect(() => {
@@ -34,6 +37,7 @@ export const Profile: React.FC = ({navigation}: any) => {
 
   return (
     <View style={styles.container}>
+
       <View style={styles.profileImg}>
           <Text style={[styles.profileInit, global.bold]}>{UserContext.user?.username[0].toUpperCase()}</Text>
       </View>
@@ -44,6 +48,7 @@ export const Profile: React.FC = ({navigation}: any) => {
         <Text style={[styles.subtitle, global.semibold]}>{beersDrunk(user!.beers).length}</Text>
         <Text style={[styles.username, global.medium]}>{' '}brewdog beers</Text>
       </View>
+
       <ScrollView>
         <View style={styles.pieContainer}>
           <Text style={styles.percentage}>{Math.round(percent)}%</Text>
@@ -65,7 +70,20 @@ export const Profile: React.FC = ({navigation}: any) => {
 
           />
         </View>
+            {/*  LISTS */}
+        <View style={styles.buttons}>
 
+          <TouchableOpacity onPress={() => navigation.navigate('BeerList')} style={[global.button ,styles.beersButton]}>
+            <Text style={[styles.buttonText, global.bold]}>Beers</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => navigation.navigate('WishList')} style={[global.button ,styles.wishButton]}>
+            <Text style={[styles.buttonText, global.bold]}>Wish List</Text>
+          </TouchableOpacity>
+          
+        </View>
+
+            {/* PHOTOS */}
         <Text style={[global.titleH2, global.bold]}>Photos</Text>
         <ScrollView horizontal={true} style={styles.photosList}>
           <View style={styles.photo}></View>
@@ -80,17 +98,46 @@ export const Profile: React.FC = ({navigation}: any) => {
           <View style={styles.photo}></View>
         </ScrollView>
 
-        <View style={styles.buttons}>
-
-          <TouchableOpacity onPress={() => navigation.navigate('BeerList')} style={[global.button ,styles.beersButton]}>
-            <Text style={[styles.buttonText, global.bold]}>Beers</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => navigation.navigate('WishList')} style={[global.button ,styles.wishButton]}>
-            <Text style={[styles.buttonText, global.bold]}>Wish List</Text>
-          </TouchableOpacity>
-          
+        <View style={{alignItems:'center', marginTop: 20}}>
+          <VictoryChart 
+            containerComponent={<VictoryZoomContainer zoomDimension="x" />}
+            defaultAxes={{}}
+            theme={chartTheme}
+            width={380}
+            domainPadding={20}
+            padding={40}
+          >
+            <VictoryLabel 
+              text="ABV Statistic" 
+              x={55} 
+              y={20} 
+              textAnchor="middle"
+            />
+            <VictoryAxis style={{
+              grid: { stroke: "none" },
+            }}/>
+            <VictoryAxis dependentAxis style={{
+              grid: { stroke: "none" },
+            }}/>
+            <VictoryBar 
+              data={abvData}
+              style={{ 
+                data: { 
+                  fill: theme.buttonColor,
+                  stroke: "white",
+                  strokeWidth: 0.2
+                },
+              }}
+              alignment="middle"
+              
+              animate={{
+                duration: 2000,
+                onLoad: { duration: 1000 }
+              }}
+            />
+          </VictoryChart>
         </View>
+
       </ScrollView>
     </View>
   );
@@ -168,7 +215,6 @@ const styles = StyleSheet.create({
   buttons: { 
     flexDirection: 'row', 
     justifyContent: 'space-around' ,
-    marginTop: 30,
-    
+    marginBottom: 30,
   }
 });

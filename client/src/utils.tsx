@@ -1,4 +1,4 @@
-import { Beer, DbBeer } from "./types";
+import { Beer, DbBeer, UserData } from "./types";
 
 export const beersParser = (beers: any): Beer[] => {
   return beers.map((b: any) => {
@@ -89,4 +89,20 @@ export function sectionBeers(beers: DbBeer[]): SectionBeer[] {
     result.push(section);
   }
   return result.filter(section => section.data.length > 0);
+}
+
+
+export const getAbv = (beer: DbBeer) => (Math.floor(beer.abv));
+
+
+export const getPercent = (user: UserData) => {
+  return (100 * beersDrunk(user!.beers).length) / 325;
+  // return (100 * 300) / 325;
+}
+
+export const getData = (percent: number) => {
+  return [
+    { x: percent, y: percent },
+    { x: 0, y: 100 - percent }
+  ];
 }

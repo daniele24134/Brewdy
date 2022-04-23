@@ -50,9 +50,6 @@ export const BeerDetail:React.FC = ({route}: any) => {
 
         uploadedBeer.then(
           (data: DbBeer) => {
-            // setIsInWishList(prev => !prev);
-            // setIsInBeerList(prev => !prev);
-
             const filteredBeers = user!.beers.map(b => {
               if (b.bid === data!.bid) {
                 return data!;
@@ -70,7 +67,6 @@ export const BeerDetail:React.FC = ({route}: any) => {
         )
 
       } else {
-
         let uploadedBeer = addBeer(newBeer, user!.id); // add the beer to the DB
 
         uploadedBeer.then(
@@ -79,7 +75,6 @@ export const BeerDetail:React.FC = ({route}: any) => {
             updateUser({ // update the user beers
               ...user!, beers: [data, ...user!.beers]
             });
-            // setIsInBeerList(prev => !prev);
           },
           (e:any) => {
             Alert.alert('Beer not added correctly')
@@ -97,8 +92,6 @@ export const BeerDetail:React.FC = ({route}: any) => {
         }); // updating the user context 
 
         setDbBeer(undefined);
-        // setIsInBeerList(prev => !prev);
-        // Alert.alert('Removed from your beer list');
       }
     }
   }
@@ -124,16 +117,12 @@ export const BeerDetail:React.FC = ({route}: any) => {
     } else { // remove otherwis
       if (WishDbBeer) {
         removeBeer(WishDbBeer.id); // removing from the DB
-
         const filteredBeers = user!.beers.filter(b => b.id !== WishDbBeer!.id);
         updateUser({
           ...user!,
           beers: filteredBeers
         }); // updating the user context 
-
         setWishDbBeer(undefined);
-        // setIsInWishList(prev => !prev);
-        // Alert.alert('Removed from the wish list');
       }
     }
   }
