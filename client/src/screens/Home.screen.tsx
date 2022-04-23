@@ -1,10 +1,18 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
+import { 
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Alert,
+  ImageBackground
+} from 'react-native';
 import { theme } from '../theme';
 import { global } from '../theme';
 import { fetchRandom } from '../services/apiService';
 import { useUserContext } from '../User.provider';
 import { beersParser } from '../utils';
+const imgBack = require('../../assets/homeBackground.jpg');
 
 export const Home: React.FC = ({navigation}: any) => {
 
@@ -21,7 +29,8 @@ export const Home: React.FC = ({navigation}: any) => {
   }
 
   return (
-    <View style={styles.container}>
+    <ImageBackground style={{flex: 1}} source={imgBack}>
+      <View style={styles.container}>
       <View style={styles.mainHome}>
         <Text style={[styles.title, global.bold]}>WELCOME {user?.username.toUpperCase()}</Text>
         <TouchableOpacity onPress={handleRandom} style={styles.mainButton}>
@@ -33,14 +42,15 @@ export const Home: React.FC = ({navigation}: any) => {
           <Text style={[global.buttonText, global.bold]}>LOGOUT</Text>
         </TouchableOpacity>
       </View>
-    </View>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.bgDark,
+    backgroundColor: "rgba(0,0,0,0.4)",
     padding: theme.padding,
   },
   title: {
@@ -57,11 +67,11 @@ const styles = StyleSheet.create({
     marginBottom:100,
   },
   mainButton: {
-    width: 280,
+    width: 260,
     backgroundColor: theme.buttonColor,
     borderRadius: 10,
     paddingHorizontal: 20,
-    paddingVertical:30,
+    paddingVertical:20,
   },
   buttonText: {
     fontSize:26,

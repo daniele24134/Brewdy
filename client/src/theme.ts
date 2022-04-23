@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const theme = {
   bgDark: "#35363A",
+  green: '#397D23',
   bgLight: "#EEEEEE",
   textDark: "#F2F2F2",
   textLight: "#454545",

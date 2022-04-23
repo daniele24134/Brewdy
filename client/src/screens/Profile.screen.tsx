@@ -36,20 +36,22 @@ export const Profile: React.FC = ({navigation}: any) => {
   },[percent]);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.mainContainer}>
+      <View style={styles.headerProfile}>
+        <View style={styles.profileImg}>
+            <Text style={[styles.profileInit, global.bold]}>{UserContext.user?.username[0].toUpperCase()}</Text>
+        </View>
 
-      <View style={styles.profileImg}>
-          <Text style={[styles.profileInit, global.bold]}>{UserContext.user?.username[0].toUpperCase()}</Text>
+        <Text style={[styles.username, global.bold]}>{UserContext.user?.username}</Text>
+        <View style={{flexDirection: 'row', justifyContent:'center', alignItems: 'baseline', marginBottom: 20}}>
+          <Text style={[styles.username, global.medium]}>You got{' '}</Text>
+          <Text style={[styles.subtitle, global.semibold]}>{beersDrunk(user!.beers).length}</Text>
+          <Text style={[styles.username, global.medium]}>{' '}brewdog beers</Text>
+        </View>
       </View>
+      
 
-      <Text style={[styles.username, global.bold]}>{UserContext.user?.username}</Text>
-      <View style={{flexDirection: 'row', justifyContent:'center', alignItems: 'baseline', marginBottom: 20}}>
-        <Text style={[styles.username, global.medium]}>You got{' '}</Text>
-        <Text style={[styles.subtitle, global.semibold]}>{beersDrunk(user!.beers).length}</Text>
-        <Text style={[styles.username, global.medium]}>{' '}brewdog beers</Text>
-      </View>
-
-      <ScrollView>
+      <ScrollView style={styles.container}>
         <View style={styles.pieContainer}>
           <Text style={styles.percentage}>{Math.round(percent)}%</Text>
           <VictoryPie
@@ -65,7 +67,7 @@ export const Profile: React.FC = ({navigation}: any) => {
             labels={() => ''}
             style={{ labels: { fill: "white", fontSize: 30 } }}
             colorScale={[
-              '#397D23',
+              theme.bluebg,
               theme.header
             ]}
 
@@ -136,10 +138,23 @@ export const Profile: React.FC = ({navigation}: any) => {
 };
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    backgroundColor: theme.bgDark,
+    flex:1,
+    zIndex:0,
+    position:'relative'
+  },
   container: {
     flex: 1,
-    backgroundColor: theme.bgDark,
-    padding: 20
+    padding: 20,
+    zIndex:2,
+    position:'relative'
+  },
+  headerProfile: { 
+    backgroundColor: theme.bluebg,
+    borderBottomStartRadius: 1000,
+    borderBottomEndRadius:1000,
+    paddingBottom: 10,
   },
   pieContainer: {
     alignItems: 'center',
@@ -178,6 +193,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
     color: theme.buttonColor,
+    textShadowColor: theme.bgDark,
     fontSize: 16,
   },
   photosList: {

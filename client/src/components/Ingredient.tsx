@@ -70,11 +70,12 @@ const styles = StyleSheet.create({
     height:5,
     borderRadius:7,
     backgroundColor: theme.buttonColor,
-    marginRight:3
+    marginRight:3,
+    marginTop:8,
   },
   dotContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   }
 
 });
