@@ -78,3 +78,12 @@ export type Comment = {
   user: UserData;
   createdAt: string;
 };
+
+export type Pub = {
+  id: number,
+  name: string,
+  city: string,
+  address: string,
+  userId : number,
+  beers?: DbBeer[]
+}

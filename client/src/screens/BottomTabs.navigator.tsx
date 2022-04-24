@@ -10,6 +10,7 @@ import { SearchBeerList } from './SearchBeerList.screen';
 import { BeerDetail } from './Beer.screen';
 import { BeerList } from './BeerList.screen';
 import { WishList } from './WishList.screen';
+import { PubForm } from './PubForm';
 
 const SearchStack = createStackNavigator();
 const RandomStack = createStackNavigator();
@@ -121,6 +122,7 @@ const BeerListStackScreen: React.FC = () => {
           animationTypeForReplace: 'pop'
         }}
       />
+      <BeerListStack.Screen component={PubForm} name={"PubForm"}/>
       <BeerListStack.Screen name="WishList"
         component={WishList}
         options={{
@@ -144,6 +146,19 @@ const BeerListStackScreen: React.FC = () => {
       />
     </BeerListStack.Navigator>
 
+  );
+}
+
+
+const PubStack = createStackNavigator();
+
+export const PubStackScreen = () => { 
+
+  return (
+    <PubStack.Navigator>
+      <PubStack.Screen component={BeerList} name={"BeerList"} />
+      <PubStack.Screen component={PubForm} name={"PubForm"}/>
+    </PubStack.Navigator>
   );
 }
 

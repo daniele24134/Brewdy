@@ -3,6 +3,7 @@ import {
   Comment,
   Credentials,
   DbBeer,
+  Pub,
   UserData,
 } from "../types";
 
@@ -144,7 +145,7 @@ export const createComment = (body: any): Promise<Comment> => {
   });
 };
 
-export const deleteComment = (id: number, userId: number) => {
+export const deleteComment = (id: number, userId: number): Promise<Comment> => {
   return fetch(url + `/comments/${id}/users/${userId}`, {
     method: "DELETE",
   }).then(res => {
@@ -155,3 +156,55 @@ export const deleteComment = (id: number, userId: number) => {
     }
   });
 };
+
+export const getPubs = (userId: number): Promise<Pub[]> => {
+  return fetch(url + `/users/${userId}/pubs`).then(res => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res);
+    }
+  });
+}
+
+export const getPub = (pubId: number): Promise<Pub> => {
+  return fetch(url + `/pubs/${pubId}`).then(res => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res);
+    }
+  });
+};
+
+export const createPub = (
+  name: string, 
+  city: string, 
+  address: string, 
+  userId: number, 
+  beerId: number ): Promise<Pub> => {
+  return fetch(url + `/pubs/${beerId}`, {
+    method: 'POST',
+    body: JSON.stringify({name, city, address, userId}),
+    credentials: "include",
+    headers: {
+      "Content-type": "application/json",
+    },
+  }).then(res => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res);
+    }
+  });
+};
+
+export const deletePub = (pubId: number): Promise<Pub> => {
+  return fetch(url + `/pubs/${pubId}`).then(res => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res);
+    }
+  });
+}

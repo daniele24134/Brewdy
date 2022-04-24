@@ -8,7 +8,7 @@ import { DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
 import { beersDrunk, filterBeer, sectionBeers } from "../utils";
 
-export const BeerList:React.FC = () => {
+export const BeerList:React.FC = ({ navigation }: any) => {
 
   const {user, updateUser} = useUserContext();
  
@@ -16,6 +16,9 @@ export const BeerList:React.FC = () => {
   const [sectionData, setSectionData] = useState(sectionBeers(beersDrunk(beers)));
   const [searchTerm, setSearchTerm] = useState('');
 
+  const handleForm = () => {
+    navigation.navigate('PubForm');
+  }
   
   useEffect(()=>{
     setSectionData(sectionBeers(beersDrunk(beers)));
@@ -98,7 +101,7 @@ export const BeerList:React.FC = () => {
           </Text>
         )}
         renderItem={({ item }) =>(
-          <BeerSectionItem decrement={decrement} increment={increment} item={item} />
+          <BeerSectionItem decrement={decrement} increment={increment} item={item} handleForm={handleForm}/>
         )}
         keyExtractor={(item) => String(item!.bid)}
       /> : 
