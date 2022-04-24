@@ -44,7 +44,7 @@ export const global = StyleSheet.create({
     backgroundColor: theme.buttonColor,
     borderRadius: 10,
     paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingVertical: 10,
   },
   titleH2: {
     color: theme.textDark,

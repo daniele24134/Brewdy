@@ -39,7 +39,7 @@ export const Home: React.FC = ({navigation}: any) => {
       </View>
       <View style={styles.logoutHeader}>
         <TouchableOpacity style={global.button} onPress={logout}>
-          <Text style={[global.buttonText, global.bold]}>LOGOUT</Text>
+          <Text style={[global.buttonText, global.bold]}>Logout</Text>
         </TouchableOpacity>
       </View>
       </View>

@@ -2,7 +2,7 @@ const router = require('express').Router();
 const UsersController = require('./controllers/UsersController');
 const BeersController = require('./controllers/BeersController');
 const CommentsController = require('./controllers/Commentscontroller');
-const authMiddleware = require('./controllers/authMiddleware'); // TODO delete this
+const PubsController = require('./controllers/PubsController');
 
 
 // users
@@ -22,4 +22,12 @@ router.get('/beers/:bid', BeersController.getByBid);
 router.delete('/comments/:id/users/:userId', CommentsController.deleteComment);
 router.get('/comments/:beerId', CommentsController.showCommentsByBeer);
 router.post('/comments', CommentsController.create);
+
+
+//pubs
+router.get('/users/:userId/pubs', PubsController.index);
+router.get('/pubs/:id', PubsController.show);
+router.post('/pubs/:beerId', PubsController.create);
+router.delete('/pubs/:id', PubsController.destroy);
+
 module.exports = router;
