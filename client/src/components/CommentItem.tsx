@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { global, theme } from "../theme";
@@ -29,36 +30,48 @@ export const CommentItem: React.FC<CommentItemProps> = ({comment, removeComment}
           </Pressable>: undefined
         }
       </View>
-      <Text style={[styles.commentBody, global.medium]}>{comment.body}</Text>
+      <View>
+        <Text style={[styles.commentBody, global.medium]}>
+          {comment.body}
+        </Text>
+        <Text style={[global.regular, styles.commentDate]}>
+          {format(new Date(comment.createdAt), "dd MMM Y, 'at' h:mmaaa")}
+        </Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   commentItem: {
-    borderBottomColor:'#ccc',
+    borderBottomColor: '#ccc',
     borderBottomWidth: 0.2,
     paddingHorizontal: 10,
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   commentUser: {
     fontWeight: '600',
     fontSize: 20,
     color: theme.buttonColor,
-    marginBottom: 5
+    marginBottom: 5,
   },
   commentBody: {
     color: theme.textDark,
     fontSize: 14,
-    width: '100%'
+    width: '100%',
   },
   deleteButton: {
     color: 'red',
     fontSize: 20,
-    fontWeight: '900'
+    fontWeight: '900',
   },
   commentWithButton: {
-    flexDirection:'row',
-    justifyContent: 'space-between'
-  }
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  commentDate: {
+    marginTop: 5,
+    color: theme.pinkbg,
+    fontSize: 12,
+  },
 });

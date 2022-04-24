@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { global, theme } from "../theme";
@@ -18,7 +19,6 @@ export const WishBeerSectionItem: React.FC<BeerSectionProps> = ({ item, toggle }
   const toggleBeer = () => {
     setWish(prev => !prev);
     setTimeout(() => {toggle(item.id);}, 500);
-    
   }
 
   return (
@@ -29,7 +29,9 @@ export const WishBeerSectionItem: React.FC<BeerSectionProps> = ({ item, toggle }
           <Text style={[styles.sectionTextOpen, global.bold]}>{item.name} {item.abv}%</Text>
           <View style={styles.toggleBeer}>
 
-            <Pressable onPress={toggleBeer} style={{marginLeft:20}}>
+            <Pressable onPress={toggleBeer} 
+              style={{marginLeft:20}}
+            >
               {wish ? 
               <EmptyBeer color="#000" /> :
               <FullBeer color="#000"/>
@@ -38,8 +40,16 @@ export const WishBeerSectionItem: React.FC<BeerSectionProps> = ({ item, toggle }
 
           </View>
         </Pressable> :
-        <Pressable onPress={() => setOpen(prev => !prev)}>
-          <Text style={[styles.sectionItem, global.semibold]}>{item.name}</Text>
+        <Pressable 
+          onPress={() => setOpen(prev => !prev)}
+          style={styles.sectionItem}
+        >
+          <Text style={[styles.sectionItemText, global.semibold]}>
+            {item.name}
+          </Text>
+          <Text style={[global.regular]}>
+            {format(new Date(item.createdAt), "dd MMM y, 'at' h:mmaaa")}
+          </Text>
         </Pressable>
     }</>
   );
@@ -49,9 +59,15 @@ export const WishBeerSectionItem: React.FC<BeerSectionProps> = ({ item, toggle }
 const styles = StyleSheet.create({
   sectionItem: {
     padding: 15,
-    fontSize: 16,
     marginBottom: 1,
     backgroundColor: theme.pinkbg,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+  },
+  sectionItemText: {
+    fontSize: 16,
+    color: theme.header
   },
   sectionItemOpen: {
     width: '100%',

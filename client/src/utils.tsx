@@ -91,18 +91,24 @@ export function sectionBeers(beers: DbBeer[]): SectionBeer[] {
   return result.filter(section => section.data.length > 0);
 }
 
-
-export const getAbv = (beer: DbBeer) => (Math.floor(beer.abv));
-
+export const getAbv = (beer: DbBeer) => Math.floor(beer.abv);
 
 export const getPercent = (user: UserData) => {
   return (100 * beersDrunk(user!.beers).length) / 325;
-  // return (100 * 300) / 325;
-}
+};
 
 export const getData = (percent: number) => {
   return [
     { x: percent, y: percent },
-    { x: 0, y: 100 - percent }
+    { x: 0, y: 100 - percent },
   ];
+};
+
+export const filterBeer = (beers: SectionBeer[], searchTerm: string) => {
+  return beers.map(section => {
+    return ({ ...section, data: section.data.filter(b => (
+      b.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    )})
+  });
 }

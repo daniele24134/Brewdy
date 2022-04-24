@@ -1,11 +1,17 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { BottomTabsNavigator, SearchStackScreen } from './screens/BottomTabs.navigator';
+import { BottomTabsNavigator } from './screens/BottomTabs.navigator';
 import { StatusBar } from 'react-native';
 import { UserProvider } from './User.provider';
-import { Text } from 'react-native';
 import { AuthTabsNavigator } from './screens/AuthTabs.navigator';
 import { useUserContext } from './User.provider';
+import { Platform, UIManager } from 'react-native';
+
+if (Platform.OS === 'android') {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+}
 
 export const App: React.FC = () => {
 

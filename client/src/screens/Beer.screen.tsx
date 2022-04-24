@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Image,ScrollView, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, Text, View, Image,ScrollView, TouchableOpacity, Alert, LayoutAnimation } from "react-native";
 import { IngredientList } from "../components/Ingredient";
 import { theme, global } from '../theme';
 import { Beer, DbBeer } from "../types";
@@ -42,6 +42,7 @@ export const BeerDetail:React.FC = ({route}: any) => {
 
 
   const toggleToBeers = async () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     if (!isInBeerList) { // add if it's not in the list
       const newBeer = beerParser(beer);
       
@@ -99,6 +100,7 @@ export const BeerDetail:React.FC = ({route}: any) => {
 
 
   const toggleToWishList = async () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     if (!isInWishList) { // add if it's not in the list
       const newBeer = beerParser(beer);
       const uploadedBeer = addBeer({...newBeer, wish: true}, user!.id);

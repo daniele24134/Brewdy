@@ -176,3 +176,20 @@ export const PasswordIcon: React.FC<IconProps> = ({ size = 40, color = '#CEF2F9'
     <Path d="M101.547 116.309a7.5 7.5 0 0 0-7.5 7.5v28.715a7.5 7.5 0 0 0 7.5 7.5 7.5 7.5 0 0 0 7.5-7.5v-28.715a7.5 7.5 0 0 0-7.5-7.5z" />
   </Svg>
 );
+
+export const PlusIcon: React.FC<IconProps> = ({ size = 40, color = '#CEF2F9' }) => (
+  <Svg fill={color} width={size} height={size}
+    viewBox="0 0 60.364 60.364"
+  >
+    <Path d="m54.454 23.18-18.609-.002-.001-17.268a5.91 5.91 0 1 0-11.819 0v17.269L5.91 23.178a5.91 5.91 0 0 0 0 11.819h18.115v19.457a5.91 5.91 0 0 0 11.82.002V34.997h18.611a5.908 5.908 0 0 0 5.908-5.907 5.906 5.906 0 0 0-5.91-5.91z" />
+  </Svg>
+);
+
+
+export const MinusIcon: React.FC<IconProps> = ({ size = 40, color = '#CEF2F9' }) => (
+  <Svg fill={color} width={size} height={size}
+    viewBox="0 0 42 42"
+  >
+    <Path d="M37.059 16H4.941C2.224 16 0 18.282 0 21s2.224 5 4.941 5H37.059C39.776 26 42 23.718 42 21s-2.224-5-4.941-5z" />
+  </Svg>
+);

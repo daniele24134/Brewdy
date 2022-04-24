@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, SectionList, Alert } from "react-native";
+import { StyleSheet, Text, View, SectionList, Alert, LayoutAnimation } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 import { BeerSectionItem } from "../components/BeerSectionItem";
 import { decrementCounter, incrementCounter, removeBeer } from "../services/backService";
 import { theme, global } from "../theme";
 import { DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
-import { beersDrunk, sectionBeers } from "../utils";
+import { beersDrunk, filterBeer, sectionBeers } from "../utils";
 
 export const BeerList:React.FC = () => {
 
@@ -13,29 +14,9 @@ export const BeerList:React.FC = () => {
  
   const [beers, setBeers] = useState(user!.beers);
   const [sectionData, setSectionData] = useState(sectionBeers(beersDrunk(beers)));
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const increment = async(id: number) => {
-    const newBeer = incrementCounter(id);
-
-    newBeer.then(
-      (data: DbBeer) => {
-        if (data) {
-          const newBeers = beers.map(b => {
-            if (b.id === data!.id) return data;
-            else return b;
-          });
-
-          updateUser({
-            ...user!,
-            beers: newBeers
-          });
-        }
-        
-      },
-      (e:any) => {Alert.alert('Not incremented correctly')}
-    )
-  }
-
+  
   useEffect(()=>{
     setSectionData(sectionBeers(beersDrunk(beers)));
   },[beers]);
@@ -44,10 +25,32 @@ export const BeerList:React.FC = () => {
     setBeers(user!.beers);
   }, [user]);
 
+  useEffect(() => {
+    setSectionData(filterBeer(
+        sectionBeers(beersDrunk(beers)), searchTerm
+      )
+    );
+  }, [searchTerm]);
+
+  const increment = async (id: number) => {
+    incrementCounter(id).then(
+      (data: DbBeer) => {
+        if (data) {
+          const newBeers = beers.map(b => {
+            if (b.id === data!.id) return data;
+            else return b;
+          });
+
+          updateUser({ ...user!, beers: newBeers });
+        }
+      },
+      (e: any) => { Alert.alert('Not incremented correctly') }
+    )
+  };
+
   const decrement = async (id: number, counter: number) => {
     if (counter > 1) {
-      const newBeer = decrementCounter(id);
-      newBeer.then(
+      decrementCounter(id).then(
         (data: DbBeer) => {
           if (data) {
             const newBeers = beers.map(b => {
@@ -55,25 +58,18 @@ export const BeerList:React.FC = () => {
               else return b;
             });
 
-            updateUser({
-              ...user!,
-              beers: newBeers
-            });
+            updateUser({ ...user!, beers: newBeers });
           }
-
         },
         (e: any) => { Alert.alert('Not decremented correctly') }
       )
 
     } else {
-      const removedBeer = removeBeer(id);
-      removedBeer.then(
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        removeBeer(id).then(
         (data: DbBeer) => {
           const newBeers = beers.filter(b => b.id !== data.id);
-          updateUser({
-            ...user!,
-            beers: newBeers
-          });
+          updateUser({ ...user!, beers: newBeers });
         },
         (e: any) => {Alert.alert('Not removed correctly')}
       )
@@ -81,15 +77,29 @@ export const BeerList:React.FC = () => {
     }
   }
 
-
   return (
     <View style={styles.container}>
+
+      <TextInput 
+        style={styles.searchInput}
+        placeholder='Search ...'
+        placeholderTextColor='#ccc'
+        value={searchTerm}
+        onChangeText={setSearchTerm}
+      />
+
       {beersDrunk(beers).length ? 
       <SectionList
         sections={sectionData}
         // stickySectionHeadersEnabled={false}
-        renderSectionHeader={({ section }) => <Text style={[styles.sectionHeader, global.bold]}>{section.title}</Text>}
-        renderItem={({ item }) => <BeerSectionItem decrement={decrement} increment={increment} item={item} />}
+        renderSectionHeader={({ section }) => (
+          <Text style={[styles.sectionHeader, global.bold]}>
+            {section.title}
+          </Text>
+        )}
+        renderItem={({ item }) =>(
+          <BeerSectionItem decrement={decrement} increment={increment} item={item} />
+        )}
         keyExtractor={(item) => String(item!.bid)}
       /> : 
       <View style={{marginTop:'50%'}}>
@@ -112,15 +122,22 @@ const styles = StyleSheet.create({
     backgroundColor: theme.bgDark,
     borderWidth: 1,
     fontWeight: '700',
-    fontSize: 16
+    fontSize: 16,
   },
   textNobeer: {
     color: theme.textDark,
     textAlign: 'center',
     fontSize: 22,
     fontWeight: '600',
-    marginBottom: 10
-  }
+    marginBottom: 10,
+  },
+  searchInput: {
+    width: '100%',
+    height: 50,
+    backgroundColor: theme.buttonColor,
+    fontSize: 20,
+    paddingHorizontal: 20
+  },
 });
 
 

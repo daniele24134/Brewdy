@@ -29,6 +29,7 @@ export type DbBeer = {
   bid: number;
   userId: number;
   id: number;
+  createdAt: string;
 };
 
 export type BeerForCreate = {
@@ -75,5 +76,5 @@ export type Comment = {
   id: number;
   userId: number;
   user: UserData;
-  creadeted_at: string;
+  createdAt: string;
 };

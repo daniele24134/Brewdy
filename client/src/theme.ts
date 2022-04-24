@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const theme = {
   bgDark: "#35363A",
-  green: '#397D23',
+  green: "#397D23",
   bgLight: "#EEEEEE",
   textDark: "#F2F2F2",
   textLight: "#454545",
@@ -10,7 +10,7 @@ export const theme = {
   buttonColor: "#53A2BE",
   padding: 30,
   bluebg: "#1b5e7b",
-  pinkbg: "#DE9DB5",
+  pinkbg: "#D7B4C0",
   fontBold: "Quicksand-Bold",
   fontRegular: "Quicksand-Regular",
   fontMedium: "Quicksand-Medium",
@@ -22,13 +22,13 @@ export const chartTheme = {
   grid: {
     fill: "none",
     stroke: "none",
-    pointerEvents: "painted"
+    pointerEvents: "painted",
   },
   axis: {
     fill: "transparent",
     style: {
       tickLabels: {
-        fill: 'white',
+        fill: "white",
       },
     },
   },
@@ -52,9 +52,8 @@ export const global = StyleSheet.create({
     fontWeight: "600",
     marginVertical: 10,
   },
-  bold: {fontFamily: theme.fontBold},
-  regular: {fontFamily: theme.fontRegular},
-  semibold: {fontFamily: theme.fontSemiBold},
-  medium: {fontFamily: theme.fontMedium},
-
+  bold: { fontFamily: theme.fontBold },
+  regular: { fontFamily: theme.fontRegular },
+  semibold: { fontFamily: theme.fontSemiBold },
+  medium: { fontFamily: theme.fontMedium },
 });

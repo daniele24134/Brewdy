@@ -8,11 +8,11 @@ type BeerItemProps = {
   navigateToBeer: (beer: Beer) => void,
 }
 
-export const BeerItem: React.FC<BeerItemProps> = ({beer, navigateToBeer}: BeerItemProps) => {
+export const BeerItem: React.FC<BeerItemProps> = ({ beer, navigateToBeer }: BeerItemProps) => {
 
 
   return (
-    <TouchableOpacity style={styles.beerItem} onPress={()=> navigateToBeer(beer)}>
+    <TouchableOpacity style={styles.beerItem} onPress={() => navigateToBeer(beer)}>
       <Image style={styles.img} source={{ uri: beer.image_url }}></Image>
       <View style={{ marginLeft: 20 }}>
         <Text style={[{ color: theme.textDark }, styles.beerName, global.bold]}>{beer.name}</Text>

@@ -26,27 +26,23 @@ export const SearchField:React.FC<SearchFieldProps> = ({name, setName, handleSea
       </TouchableOpacity>
     </View>
   );
-
 }
-
 
 const styles = StyleSheet.create({
   searchInput: {
     width: '100%',
-    height: 60,
+    height: 50,
     backgroundColor: theme.buttonColor,
     borderRadius: 10,
     fontSize: 20,
-    padding: 20,
-
+    paddingHorizontal: 20,
   },
   searchField: {
     flexDirection: 'row',
-
   },
   icon: {
     position: 'absolute',
-    top: 10,
-    right: 20,
+    top: 5,
+    right: 15,
   },
 });
