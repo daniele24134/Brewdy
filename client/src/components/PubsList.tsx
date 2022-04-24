@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { global, theme } from "../theme";
 import { Pub } from "../types";
 
 type PubsListProps = {
@@ -11,8 +12,14 @@ export const PubsList: React.FC<PubsListProps> = ({pubs}) => {
   return (
     <View>
       {pubs.map(pub => (
-        <Text key={pub.id}>{pub.name}</Text>
+        <Text style={[styles.name, global.medium]} key={pub.id}>{pub.name}</Text>
       ))}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  name: {
+    color: theme.textDark
+  }
+});

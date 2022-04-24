@@ -26,8 +26,7 @@ export const BeerDetail:React.FC = ({route}: any) => {
   const [WishDbBeer, setWishDbBeer] = useState<DbBeer>(); // The Wish beer in the DB
 
   useEffect(() => {
-    getBeerByBid(beer.bid)
-    .then(
+    getBeerByBid(beer.bid).then(
       data => {
         data!.wish ? setWishDbBeer(data) : setDbBeer(data);
       },

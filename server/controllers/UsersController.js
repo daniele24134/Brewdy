@@ -6,7 +6,7 @@ const saltRounds = 10;
 const show = async (req, res) => {
   try {
     const {id} = req.params;
-    const user = await User.findByPk(id, {include: 'beers'});
+    const user = await User.findByPk(id, {include: 'beers', include: 'pubs'});
     
     res.send(user);
   } catch (error) {

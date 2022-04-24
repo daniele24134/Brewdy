@@ -1,4 +1,5 @@
 const {Beer} = require('../models');
+const { Tagging } = require('../models');
 
 const create = async (req, res) => {
   try {
@@ -16,7 +17,7 @@ const create = async (req, res) => {
 const getByBid = async (req, res) => {
   try {
     const { bid } = req.params;
-    const beer = await Beer.findOne({where: {bid}});
+    const beer = await Beer.findOne({where: {bid}, include: 'pubs'});
     res.send(beer);
   } catch (error) {
     console.error(error);
@@ -29,6 +30,7 @@ const destroy = async (req, res) => {
     const {id} = req.params;
     const beer = await Beer.findByPk(id);
     await beer.destroy();
+    await Tagging.destroy({where: {BeerId: beer.id}});
     res.send(beer);
 
   } catch (error) {

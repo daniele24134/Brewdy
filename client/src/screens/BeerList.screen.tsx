@@ -8,7 +8,7 @@ import { DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
 import { beersDrunk, filterBeer, sectionBeers } from "../utils";
 
-export const BeerList:React.FC = ({ navigation }: any) => {
+export const BeerList:React.FC = ({ navigation, route }: any) => {
 
   const {user, updateUser} = useUserContext();
  
@@ -16,8 +16,8 @@ export const BeerList:React.FC = ({ navigation }: any) => {
   const [sectionData, setSectionData] = useState(sectionBeers(beersDrunk(beers)));
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleForm = () => {
-    navigation.navigate('PubForm');
+  const handleForm = (id: number) => {
+    navigation.navigate('PubForm', {beerId: id});
   }
   
   useEffect(()=>{

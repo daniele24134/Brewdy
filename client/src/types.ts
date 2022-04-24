@@ -30,6 +30,7 @@ export type DbBeer = {
   userId: number;
   id: number;
   createdAt: string;
+  pubs: Pub[];
 };
 
 export type BeerForCreate = {

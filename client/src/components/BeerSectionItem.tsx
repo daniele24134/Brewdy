@@ -1,6 +1,7 @@
 import { format } from "date-fns";
-import React, { useState } from "react";
-import { StyleSheet, Text, View, Image, Pressable, LayoutAnimation } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Image, Pressable, LayoutAnimation, Alert } from "react-native";
+import { getBeerByBid, getPubs } from "../services/backService";
 import { global, theme } from "../theme";
 import { DbBeer, Pub } from "../types";
 import { MinusIcon, PlusIcon } from "./Icons";
@@ -10,15 +11,21 @@ type BeerSectionProps = {
   item: DbBeer,
   increment: (id: number) => void,
   decrement: (id: number, counter: number) => void,
-  handleForm: () => void,
+  handleForm: (id: number) => void,
 }
 
 export const BeerSectionItem: React.FC<BeerSectionProps> = ({ item, increment, decrement, handleForm }) => {
 
   const [open, setOpen] = React.useState(false);
-  const [pubs, setPubs] = useState<Pub[]>([]);
+  const [pubs, setPubs] = useState<Pub[]>(item.pubs);
 
-  
+  useEffect(()=> {
+    getBeerByBid(item.bid).then(
+      data => {setPubs(data.pubs)},
+      (e:any) => {Alert.alert('Pubs not fetched correctly')}
+    )
+  },[open]);
+
   return (
     <>{
       open ?
@@ -45,8 +52,8 @@ export const BeerSectionItem: React.FC<BeerSectionProps> = ({ item, increment, d
           {/* pubs */}
           <View style={styles.pubSection}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={[global.bold, styles.pubTitle]}>Pubs</Text>
-              <Pressable onPress={handleForm} style={[styles.counterButton, styles.incCounter]}>
+              <Text style={[global.bold, styles.pubTitle]}>Pubs </Text>
+              <Pressable onPress={() => handleForm(item.id)} style={[styles.counterButton, styles.incCounter]}>
                 <PlusIcon size={15} color={theme.bgDark} />
               </Pressable>
             </View>
