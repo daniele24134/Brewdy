@@ -41,7 +41,7 @@ export const SearchStackScreen = () => {
         },
         headerBackTitle: '',
         headerBackTitleStyle: {
-          color: theme.bluebg,
+          color: themeStyle.blue,
           fontFamily: theme.fontRegular
         },
         animationTypeForReplace: 'pop'
@@ -56,7 +56,7 @@ export const SearchStackScreen = () => {
           backgroundColor: themeStyle.headerbg
         },
         headerBackTitleStyle: { 
-          color: theme.bluebg,
+          color: themeStyle.blue,
           fontFamily: theme.fontRegular
         },
         animationTypeForReplace: 'pop'
@@ -91,7 +91,7 @@ export const RandomStackScreen:React.FC = () => {
         },
         animationTypeForReplace: 'pop',
         headerBackTitleStyle: { 
-          color: theme.bluebg,
+          color: themeStyle.blue,
           fontFamily: theme.fontRegular
         }
         }}
@@ -128,7 +128,7 @@ const BeerListStackScreen: React.FC = () => {
             fontFamily: theme.fontBold
           },
           headerBackTitleStyle: { 
-            color: theme.bluebg,
+            color: themeStyle.blue,
             fontFamily: theme.fontRegular
           },
           animationTypeForReplace: 'pop'
@@ -150,7 +150,7 @@ const BeerListStackScreen: React.FC = () => {
             fontFamily: theme.fontBold
           },
           headerBackTitleStyle: {
-            color: theme.bluebg,
+            color: themeStyle.blue,
             fontFamily: theme.fontRegular
           },
           presentation: 'modal'
@@ -171,7 +171,7 @@ const BeerListStackScreen: React.FC = () => {
             fontFamily: theme.fontBold
           },
           headerBackTitleStyle: {
-            color: theme.bluebg,
+            color: themeStyle.blue,
             fontFamily: theme.fontRegular
           },
         }}
@@ -191,7 +191,7 @@ const BeerListStackScreen: React.FC = () => {
             fontFamily: theme.fontBold
           },
           headerBackTitleStyle: {
-            color: theme.bluebg,
+            color: themeStyle.blue,
             fontFamily: theme.fontRegular
           },
         }}
@@ -211,7 +211,7 @@ const BeerListStackScreen: React.FC = () => {
             backgroundColor: themeStyle.headerbg
           },
           headerBackTitleStyle: { 
-            color: theme.bluebg,
+            color: themeStyle.blue,
             fontFamily: theme.fontRegular
           },
           animationTypeForReplace: 'pop'
@@ -232,7 +232,7 @@ export const BottomTabsNavigator: React.FC = () => {
           backgroundColor: themeStyle.headerbg,
         },
         headerTitleStyle: {
-          color: theme.bluebg,
+          color: themeStyle.blue,
           fontSize:30,
           marginBottom: 10,
           fontFamily: theme.fontBold
@@ -245,7 +245,7 @@ export const BottomTabsNavigator: React.FC = () => {
         },
         headerTitle: 'Brewdy',
 
-        tabBarActiveTintColor: theme.bluebg,
+        tabBarActiveTintColor: themeStyle.blue,
         tabBarInactiveTintColor: themeStyle.text,
         tabBarItemStyle: {marginTop:10, height: 45},
 
