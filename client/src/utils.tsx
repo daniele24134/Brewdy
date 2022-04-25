@@ -110,5 +110,5 @@ export const filterBeer = (beers: SectionBeer[], searchTerm: string) => {
       b.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     )})
-  });
+  }).filter(section => section.data.length > 0);
 }

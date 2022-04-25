@@ -53,7 +53,13 @@ export const BeerSectionItem: React.FC<BeerSectionProps> = ({ item, increment, d
           <View style={styles.pubSection}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={[global.bold, styles.pubTitle]}>Pubs </Text>
-              <Pressable onPress={() => handleForm(item.id)} style={[styles.counterButton, styles.incCounter]}>
+              <Pressable 
+                onPress={() => {
+                  setOpen(prev => !prev)
+                  handleForm(item.id);
+                }} 
+                style={[styles.counterButton, styles.incCounter]}
+              >
                 <PlusIcon size={15} color={theme.bgDark} />
               </Pressable>
             </View>

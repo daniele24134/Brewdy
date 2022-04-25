@@ -6,16 +6,12 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { global, theme, chartTheme } from "../theme";
+import { global, theme } from "../theme";
 import { useUserContext } from "../User.provider";
 import { beersDrunk, getAbv, getData, getPercent } from "../utils";
-import {
-  VictoryBar,
-  VictoryPie,
-  VictoryChart,
-  VictoryAxis,
-} from "victory-native";
 import { groupBy } from "lodash";
+import { PieChart } from "../components/PieChart";
+import { BarChart } from "../components/BarChart";
 
 export const Profile: React.FC = ({ navigation }: any) => {
   const UserContext = useUserContext();
@@ -59,24 +55,8 @@ export const Profile: React.FC = ({ navigation }: any) => {
       </View>
 
       <ScrollView style={styles.container}>
-        <View style={styles.pieContainer}>
-          <Text style={styles.percentage}>{Math.round(percent)}%</Text>
-          <VictoryPie
-            animate={{
-              duration: 2000,
-              onLoad: { duration: 1000 },
-            }}
-            radius={100}
-            width={300}
-            height={300}
-            data={data}
-            innerRadius={120}
-            cornerRadius={0}
-            labels={() => ""}
-            style={{ labels: { fill: "white", fontSize: 30 } }}
-            colorScale={[theme.bluebg, theme.header]}
-          />
-        </View>
+        <PieChart percent={percent} data={data} />
+
         {/*  LISTS */}
         <View style={styles.buttons}>
           <TouchableOpacity
@@ -107,36 +87,8 @@ export const Profile: React.FC = ({ navigation }: any) => {
           <View style={styles.photo}></View>
         </ScrollView>
 
-        <View style={{ marginTop: 40 }}>
-          <Text style={[global.bold, global.titleH2, { marginBottom: 0 }]}>
-            Statistic ABV
-          </Text>
-          <VictoryChart
-            theme={chartTheme}
-            domainPadding={{ x: 5 }}
-            padding={40}
-            width={370}
-            height={400}>
-            <VictoryAxis style={{ grid: { stroke: "none" } }} />
-            <VictoryAxis dependentAxis />
-            <VictoryBar
-              horizontal
-              data={abvData}
-              style={{
-                data: {
-                  fill: theme.buttonColor,
-                  stroke: "black",
-                  strokeWidth: 1.2,
-                },
-              }}
-              alignment="middle"
-              animate={{
-                duration: 2000,
-                onLoad: { duration: 1000 },
-              }}
-            />
-          </VictoryChart>
-        </View>
+
+        <BarChart abvData={abvData}/>
       </ScrollView>
     </View>
   );

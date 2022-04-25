@@ -10,7 +10,7 @@ type PubsListProps = {
 export const PubsList: React.FC<PubsListProps> = ({pubs}) => {
 
   return (
-    <View>
+    <View style={styles.pubs}>
       {pubs.map(pub => (
         <Text style={[styles.name, global.medium]} key={pub.id}>{pub.name}</Text>
       ))}
@@ -19,7 +19,15 @@ export const PubsList: React.FC<PubsListProps> = ({pubs}) => {
 }
 
 const styles = StyleSheet.create({
+  pubs: {
+    marginTop: 5,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
   name: {
-    color: theme.textDark
+    color: theme.textDark,
+    fontSize: 15,
+    marginHorizontal: 5,
+    marginVertical: 5
   }
 });

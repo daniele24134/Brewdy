@@ -101,7 +101,12 @@ export const BeerList:React.FC = ({ navigation, route }: any) => {
           </Text>
         )}
         renderItem={({ item }) =>(
-          <BeerSectionItem decrement={decrement} increment={increment} item={item} handleForm={handleForm}/>
+          <BeerSectionItem 
+            decrement={decrement} 
+            increment={increment} 
+            item={item} 
+            handleForm={handleForm}
+          />
         )}
         keyExtractor={(item) => String(item!.bid)}
       /> : 
