@@ -12,6 +12,7 @@ import { useState } from "react";
 import { global } from "../theme";
 import { Color } from "../components/Color";
 import { SearchField } from "../components/SearchField";
+import { useThemeContext } from "../Theme.provider";
 
 const ebc = {
   yellow: ["2", "12"],
@@ -27,7 +28,8 @@ export const Search: React.FC = ({ navigation }: any) => {
   const [color, setColor] = useState<string[]>([]);
   const [food, setFood] = useState("");
   const [isPressed, setIsPressed] = useState("");
-
+  const { themeStyle } = useThemeContext();
+  
   const toggleColor = (c: string) => {
     let toggle;
     switch (c) {
@@ -74,25 +76,25 @@ export const Search: React.FC = ({ navigation }: any) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: themeStyle.bg}]}>
       <SearchField name={name} setName={setName} handleSearch={handleSearch} />
 
-      <Text style={[styles.title, global.bold]}>Filters</Text>
+      <Text style={[styles.title, global.bold, {color: themeStyle.text}]}>Filters</Text>
 
       <View style={styles.filter}>
-        <Text style={[styles.filterText, global.semibold]}>Abv</Text>
-        <Text style={[styles.sliderText, global.semibold]}>{abv}%</Text>
+        <Text style={[styles.filterText, global.semibold,{color: themeStyle.text}]}>Abv</Text>
+        <Text style={[styles.sliderText, global.semibold,{color: themeStyle.text}]}>{abv}%</Text>
         <Slider val={abv} setVal={setAbv} min={0} max={54} step={1} />
       </View>
 
       <View style={styles.filter}>
-        <Text style={[styles.filterText, global.semibold]}>Ibu</Text>
-        <Text style={[styles.sliderText, global.semibold]}>{ibu}</Text>
+        <Text style={[styles.filterText, global.semibold,{color: themeStyle.text}]}>Ibu</Text>
+        <Text style={[styles.sliderText, global.semibold,{color: themeStyle.text}]}>{ibu}</Text>
         <Slider val={ibu} setVal={setIbu} min={1} max={1155} step={10} />
       </View>
 
       <View style={styles.filter}>
-        <Text style={[styles.filterText, global.semibold]}>Color</Text>
+        <Text style={[styles.filterText, global.semibold,{color: themeStyle.text}]}>Color</Text>
         <View style={{ flexDirection: "row" }}>
           <Color
             isPressed={isPressed === "yellow"}
@@ -122,7 +124,7 @@ export const Search: React.FC = ({ navigation }: any) => {
       </View>
 
       <View style={styles.filter}>
-        <Text style={[styles.filterText, global.semibold]}>Food</Text>
+        <Text style={[styles.filterText, global.semibold,{color: themeStyle.text}]}>Food</Text>
         <TextInput
           style={[styles.foodSearch, global.semibold]}
           value={food}
@@ -144,13 +146,11 @@ export const Search: React.FC = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.bgDark,
     padding: theme.padding,
   },
   title: {
     marginTop: 50,
     fontSize: 34,
-    color: theme.pinkbg,
   },
   filter: {
     flexDirection: "row",
@@ -161,7 +161,6 @@ const styles = StyleSheet.create({
   },
   filterText: {
     fontSize: 22,
-    color: theme.textDark,
     width: 60,
   },
   sliderText: {
@@ -178,7 +177,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 20,
     padding: 20,
-    fontWeight: "600",
+    color: theme.textDark,
+    borderColor: theme.header,
+    borderWidth: 1,
   },
   submit: {
     position: "absolute",

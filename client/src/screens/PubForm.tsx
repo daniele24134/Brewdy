@@ -4,6 +4,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { usePubsContext } from '../PubsProvider';
 import { createPub, getPubs } from '../services/backService';
 import { global, theme } from '../theme';
+import { useThemeContext } from '../Theme.provider';
 import { Pub } from '../types';
 import { useUserContext } from '../User.provider';
 
@@ -11,11 +12,11 @@ export const PubForm: React.FC = ({route, navigation}: any) => {
 
   const { user } = useUserContext();
   const { addPub } = usePubsContext();
+  const { themeStyle } = useThemeContext();
 
   const [name, setName] = useState('');
   const [city, setCity] = useState('');
   const [address, setAddress] = useState('');
- 
 
   const handleAdd = () => {
     createPub(name, city, address, user!.id).then(
@@ -33,7 +34,7 @@ export const PubForm: React.FC = ({route, navigation}: any) => {
   }
 
   return (
-    <View style={styles.pubFormContainer}>
+    <View style={[styles.pubFormContainer, {backgroundColor: themeStyle.bg}]}>
       <Text style={[global.titleH2, global.bold, styles.pubFormTitle]}>Add a Pub</Text>
       <Text style={[styles.label, global.semibold]}>Name</Text>
       <TextInput

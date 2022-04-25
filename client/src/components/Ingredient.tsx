@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { global, theme } from "../theme";
+import { useThemeContext } from "../Theme.provider";
 import { Hop, Ingredients, Malt } from "../types";
 import {onlyUnique} from '../utils';
 
@@ -11,6 +12,8 @@ type IngredientListProps = {
 
 export const IngredientList: React.FC<IngredientListProps> = ({ingredients, title}: IngredientListProps) => {
   let ing: Malt[] | Hop[] | string;
+
+  const { themeStyle } = useThemeContext();
 
   switch(title){
     case 'malt':
@@ -35,7 +38,7 @@ export const IngredientList: React.FC<IngredientListProps> = ({ingredients, titl
       ing.map(it=> it.name).filter(onlyUnique).map((item, i) => (
         <View key={i} style={styles.dotContainer}>
           <View style={styles.dot}></View>
-          <Text style={[styles.text, global.medium]}>
+          <Text style={[styles.text, global.medium, {color: themeStyle.text}]}>
             {item}
           </Text>
         </View>
@@ -43,7 +46,7 @@ export const IngredientList: React.FC<IngredientListProps> = ({ingredients, titl
 
       <View style={styles.dotContainer}>
         <View style={styles.dot}></View>
-        <Text style={[styles.text, global.medium]}>{ing}</Text>
+        <Text style={[styles.text, global.medium, { color: themeStyle.text }]}>{ing}</Text>
       </View>
     }
   </View>

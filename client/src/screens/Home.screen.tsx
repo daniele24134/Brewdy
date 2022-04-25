@@ -5,13 +5,15 @@ import {
   Text,
   TouchableOpacity,
   Alert,
-  ImageBackground
+  ImageBackground,
+  Switch
 } from 'react-native';
 import { theme } from '../theme';
 import { global } from '../theme';
 import { fetchRandom } from '../services/apiService';
 import { useUserContext } from '../User.provider';
 import { beersParser } from '../utils';
+import { useThemeContext } from '../Theme.provider';
 const imgBack = require('../../assets/homeBackground.jpg');
 
 export const Home: React.FC = ({navigation}: any) => {
@@ -28,6 +30,8 @@ export const Home: React.FC = ({navigation}: any) => {
     )
   }
 
+  const { isDark, themeStyle, toggleTheme } = useThemeContext();
+
   return (
     <ImageBackground style={{flex: 1}} source={imgBack}>
       <View style={styles.container}>
@@ -38,6 +42,13 @@ export const Home: React.FC = ({navigation}: any) => {
         </TouchableOpacity>
       </View>
       <View style={styles.logoutHeader}>
+        <Switch
+          trackColor={{ false: theme.buttonColor, true: theme.buttonColor }}
+          thumbColor={isDark ? themeStyle.bg : themeStyle.bg}
+          ios_backgroundColor={theme.buttonColor}
+          onValueChange={toggleTheme}
+          value={isDark}
+        />
         <TouchableOpacity style={global.button} onPress={logout}>
           <Text style={[global.buttonText, global.bold]}>Logout</Text>
         </TouchableOpacity>
@@ -80,9 +91,9 @@ const styles = StyleSheet.create({
   },
   
   logoutHeader: {
-    position: 'absolute',
-    bottom: theme.padding,
-    right: theme.padding,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 
   buttonLogout:{

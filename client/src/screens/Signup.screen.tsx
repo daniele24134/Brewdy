@@ -19,7 +19,7 @@ export const Signup: React.FC = ({ navigation }: any) => {
   const [password, setPassword] = useState("");
   const { login } = useUserContext();
 
-  const handleCreate = async () => {
+  const handleCreate = () => {
     if (email && username && password) {
       if (password.length < 6) {
         Alert.alert("Password must be longer than 6 characters");

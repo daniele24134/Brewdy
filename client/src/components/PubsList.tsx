@@ -9,8 +9,9 @@ type PubsListProps = {
 
 export const PubsList: React.FC<PubsListProps> = ({pubs}) => {
 
+
   return (
-    <View style={styles.pubs}>
+    <View style={[styles.pubs]}>
       {pubs.map(pub => (
         <Text style={[styles.name, global.medium]} key={pub.id}>{pub.name}</Text>
       ))}

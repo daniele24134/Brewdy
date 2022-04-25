@@ -2,6 +2,7 @@ import React from "react";
 import {View, Text, StyleSheet,  } from 'react-native';
 import { VictoryPie } from "victory-native";
 import { theme } from "../theme";
+import { useThemeContext } from "../Theme.provider";
 
 
 type PieChartProps = {
@@ -10,6 +11,8 @@ type PieChartProps = {
 }
 
 export const PieChart:React.FC<PieChartProps> = ( { percent, data } ) => {
+
+  const { themeStyle } = useThemeContext();
 
   return (
     <View style={styles.pieContainer}>
@@ -27,12 +30,9 @@ export const PieChart:React.FC<PieChartProps> = ( { percent, data } ) => {
         cornerRadius={0}
         labels={() => ""}
         style={{ labels: { fill: "white", fontSize: 30 } }}
-        colorScale={[theme.bluebg, theme.header]}
+        colorScale={[themeStyle.blue, themeStyle.headerbg]}
       />
     </View>
-
-
-
   );
 }
 

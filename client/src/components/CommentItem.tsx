@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { global, theme } from "../theme";
+import { useThemeContext } from "../Theme.provider";
 import { Comment } from "../types";
 import { UserProvider, useUserContext } from "../User.provider";
 import { TrashIcon } from "./Icons";
@@ -14,7 +15,7 @@ type CommentItemProps = {
 export const CommentItem: React.FC<CommentItemProps> = ({comment, removeComment}) => {
 
   const {user} = useUserContext();
-
+  const { themeStyle } = useThemeContext();
 
   const handleDelete = () => {
     removeComment(comment.id, comment.userId);
@@ -26,15 +27,15 @@ export const CommentItem: React.FC<CommentItemProps> = ({comment, removeComment}
         <Text style={[styles.commentUser, global.semibold]}>{comment.user.username}:</Text>
         {comment.user.id === user!.id ? 
           <Pressable onPress={handleDelete}>
-            <TrashIcon size={20}/>
+            <TrashIcon size={25} color={themeStyle.text}/>
           </Pressable>: undefined
         }
       </View>
       <View>
-        <Text style={[styles.commentBody, global.medium]}>
+        <Text style={[styles.commentBody, global.medium, {color: themeStyle.text}]}>
           {comment.body}
         </Text>
-        <Text style={[global.regular, styles.commentDate]}>
+        <Text style={[global.bold, styles.commentDate]}>
           {format(new Date(comment.createdAt), "dd MMM Y, 'at' h:mmaaa")}
         </Text>
       </View>

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { theme, global } from "../theme";
+import { useThemeContext } from "../Theme.provider";
 import { Beer } from "../types";
 
 type BeerItemProps = {
@@ -9,15 +10,15 @@ type BeerItemProps = {
 }
 
 export const BeerItem: React.FC<BeerItemProps> = ({ beer, navigateToBeer }: BeerItemProps) => {
-
+  const { themeStyle } = useThemeContext();
 
   return (
     <TouchableOpacity style={styles.beerItem} onPress={() => navigateToBeer(beer)}>
       <Image style={styles.img} source={{ uri: beer.image_url }}></Image>
       <View style={{ marginLeft: 20 }}>
-        <Text style={[{ color: theme.textDark }, styles.beerName, global.bold]}>{beer.name}</Text>
-        <Text style={[{ color: theme.textDark }, global.semibold]}>{beer.tagline}</Text>
-        <Text style={[{ color: theme.textDark }, global.medium]}>{beer.abv}% {' - '} {beer.ibu} IBU</Text>
+        <Text style={[{ color: themeStyle.text }, styles.beerName, global.bold]}>{beer.name}</Text>
+        <Text style={[{ color: themeStyle.text }, global.semibold]}>{beer.tagline}</Text>
+        <Text style={[{ color: themeStyle.text }, global.medium]}>{beer.abv}% {' - '} {beer.ibu} IBU</Text>
       </View>
     </TouchableOpacity>
   );
@@ -41,10 +42,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.3)',
+    backgroundColor: 'rgba(83,162,190,0.2)',
   },
   beerName: {
     fontSize: 20,
-    maxWidth: '95%'
+    width: 250
   }
 })

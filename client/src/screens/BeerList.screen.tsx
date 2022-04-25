@@ -4,6 +4,7 @@ import { TextInput } from "react-native-gesture-handler";
 import { BeerSectionItem } from "../components/BeerSectionItem";
 import { decrementCounter, incrementCounter, removeBeer } from "../services/backService";
 import { theme, global } from "../theme";
+import { useThemeContext } from "../Theme.provider";
 import { DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
 import { beersDrunk, filterBeer, sectionBeers } from "../utils";
@@ -16,12 +17,17 @@ export const BeerList:React.FC = ({ navigation, route }: any) => {
   const [sectionData, setSectionData] = useState(sectionBeers(beersDrunk(beers)));
   const [searchTerm, setSearchTerm] = useState('');
 
+  const { themeStyle } = useThemeContext();
+
   const handleForm = (id: number) => {
     navigation.navigate('ChoosePub', {beerId: id});
   }
   
   useEffect(()=>{
-    setSectionData(sectionBeers(beersDrunk(beers)));
+    setSectionData(filterBeer(
+        sectionBeers(beersDrunk(beers)), searchTerm
+      )
+    );
   },[beers]);
 
   useEffect(()=> {
@@ -81,7 +87,7 @@ export const BeerList:React.FC = ({ navigation, route }: any) => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: themeStyle.bg}]}>
 
       <TextInput 
         style={styles.searchInput}
@@ -96,7 +102,7 @@ export const BeerList:React.FC = ({ navigation, route }: any) => {
         sections={sectionData}
         // stickySectionHeadersEnabled={false}
         renderSectionHeader={({ section }) => (
-          <Text style={[styles.sectionHeader, global.bold]}>
+          <Text style={[styles.sectionHeader, global.bold, {backgroundColor: themeStyle.bg, color: themeStyle.text}]}>
             {section.title}
           </Text>
         )}
@@ -111,8 +117,12 @@ export const BeerList:React.FC = ({ navigation, route }: any) => {
         keyExtractor={(item) => String(item!.bid)}
       /> : 
       <View style={{marginTop:'50%'}}>
-        <Text style={[styles.textNobeer, global.bold]}>No beer in the beer list yet.</Text>
-        <Text style={[styles.textNobeer, global.bold]}>Start searching for a beer.</Text>
+        <Text style={[styles.textNobeer, global.bold, {color: themeStyle.text}]}>
+          No beer in the beer list yet.
+        </Text>
+        <Text style={[styles.textNobeer, global.bold, {color: themeStyle.text}]}>
+          Start searching for a beer.
+        </Text>
       </View>
       }
     </View>
@@ -122,21 +132,15 @@ export const BeerList:React.FC = ({ navigation, route }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.bgDark,
   },
   sectionHeader: {
     padding: 15,
-    color: theme.textDark,
-    backgroundColor: theme.bgDark,
     borderWidth: 1,
-    fontWeight: '700',
     fontSize: 16,
   },
   textNobeer: {
-    color: theme.textDark,
     textAlign: 'center',
     fontSize: 22,
-    fontWeight: '600',
     marginBottom: 10,
   },
   searchInput: {
@@ -144,7 +148,8 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: theme.buttonColor,
     fontSize: 20,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    color: theme.textDark
   },
 });
 

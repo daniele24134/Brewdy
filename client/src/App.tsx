@@ -7,6 +7,7 @@ import { AuthTabsNavigator } from './screens/AuthTabs.navigator';
 import { useUserContext } from './User.provider';
 import { Platform, UIManager } from 'react-native';
 import { PubsProvider } from './PubsProvider';
+import { ThemeProvider, useThemeContext } from './Theme.provider';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -14,14 +15,23 @@ if (Platform.OS === 'android') {
   }
 }
 
+const CustomStatusBar = () => {
+  const { isDark } = useThemeContext();
+
+  return (
+  <>{ !isDark ? 
+    <StatusBar barStyle={'light-content'} /> :
+    <StatusBar barStyle={"dark-content"} />
+  }</>
+  );
+}
+
 export const App: React.FC = () => {
 
-    
   return (
     <UserProvider>
       <DashBoard />
     </UserProvider>
-      
   );
 };
 
@@ -29,12 +39,15 @@ const DashBoard:React.FC = () => {
   const UserContext = useUserContext();
 
   const AppLogged = (
-    <PubsProvider>
-      <NavigationContainer>
-        <BottomTabsNavigator />
-        <StatusBar barStyle={'light-content'} />
-      </NavigationContainer>
-    </PubsProvider>
+    <ThemeProvider>
+      <PubsProvider>
+        <NavigationContainer>
+          <BottomTabsNavigator />
+          <CustomStatusBar />
+        </NavigationContainer>
+      </PubsProvider>
+    </ThemeProvider>
+
   );
 
   const AppNotLogged = (

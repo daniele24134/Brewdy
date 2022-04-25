@@ -59,7 +59,8 @@ export const WishBeerSectionItem: React.FC<BeerSectionProps> = ({ item, toggle }
 const styles = StyleSheet.create({
   sectionItem: {
     padding: 15,
-    marginBottom: 1,
+    borderBottomColor: theme.header,
+    borderBottomWidth: 1,
     backgroundColor: theme.pinkbg,
     flexDirection: 'row',
     justifyContent: 'space-between',

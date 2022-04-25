@@ -38,7 +38,8 @@ const destroy = async (req, res) => {
   try {
     const { id } = req.params;
     const pub = await Pub.findByPk(id);
-    await pub.destroy;
+    console.log("DELTING", pub);
+    await pub.destroy();
     await Tagging.destroy({where: {PubId: pub.id}});
     res.send(pub);
   } catch (error) {

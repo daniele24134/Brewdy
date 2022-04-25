@@ -1,20 +1,19 @@
 import React, { createContext, useEffect, useState } from "react";
 import { getPubs } from "./services/backService";
 import { Pub } from "./types";
-import { useUserContext } from "./User.provider";
-
 
 type PubContextType = {
   pubs: Pub[],
   addPub: (pub: Pub) => void,
-  getAllPubs: (userId: number) => void
+  getAllPubs: (userId: number) => void,
+  removePub: (id: number) => void
 }
-
 
 const PubsContext = createContext<PubContextType>({
   pubs: [],
   addPub: (pub: Pub) => {},
   getAllPubs: (userId: number) => {},
+  removePub: (id: number) => {}
 });
 
 export const PubsProvider: React.FC = ({ children }) => {
@@ -35,9 +34,15 @@ export const PubsProvider: React.FC = ({ children }) => {
     setPubs([...pubs, pub]);
   }
 
+  const removePub = (id: number) => {
+    setPubs(prev => {
+      return prev.filter( p => p.id !== id);
+    });
+  };
+
 
   return (
-    <PubsContext.Provider value={{ pubs: pubs, addPub, getAllPubs }}>
+    <PubsContext.Provider value={{ pubs: pubs, addPub, getAllPubs, removePub }}>
       {children}
     </PubsContext.Provider>
   );

@@ -89,10 +89,11 @@ const styles = StyleSheet.create({
   sectionItem: {
     padding: 15,
     backgroundColor: theme.bluebg,
-    marginBottom: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    borderBottomColor: theme.header,
+    borderBottomWidth: 1,
   },
   sectionItemText: {
     fontSize: 16,

@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Alert, Switch } from "react-native";
+import { SwitchPub } from "../components/SwitchPub";
 import { usePubsContext } from "../PubsProvider";
-import { createTagging } from "../services/backService";
+import { createTagging, deleteTagging } from "../services/backService";
 import { global, theme } from "../theme";
+import { useThemeContext } from "../Theme.provider";
 import { useUserContext } from "../User.provider";
 
 export const ChoosePub: React.FC = ({ route, navigation }: any) => {
 
   const { user } = useUserContext();
   const { pubs, getAllPubs } = usePubsContext();
+  const { themeStyle } = useThemeContext();
 
   useEffect(() => {
     getAllPubs(user!.id);
@@ -20,25 +23,41 @@ export const ChoosePub: React.FC = ({ route, navigation }: any) => {
   const handleChoose = (pubId: number, ) => {
     createTagging(beerId, pubId).then(
       data => {
-        navigation.goBack();
+        
       },
       (_e: any) => Alert.alert('Connection failed'),
     )
   }
 
+  const removeChoose = (pubId: number) => {
+    deleteTagging(beerId, pubId).then(
+      (data) => {
+        
+      },
+      (e: any) => {
+        console.log(e);
+        Alert.alert('Pub not removed correctly');
+      }
+    )
+  }
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, {backgroundColor: themeStyle.bg}]}>
       <View style={styles.pubsContainer}>
         {pubs.map(pub => (
-          <TouchableOpacity
-            onPress={() => handleChoose(pub.id)}
+          <View
             key={pub.id} 
             style={styles.pub}
           >
             <Text style={[global.bold, {color: theme.textDark}]}>
               {pub.name}
             </Text>
-          </TouchableOpacity>
+            <SwitchPub 
+              pubId={pub.id}
+              addPub={handleChoose}
+              deletePub={removeChoose}
+            />
+          </View>
         ))}
       </View>
     </ScrollView>
@@ -49,19 +68,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.bgDark,
-    padding: theme.padding,
   },
   pubsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    flexWrap: 'wrap'
   },
   pub: {
-    width: 80,
-    height: 80,
-    borderRadius: 100,
+    width: '100%',
+    height: 50,
     backgroundColor: theme.bluebg,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 1,
+    paddingHorizontal: 20,
+    flexDirection: 'row'
+
   }
 })

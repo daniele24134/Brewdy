@@ -11,6 +11,7 @@ export const theme = {
   padding: 30,
   bluebg: "#1b5e7b",
   pinkbg: "#D7B4C0",
+  
   fontBold: "Quicksand-Bold",
   fontRegular: "Quicksand-Regular",
   fontMedium: "Quicksand-Medium",
@@ -18,25 +19,11 @@ export const theme = {
   fontSemiBold: "Quicksand-SemiBold",
 };
 
-export const chartTheme = {
-  grid: {
-    fill: "none",
-    stroke: "none",
-    pointerEvents: "painted",
-  },
-  axis: {
-    fill: "transparent",
-    style: {
-      tickLabels: {
-        fill: "white",
-      },
-    },
-  },
-};
+
 
 export const global = StyleSheet.create({
   buttonText: {
-    fontSize: 26,
+    fontSize: 20,
     color: theme.textDark,
     textAlign: "center",
   },
@@ -45,6 +32,8 @@ export const global = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 20,
     paddingVertical: 10,
+    borderColor: theme.header,
+    borderWidth: 1
   },
   titleH2: {
     color: theme.textDark,

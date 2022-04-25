@@ -33,5 +33,6 @@ router.delete('/pubs/:id', PubsController.destroy);
 
 // taggings
 router.post('/taggings', TaggingsController.create);
+router.delete('/taggings/beers/:BeerId/pubs/:PubId', TaggingsController.destroy);
 
 module.exports = router;

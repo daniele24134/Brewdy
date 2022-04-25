@@ -14,13 +14,15 @@ import { beersDrunk, getAbv, getData, getPercent } from "../utils";
 import { groupBy } from "lodash";
 import { PieChart } from "../components/PieChart";
 import { BarChart } from "../components/BarChart";
-import { PlusIcon } from "../components/Icons";
+import { FullBeer, FullHeart, PlusIcon } from "../components/Icons";
 import { usePubsContext } from "../PubsProvider";
+import { useThemeContext } from "../Theme.provider";
 
 export const Profile: React.FC = ({ navigation }: any) => {
   const UserContext = useUserContext();
   const { user } = UserContext;
-  const { pubs, getAllPubs } = usePubsContext()
+  const { pubs, getAllPubs } = usePubsContext();
+  const { themeStyle } = useThemeContext();
 
   useEffect(()=>{
     getAllPubs(user!.id);
@@ -46,7 +48,7 @@ export const Profile: React.FC = ({ navigation }: any) => {
   }, [percent]);
 
   return (
-    <View style={styles.mainContainer}>
+    <View style={[styles.mainContainer, {backgroundColor: themeStyle.bg}]}>
       <View style={styles.headerProfile}>
         <View style={styles.profileImg}>
           <Text style={[styles.profileInit, global.bold]}>{UserContext.user?.username[0].toUpperCase()}</Text>
@@ -72,26 +74,29 @@ export const Profile: React.FC = ({ navigation }: any) => {
           <TouchableOpacity
             onPress={() => navigation.navigate("BeerList")}
             style={[global.button, styles.beersButton]}>
+            <FullBeer color={theme.header} />
             <Text style={[styles.buttonText, global.bold]}>Beers</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => navigation.navigate("WishList")}
-            style={[global.button, styles.wishButton]}>
-            <Text style={[styles.buttonText, global.bold]}>Wish List</Text>
+            style={[global.button, styles.wishButton, styles.beersButton]}>
+              <FullHeart color={'red'} />
+            <Text style={[styles.buttonText, global.bold, {color: theme.header}]}>Wish List</Text>
+
           </TouchableOpacity>
         </View>
 
         {/* PUBS */}
         <View style={styles.pubsTitle}>
-          <Text style={[global.titleH2, global.bold]}>Pubs</Text>
+          <Text style={[global.titleH2, global.bold, {color: themeStyle.text}]}>Pubs</Text>
           <Pressable
             onPress={() => {
               navigation.navigate('PubForm')
             }}
             style={[styles.counterButton]}
           >
-            <PlusIcon size={15} color={theme.bgDark} />
+            <PlusIcon size={15} color={themeStyle.bg} />
           </Pressable>
         </View>
         <ScrollView horizontal={true} style={styles.pubsList}>
@@ -100,7 +105,7 @@ export const Profile: React.FC = ({ navigation }: any) => {
             <TouchableOpacity 
               onPress={() => {navigation.navigate('Pub', {id: pub.id})}}
               key={pub.id} 
-              style={styles.photo}
+              style={styles.pub}
             >
               <Text style={[styles.pubName, global.bold]}>{pub.name}</Text>
             </TouchableOpacity>
@@ -121,7 +126,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 20,
   },
   headerProfile: {
     backgroundColor: theme.bluebg,
@@ -138,7 +142,7 @@ const styles = StyleSheet.create({
   pubsTitle: {
     flexDirection: 'row',
     alignItems: 'center',
-
+    paddingHorizontal: theme.padding
   },
   counterButton: {
     width: 30,
@@ -178,9 +182,9 @@ const styles = StyleSheet.create({
   },
   pubsList: {
     width: "100%",
-    maxHeight: 100,
+    height: 92,
   },
-  photo: {
+  pub: {
     width: 80,
     height: 80,
     marginRight: 8,
@@ -195,16 +199,17 @@ const styles = StyleSheet.create({
   beersButton: {
     width: 150,
     alignItems: "center",
-    paddingVertical: 20,
+    justifyContent: 'center',
+    paddingVertical: 14,
+    flexDirection: 'row'
   },
   wishButton: {
-    width: 150,
-    alignItems: "center",
-    paddingVertical: 20,
+    backgroundColor: theme.pinkbg,
   },
   buttonText: {
     color: theme.textDark,
     fontSize: 22,
+    marginHorizontal: 5
   },
   buttons: {
     flexDirection: "row",

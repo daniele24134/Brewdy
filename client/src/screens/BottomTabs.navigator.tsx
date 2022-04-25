@@ -13,12 +13,16 @@ import { WishList } from './WishList.screen';
 import { PubForm } from './PubForm';
 import { ChoosePub } from './ChoosePub';
 import { PubScreen } from './Pub.screen';
+import { useThemeContext } from '../Theme.provider';
 
 const SearchStack = createStackNavigator();
 const RandomStack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
-export const SearchStackScreen = () => (
+export const SearchStackScreen = () => {
+  const { themeStyle } = useThemeContext();
+
+  return (
   <SearchStack.Navigator screenOptions={() => ({
     
   })}>
@@ -33,11 +37,11 @@ export const SearchStackScreen = () => (
       options={{
         title:'',
         headerStyle: {
-          backgroundColor: theme.bgDark
+          backgroundColor: themeStyle.headerbg
         },
         headerBackTitle: '',
         headerBackTitleStyle: {
-          color: theme.buttonColor,
+          color: theme.bluebg,
           fontFamily: theme.fontRegular
         },
         animationTypeForReplace: 'pop'
@@ -49,20 +53,24 @@ export const SearchStackScreen = () => (
         headerTitle: '',
         headerBackTitle: '',
         headerStyle: {
-          backgroundColor: theme.bgDark
+          backgroundColor: themeStyle.headerbg
         },
         headerBackTitleStyle: { 
-          color: theme.buttonColor,
+          color: theme.bluebg,
           fontFamily: theme.fontRegular
         },
         animationTypeForReplace: 'pop'
       }}
     />
   </SearchStack.Navigator>
-)
+  );
+}
 
 
 export const RandomStackScreen:React.FC = () => {
+
+  const { themeStyle } = useThemeContext();
+
   return (
     <RandomStack.Navigator>
       <RandomStack.Screen 
@@ -79,11 +87,11 @@ export const RandomStackScreen:React.FC = () => {
           headerTitle: '',
           headerBackTitle: '',
           headerStyle: {
-          backgroundColor: theme.bgDark,
+          backgroundColor: themeStyle.headerbg,
         },
         animationTypeForReplace: 'pop',
         headerBackTitleStyle: { 
-          color: theme.buttonColor,
+          color: theme.bluebg,
           fontFamily: theme.fontRegular
         }
         }}
@@ -96,6 +104,9 @@ export const RandomStackScreen:React.FC = () => {
 const BeerListStack = createStackNavigator();
 
 const BeerListStackScreen: React.FC = () => {
+
+  const { themeStyle } = useThemeContext();
+
   return (
     <BeerListStack.Navigator defaultScreenOptions={{}}>
       <BeerListStack.Screen name="User" component={Profile}
@@ -109,15 +120,15 @@ const BeerListStackScreen: React.FC = () => {
           headerTitle: 'Beer List',
           headerBackTitle: '',
           headerStyle: {
-            backgroundColor: theme.bgDark,
+            backgroundColor: themeStyle.headerbg,
           },
           headerTitleStyle:{
-            color: theme.textDark,
+            color: themeStyle.text,
             fontSize: 24,
             fontFamily: theme.fontBold
           },
           headerBackTitleStyle: { 
-            color: theme.buttonColor,
+            color: theme.bluebg,
             fontFamily: theme.fontRegular
           },
           animationTypeForReplace: 'pop'
@@ -131,15 +142,15 @@ const BeerListStackScreen: React.FC = () => {
           headerTitle: '',
           headerBackTitle: '',
           headerStyle: {
-            backgroundColor: theme.bgDark,
+            backgroundColor: themeStyle.headerbg,
           },
           headerTitleStyle: {
-            color: theme.textDark,
+            color: themeStyle.text,
             fontSize: 24,
             fontFamily: theme.fontBold
           },
           headerBackTitleStyle: {
-            color: theme.buttonColor,
+            color: theme.bluebg,
             fontFamily: theme.fontRegular
           },
           presentation: 'modal'
@@ -152,15 +163,15 @@ const BeerListStackScreen: React.FC = () => {
           headerTitle: '',
           headerBackTitle: '',
           headerStyle: {
-            backgroundColor: theme.bgDark,
+            backgroundColor: themeStyle.headerbg,
           },
           headerTitleStyle: {
-            color: theme.textDark,
+            color: themeStyle.text,
             fontSize: 24,
             fontFamily: theme.fontBold
           },
           headerBackTitleStyle: {
-            color: theme.buttonColor,
+            color: theme.bluebg,
             fontFamily: theme.fontRegular
           },
         }}
@@ -172,15 +183,15 @@ const BeerListStackScreen: React.FC = () => {
           headerTitle: '',
           headerBackTitle: '',
           headerStyle: {
-            backgroundColor: theme.bgDark,
+            backgroundColor: themeStyle.headerbg,
           },
           headerTitleStyle: {
-            color: theme.textDark,
+            color: themeStyle.text,
             fontSize: 24,
             fontFamily: theme.fontBold
           },
           headerBackTitleStyle: {
-            color: theme.buttonColor,
+            color: theme.bluebg,
             fontFamily: theme.fontRegular
           },
         }}
@@ -191,16 +202,16 @@ const BeerListStackScreen: React.FC = () => {
           headerTitle: 'Wish List',
           headerTitleStyle:{
             fontWeight: '600',
-            color: theme.textDark,
+            color: themeStyle.text,
             fontSize: 24,
             fontFamily: theme.fontBold
           },
           headerBackTitle: '',
           headerStyle: {
-            backgroundColor: theme.bgDark
+            backgroundColor: themeStyle.headerbg
           },
           headerBackTitleStyle: { 
-            color: theme.buttonColor,
+            color: theme.bluebg,
             fontFamily: theme.fontRegular
           },
           animationTypeForReplace: 'pop'
@@ -212,28 +223,30 @@ const BeerListStackScreen: React.FC = () => {
 }
 
 export const BottomTabsNavigator: React.FC = () => {
+  const { themeStyle } = useThemeContext();
+
   return (
     <BottomTabs.Navigator
       screenOptions={({route}) => ({
         headerStyle: {
-          backgroundColor: theme.header,
+          backgroundColor: themeStyle.headerbg,
         },
         headerTitleStyle: {
-          color: theme.buttonColor,
+          color: theme.bluebg,
           fontSize:30,
           marginBottom: 10,
           fontFamily: theme.fontBold
         },
         tabBarStyle:{
-          backgroundColor: theme.header,
+          backgroundColor: themeStyle.headerbg,
         },
         tabBarLabelStyle: {
           fontFamily: theme.fontSemiBold
         },
         headerTitle: 'Brewdy',
 
-        tabBarActiveTintColor: theme.buttonColor,
-        tabBarInactiveTintColor: theme.bgLight,
+        tabBarActiveTintColor: theme.bluebg,
+        tabBarInactiveTintColor: themeStyle.text,
         tabBarItemStyle: {marginTop:10, height: 45},
 
         tabBarIcon: ({color, size}) => {
@@ -241,7 +254,7 @@ export const BottomTabsNavigator: React.FC = () => {
             return <HomeIcon color={color} size={size}/>
           }
           if (route.name === 'Search') {
-            return <SearchIcon color={color} size={size} />
+            return <SearchIcon color={color} size={size+2} />
           }
           if (route.name === 'Profile') {
             return <UserIcon color={color} size={size} />

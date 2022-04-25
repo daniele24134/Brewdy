@@ -36,6 +36,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 20,
     paddingHorizontal: 20,
+    color: theme.textDark,
+    borderColor: theme.header,
+    borderWidth: 1,
   },
   searchField: {
     flexDirection: 'row',

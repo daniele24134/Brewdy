@@ -6,6 +6,7 @@ import { DbBeer } from "../types";
 import { useUserContext } from "../User.provider";
 import { wishBeers, sectionBeers, filterBeer } from "../utils";
 import { WishBeerSectionItem } from "../components/WishBeerSectionItem";
+import { useThemeContext } from "../Theme.provider";
 
 export const WishList: React.FC = () => {
   const { user, updateUser } = useUserContext();
@@ -15,6 +16,7 @@ export const WishList: React.FC = () => {
   const [sectionData, setSectionData] = useState(
     sectionBeers(wishBeers(beers)),
   );
+  const { themeStyle } = useThemeContext();
 
   const toggle = (beerId: number) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -49,7 +51,7 @@ export const WishList: React.FC = () => {
   }, [searchTerm]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: themeStyle.bg}]}>
 
       <TextInput
         style={styles.searchInput}
@@ -64,7 +66,7 @@ export const WishList: React.FC = () => {
           sections={sectionData}
           // stickySectionHeadersEnabled={false}
           renderSectionHeader={({ section }) => (
-            <Text style={[styles.sectionHeader, global.bold]}>
+            <Text style={[styles.sectionHeader, global.bold, {backgroundColor: themeStyle.bg, color: themeStyle.text}]}>
               {section.title}
             </Text>
           )}
@@ -94,8 +96,6 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     padding: 15,
-    color: theme.textDark,
-    backgroundColor: theme.bgDark,
     borderWidth: 1,
     fontWeight: "700",
     fontSize: 16,
@@ -105,7 +105,8 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: theme.buttonColor,
     fontSize: 20,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    color: theme.textDark
   },
   textNobeer: {
     color: theme.textDark,

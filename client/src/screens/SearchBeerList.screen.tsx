@@ -5,10 +5,13 @@ import { fetchQuery } from "../services/apiService";
 import { Beer } from "../types";
 import { BeerItem } from "../components/BeerItem";
 import { beersParser } from "../utils";
+import { useThemeContext } from "../Theme.provider";
 
 export const SearchBeerList: React.FC = ({ route, navigation }: any) => {
   const { name, abv, ibu, color, food } = route.params;
   const [beers, setBeers] = useState<Beer[]>([]);
+
+  const { themeStyle } = useThemeContext();
 
   useEffect(() => {
     let url = "/beers?";
@@ -38,7 +41,7 @@ export const SearchBeerList: React.FC = ({ route, navigation }: any) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: themeStyle.bg}]}>
       {beers.length ? (
         <FlatList
           data={beers}
@@ -49,7 +52,7 @@ export const SearchBeerList: React.FC = ({ route, navigation }: any) => {
         />
       ) : (
         <Text
-          style={[{ color: theme.textDark, alignSelf: "center" }, global.bold]}>
+          style={[{ color: themeStyle.text, alignSelf: "center" }, global.bold]}>
           No beer sorry
         </Text>
       )}
