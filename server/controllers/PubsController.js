@@ -26,9 +26,7 @@ const show = async (req, res) => {
 const create = async (req, res) => {
   try {
     const { name, address, city, userId } = req.body;
-    const { beerId } = req.params;
     const pub = await Pub.create({ name, address, city, userId });
-    await Tagging.create({ BeerId: beerId, PubId: pub.id});
     res.send(pub);
   } catch (error) {
     console.log(error);

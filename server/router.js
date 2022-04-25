@@ -3,7 +3,7 @@ const UsersController = require('./controllers/UsersController');
 const BeersController = require('./controllers/BeersController');
 const CommentsController = require('./controllers/Commentscontroller');
 const PubsController = require('./controllers/PubsController');
-
+const TaggingsController = require('./controllers/TaggingsController');
 
 // users
 router.get('/users/:id', UsersController.show);
@@ -27,7 +27,11 @@ router.post('/comments', CommentsController.create);
 //pubs
 router.get('/users/:userId/pubs', PubsController.index);
 router.get('/pubs/:id', PubsController.show);
-router.post('/pubs/:beerId', PubsController.create);
+router.post('/pubs', PubsController.create);
 router.delete('/pubs/:id', PubsController.destroy);
+
+
+// taggings
+router.post('/taggings', TaggingsController.create);
 
 module.exports = router;

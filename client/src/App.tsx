@@ -6,6 +6,7 @@ import { UserProvider } from './User.provider';
 import { AuthTabsNavigator } from './screens/AuthTabs.navigator';
 import { useUserContext } from './User.provider';
 import { Platform, UIManager } from 'react-native';
+import { PubsProvider } from './PubsProvider';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -28,10 +29,12 @@ const DashBoard:React.FC = () => {
   const UserContext = useUserContext();
 
   const AppLogged = (
-    <NavigationContainer>
-      <BottomTabsNavigator />
-      <StatusBar barStyle={'light-content'} />
-    </NavigationContainer>
+    <PubsProvider>
+      <NavigationContainer>
+        <BottomTabsNavigator />
+        <StatusBar barStyle={'light-content'} />
+      </NavigationContainer>
+    </PubsProvider>
   );
 
   const AppNotLogged = (

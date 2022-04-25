@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { createPub } from '../services/backService';
+import { usePubsContext } from '../PubsProvider';
+import { createPub, getPubs } from '../services/backService';
 import { global, theme } from '../theme';
+import { Pub } from '../types';
 import { useUserContext } from '../User.provider';
 
 export const PubForm: React.FC = ({route, navigation}: any) => {
 
   const { user } = useUserContext();
+  const { addPub } = usePubsContext();
 
-  const { beerId } = route.params;
   const [name, setName] = useState('');
   const [city, setCity] = useState('');
   const [address, setAddress] = useState('');
+ 
 
   const handleAdd = () => {
-    createPub(name, city, address, user!.id, beerId).then(
+    createPub(name, city, address, user!.id).then(
       (data) => {
-        navigation.navigate('BeerList', { pub: data });
+        addPub(data);
+        navigation.navigate('User', { pub: data });
         setName('');
         setCity('');
         setAddress('');

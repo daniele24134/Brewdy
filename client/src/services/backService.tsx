@@ -6,6 +6,7 @@ import {
   Pub,
   UserData,
 } from "../types";
+// import { PORT } from 'react-native-dotenv';
 
 const url = "http://localhost:3003";
 
@@ -178,12 +179,12 @@ export const getPub = (pubId: number): Promise<Pub> => {
 };
 
 export const createPub = (
-  name: string, 
-  city: string, 
-  address: string, 
-  userId: number, 
-  beerId: number ): Promise<Pub> => {
-  return fetch(url + `/pubs/${beerId}`, {
+    name: string, 
+    city: string, 
+    address: string, 
+    userId: number, 
+  ): Promise<Pub> => {
+  return fetch(url + `/pubs`, {
     method: 'POST',
     body: JSON.stringify({name, city, address, userId}),
     credentials: "include",
@@ -208,3 +209,20 @@ export const deletePub = (pubId: number): Promise<Pub> => {
     }
   });
 }
+
+export const createTagging = (beerId: number, pubId: number) => {
+  return fetch(url + '/taggings', {
+    method: 'POST',
+    body: JSON.stringify({ BeerId: beerId, PubId: pubId }),
+    credentials: "include",
+    headers: {
+      "Content-type": "application/json",
+    },
+  }).then(res => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res);
+    }
+  });
+};

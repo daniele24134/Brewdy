@@ -11,6 +11,8 @@ import { BeerDetail } from './Beer.screen';
 import { BeerList } from './BeerList.screen';
 import { WishList } from './WishList.screen';
 import { PubForm } from './PubForm';
+import { ChoosePub } from './ChoosePub';
+import { PubScreen } from './Pub.screen';
 
 const SearchStack = createStackNavigator();
 const RandomStack = createStackNavigator();
@@ -110,7 +112,6 @@ const BeerListStackScreen: React.FC = () => {
             backgroundColor: theme.bgDark,
           },
           headerTitleStyle:{
-            fontWeight: '600',
             color: theme.textDark,
             fontSize: 24,
             fontFamily: theme.fontBold
@@ -122,7 +123,68 @@ const BeerListStackScreen: React.FC = () => {
           animationTypeForReplace: 'pop'
         }}
       />
-      <BeerListStack.Screen component={PubForm} name={"PubForm"}/>
+      <BeerListStack.Screen
+        name={'ChoosePub'}
+        component={ChoosePub}
+       
+        options={{
+          headerTitle: '',
+          headerBackTitle: '',
+          headerStyle: {
+            backgroundColor: theme.bgDark,
+          },
+          headerTitleStyle: {
+            color: theme.textDark,
+            fontSize: 24,
+            fontFamily: theme.fontBold
+          },
+          headerBackTitleStyle: {
+            color: theme.buttonColor,
+            fontFamily: theme.fontRegular
+          },
+          presentation: 'modal'
+        }}
+      />
+      <BeerListStack.Screen 
+        component={PubForm} 
+        name={"PubForm"}
+        options={{
+          headerTitle: '',
+          headerBackTitle: '',
+          headerStyle: {
+            backgroundColor: theme.bgDark,
+          },
+          headerTitleStyle: {
+            color: theme.textDark,
+            fontSize: 24,
+            fontFamily: theme.fontBold
+          },
+          headerBackTitleStyle: {
+            color: theme.buttonColor,
+            fontFamily: theme.fontRegular
+          },
+        }}
+      />
+      <BeerListStack.Screen
+        component={PubScreen}
+        name={"Pub"}
+        options={{
+          headerTitle: '',
+          headerBackTitle: '',
+          headerStyle: {
+            backgroundColor: theme.bgDark,
+          },
+          headerTitleStyle: {
+            color: theme.textDark,
+            fontSize: 24,
+            fontFamily: theme.fontBold
+          },
+          headerBackTitleStyle: {
+            color: theme.buttonColor,
+            fontFamily: theme.fontRegular
+          },
+        }}
+      />
       <BeerListStack.Screen name="WishList"
         component={WishList}
         options={{
@@ -148,20 +210,6 @@ const BeerListStackScreen: React.FC = () => {
 
   );
 }
-
-
-const PubStack = createStackNavigator();
-
-export const PubStackScreen = () => { 
-
-  return (
-    <PubStack.Navigator>
-      <PubStack.Screen component={BeerList} name={"BeerList"} />
-      <PubStack.Screen component={PubForm} name={"PubForm"}/>
-    </PubStack.Navigator>
-  );
-}
-
 
 export const BottomTabsNavigator: React.FC = () => {
   return (

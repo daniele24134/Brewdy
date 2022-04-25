@@ -5,6 +5,8 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  Pressable,
+  Alert,
 } from "react-native";
 import { global, theme } from "../theme";
 import { useUserContext } from "../User.provider";
@@ -12,10 +14,18 @@ import { beersDrunk, getAbv, getData, getPercent } from "../utils";
 import { groupBy } from "lodash";
 import { PieChart } from "../components/PieChart";
 import { BarChart } from "../components/BarChart";
+import { PlusIcon } from "../components/Icons";
+import { usePubsContext } from "../PubsProvider";
 
 export const Profile: React.FC = ({ navigation }: any) => {
   const UserContext = useUserContext();
   const { user } = UserContext;
+  const { pubs, getAllPubs } = usePubsContext()
+
+  useEffect(()=>{
+    getAllPubs(user!.id);
+
+  }, [])
 
   const abvData = Object.entries(groupBy(user?.beers, getAbv)).map(
     ([key, value]) => ({
@@ -72,19 +82,29 @@ export const Profile: React.FC = ({ navigation }: any) => {
           </TouchableOpacity>
         </View>
 
-        {/* PHOTOS */}
-        <Text style={[global.titleH2, global.bold]}>Photos</Text>
-        <ScrollView horizontal={true} style={styles.photosList}>
-          <View style={styles.photo}></View>
-          <View style={styles.photo}></View>
-          <View style={styles.photo}></View>
-          <View style={styles.photo}></View>
-          <View style={styles.photo}></View>
-          <View style={styles.photo}></View>
-          <View style={styles.photo}></View>
-          <View style={styles.photo}></View>
-          <View style={styles.photo}></View>
-          <View style={styles.photo}></View>
+        {/* PUBS */}
+        <View style={styles.pubsTitle}>
+          <Text style={[global.titleH2, global.bold]}>Pubs</Text>
+          <Pressable
+            onPress={() => {
+              navigation.navigate('PubForm')
+            }}
+            style={[styles.counterButton]}
+          >
+            <PlusIcon size={15} color={theme.bgDark} />
+          </Pressable>
+        </View>
+        <ScrollView horizontal={true} style={styles.pubsList}>
+
+          {pubs.map(pub => (
+            <TouchableOpacity 
+              onPress={() => {navigation.navigate('Pub', {id: pub.id})}}
+              key={pub.id} 
+              style={styles.photo}
+            >
+              <Text style={[styles.pubName, global.bold]}>{pub.name}</Text>
+            </TouchableOpacity>
+          ))}
         </ScrollView>
 
 
@@ -115,18 +135,19 @@ const styles = StyleSheet.create({
     alignItems: "baseline",
     marginBottom: 20,
   },
-  pieContainer: {
-    alignItems: "center",
-    width: 300,
-    height: 300,
-    alignSelf: "center",
-    position: "relative",
+  pubsTitle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+
   },
-  percentage: {
-    position: "absolute",
-    fontSize: 50,
-    color: theme.buttonColor,
-    top: 120,
+  counterButton: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.bluebg,
+    marginLeft: 10
   },
   profileImg: {
     width: 100,
@@ -155,15 +176,21 @@ const styles = StyleSheet.create({
     textShadowColor: theme.bgDark,
     fontSize: 16,
   },
-  photosList: {
+  pubsList: {
     width: "100%",
-    maxHeight: 70,
+    maxHeight: 100,
   },
   photo: {
-    width: 60,
-    height: 60,
+    width: 80,
+    height: 80,
     marginRight: 8,
-    backgroundColor: theme.header,
+    borderRadius: 300,
+    backgroundColor: theme.bluebg,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  pubName: {
+    color: theme.textDark
   },
   beersButton: {
     width: 150,

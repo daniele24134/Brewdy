@@ -71,18 +71,6 @@ export const UserProvider: React.FC = ({children}) => {
     setUser(undefined);
   };
 
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     const data = await fetchUser();
-
-  //     console.warn('USER', data); // TODO remove
-
-  //     if (data) setUser(data);
-  //   };
-  //   getUser();
-  // }, [isLogged]);
-
-
 
   return (
     <UserContext.Provider value={{user: user, isLogged: isLogged, login, logout, updateUser: setUser}}>

@@ -17,7 +17,7 @@ export const BeerList:React.FC = ({ navigation, route }: any) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleForm = (id: number) => {
-    navigation.navigate('PubForm', {beerId: id});
+    navigation.navigate('ChoosePub', {beerId: id});
   }
   
   useEffect(()=>{
