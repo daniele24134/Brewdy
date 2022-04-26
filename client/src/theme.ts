@@ -17,6 +17,11 @@ export const theme = {
   fontMedium: "Quicksand-Medium",
   fontLight: "Quicksand-Light",
   fontSemiBold: "Quicksand-SemiBold",
+
+  yellow: "#FDC426",
+  orange: "#D0752C",
+  brown: "#812613",
+  black: "#290D0E",
 };
 
 

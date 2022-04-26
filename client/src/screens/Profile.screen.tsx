@@ -6,17 +6,18 @@ import {
   ScrollView,
   TouchableOpacity,
   Pressable,
-  Alert,
 } from "react-native";
 import { global, theme } from "../theme";
 import { useUserContext } from "../User.provider";
-import { beersDrunk, getAbv, getData, getPercent } from "../utils";
+import { beersDrunk, getAbv, getData, getPercent, getEbcData } from "../utils";
 import { groupBy } from "lodash";
 import { PieChart } from "../components/PieChart";
 import { BarChart } from "../components/BarChart";
 import { FullBeer, FullHeart, PlusIcon } from "../components/Icons";
 import { usePubsContext } from "../PubsProvider";
 import { useThemeContext } from "../Theme.provider";
+import { VictoryPie } from "victory-native";
+import { ColorChart } from "../components/colorChart";
 
 export const Profile: React.FC = ({ navigation }: any) => {
   const UserContext = useUserContext();
@@ -38,9 +39,11 @@ export const Profile: React.FC = ({ navigation }: any) => {
 
   const [percent, setPercent] = useState(0);
   const [data, setData] = useState(getData(percent));
+  const [ebcData, setEbcData] = useState(getEbcData(user!.beers));
 
   useEffect(() => {
     setPercent(getPercent(user!));
+    setEbcData(getEbcData(user!.beers));
   }, [user]);
 
   useEffect(() => {
@@ -99,6 +102,7 @@ export const Profile: React.FC = ({ navigation }: any) => {
             <PlusIcon size={15} color={themeStyle.bg} />
           </Pressable>
         </View>
+        {pubs.length ?
         <ScrollView horizontal={true} style={styles.pubsList}>
 
           {pubs.map(pub => (
@@ -110,10 +114,13 @@ export const Profile: React.FC = ({ navigation }: any) => {
               <Text style={[styles.pubName, global.bold]}>{pub.name}</Text>
             </TouchableOpacity>
           ))}
-        </ScrollView>
+        </ScrollView> : undefined
+        }
 
-
+        <Text style={[global.bold, global.titleH2,styles.statisticsTitle, {color: themeStyle.text}]}>Statistics</Text>
+        <ColorChart data={ebcData}/> 
         <BarChart abvData={abvData}/>
+
       </ScrollView>
     </View>
   );
@@ -216,4 +223,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginBottom: 30,
   },
+  statisticsTitle: {
+    paddingHorizontal: theme.padding,
+    marginBottom: 0
+  }
 });

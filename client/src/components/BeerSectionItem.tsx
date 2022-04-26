@@ -32,7 +32,14 @@ export const BeerSectionItem: React.FC<BeerSectionProps> = ({ item, increment, d
         <Pressable onPress={() => setOpen(prev => !prev)} style={[styles.sectionItemOpen]} >
           <View style={[styles.sectionItemOpenHeader]}>
             <Image style={styles.img} source={{ uri: item.image_url }}></Image>
-            <Text style={[styles.sectionTextOpen, global.bold]}>{item.name} {item.abv}%</Text>
+            <View style={styles.title}>
+              <Text style={[styles.sectionTextOpen, global.bold]}>
+                {item.name}
+              </Text>
+              <Text style={[styles.sectionTextOpen, global.bold]}>
+                {item.abv}% {item.ebc}
+              </Text>
+            </View>
 
             <View style={styles.counter}>
 
@@ -110,11 +117,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  title: {
+    marginLeft: 20,
+    width: '60%',
+  },
   sectionTextOpen: {
     fontSize: 18,
-    marginLeft: 20,
-    fontWeight: '600',
-    width: '60%',
     color: theme.textDark
   },
   img: {

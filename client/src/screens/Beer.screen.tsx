@@ -171,6 +171,11 @@ export const BeerDetail:React.FC = ({route}: any) => {
               <Text style={[{color: themeStyle.text}, global.medium]}>{beer.ibu}</Text>
             </View>
 
+            <View style={{ marginRight: 20 }}>
+              <Text style={[{ color: themeStyle.text }, global.bold, { color: theme.buttonColor }]}>EBC</Text>
+              <Text style={[{ color: themeStyle.text }, global.medium]}>{beer.ebc}</Text>
+            </View>
+
           </View>
 
           <View style={{flexDirection:'row', marginTop: 10}}>

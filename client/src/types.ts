@@ -26,6 +26,7 @@ export type DbBeer = {
   image_url: string;
   abv: number;
   ibu: number;
+  ebc: number;
   bid: number;
   userId: number;
   id: number;
@@ -40,6 +41,7 @@ export type BeerForCreate = {
   abv: number;
   ibu: number;
   wish?: boolean;
+  ebc: number
 };
 
 export type Ingredients = {

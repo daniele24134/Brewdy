@@ -11,7 +11,6 @@ module.exports = {
       name: {
         type: DataTypes.STRING,
         allowNull: true,
-        unique: true
       },
       counter: {
         type: DataTypes.INTEGER,
@@ -34,6 +33,10 @@ module.exports = {
         allowNull: true,
       },
       ibu: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+      },
+      ebc: {
         type: DataTypes.FLOAT,
         allowNull: true,
       },

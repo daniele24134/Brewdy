@@ -100,25 +100,25 @@ export const Search: React.FC = ({ navigation }: any) => {
             isPressed={isPressed === "yellow"}
             toggleColor={toggleColor}
             nameColor="yellow"
-            color="#FDC426"
+            color={theme.yellow}
           />
           <Color
             isPressed={isPressed === "orange"}
             toggleColor={toggleColor}
             nameColor="orange"
-            color="#D0752C"
+            color={theme.orange}
           />
           <Color
             isPressed={isPressed === "brown"}
             toggleColor={toggleColor}
             nameColor="brown"
-            color="#812613"
+            color={theme.brown}
           />
           <Color
             isPressed={isPressed === "black"}
             toggleColor={toggleColor}
             nameColor="black"
-            color="#290D0E"
+            color={theme.black}
           />
         </View>
       </View>

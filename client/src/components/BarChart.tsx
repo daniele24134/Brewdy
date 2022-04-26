@@ -30,9 +30,9 @@ export const BarChart:React.FC<BarChartProps> = ({ abvData }) => {
   };
 
   return (
-    <View style={{ marginTop: 40 , alignItems: 'center'}}>
+    <View style={{ marginTop: 15 , alignItems: 'center'}}>
       <Text style={[global.bold, global.titleH2, { marginBottom: 0, color: themeStyle.text }]}>
-        Statistic ABV
+        abv
       </Text>
       <VictoryChart
         theme={chartTheme}

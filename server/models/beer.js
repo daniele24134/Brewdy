@@ -43,6 +43,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    ebc: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
     bid: {
       type: DataTypes.INTEGER,
       allowNull: true,

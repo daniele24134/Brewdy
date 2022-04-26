@@ -4,8 +4,8 @@ const { Tagging } = require('../models');
 const create = async (req, res) => {
   try {
     const {userId} = req.params;
-    const {name, counter, tagline, abv, ibu, wish, image_url,bid } = req.body;
-    const beer = await Beer.create({ name, counter, tagline, abv, ibu, wish, image_url, userId: Number(userId), bid });
+    const {name, counter, tagline, abv, ibu, wish, image_url, bid, ebc } = req.body;
+    const beer = await Beer.create({ name, counter, tagline, abv, ibu, ebc, wish, image_url, userId: Number(userId), bid });
     res.status(201).send(beer);
 
   } catch (error) {

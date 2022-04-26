@@ -1,4 +1,13 @@
+import { groupBy } from "lodash";
+import { theme } from "./theme";
 import { Beer, DbBeer, UserData } from "./types";
+
+const ebc = {
+  yellow: [0, 12],
+  orange: [13, 30],
+  brown: [31, 47],
+  black: [48, 79],
+};
 
 export const beersParser = (beers: any): Beer[] => {
   return beers.map((b: any) => {
@@ -25,6 +34,7 @@ export const beerParser = (beer: Beer) => {
     abv: beer.abv,
     ibu: beer.ibu,
     bid: beer.bid,
+    ebc: beer.ebc,
   };
 };
 
@@ -93,6 +103,28 @@ export function sectionBeers(beers: DbBeer[]): SectionBeer[] {
 
 export const getAbv = (beer: DbBeer) => Math.floor(beer.abv);
 
+export const getEbc = (beers: DbBeer[]) => {
+  const colorSchema = {
+    "#FDC426": 0,
+    "#D0752C": 0,
+    "#812613": 0,
+    "#290D0E": 0,
+  }
+  for (let beer of beers) {
+    let keyColor = Number(beer.ebc);
+    if (keyColor <= ebc.yellow[1]) {
+      colorSchema["#FDC426"]++;
+    } else if (keyColor > ebc.orange[0] && keyColor <= ebc.orange[1]) {
+      colorSchema["#D0752C"]++;
+    } else if (keyColor > ebc.brown[0] && keyColor <= ebc.brown[1]) {
+      colorSchema["#812613"]++;
+    } else if (keyColor > ebc.black[0]) {
+      colorSchema["#290D0E"]++;
+    }
+  }
+  return colorSchema;
+};
+
 export const getPercent = (user: UserData) => {
   return (100 * beersDrunk(user!.beers).length) / 325;
 };
@@ -112,3 +144,21 @@ export const filterBeer = (beers: SectionBeer[], searchTerm: string) => {
     )})
   }).filter(section => section.data.length > 0);
 }
+
+export const getEbcData = (beers: DbBeer[]) => {
+
+  const beerSchema = getEbc(beers);
+  const data = Object.entries(beerSchema).map(
+    (val) => {
+      return ({
+        x: val[1],
+        y: val[1],
+      });
+    }
+  );
+  return data;
+};
+
+
+
+
