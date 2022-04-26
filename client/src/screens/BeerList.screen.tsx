@@ -5,7 +5,7 @@ import { BeerSectionItem } from "../components/BeerSectionItem";
 import { decrementCounter, incrementCounter, removeBeer } from "../services/backService";
 import { theme, global } from "../theme";
 import { useThemeContext } from "../Theme.provider";
-import { DbBeer } from "../types";
+import { DbBeer, Pub } from "../types";
 import { useUserContext } from "../User.provider";
 import { beersDrunk, filterBeer, sectionBeers } from "../utils";
 
@@ -19,8 +19,9 @@ export const BeerList:React.FC = ({ navigation, route }: any) => {
 
   const { themeStyle } = useThemeContext();
 
-  const handleForm = (id: number) => {
-    navigation.navigate('ChoosePub', {beerId: id});
+  const handleForm = (id: number, pubs: Pub[]) => {
+    navigation.navigate('ChoosePub', {beerId: id, pubsIds: pubs.map(p => p.id)});
+
   }
   
   useEffect(()=>{
@@ -107,7 +108,8 @@ export const BeerList:React.FC = ({ navigation, route }: any) => {
           </Text>
         )}
         renderItem={({ item }) =>(
-          <BeerSectionItem 
+          <BeerSectionItem
+            navigation={navigation}
             decrement={decrement} 
             increment={increment} 
             item={item} 

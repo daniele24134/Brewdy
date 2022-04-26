@@ -5,6 +5,7 @@ import { usePubsContext } from "../PubsProvider";
 import { createTagging, deleteTagging } from "../services/backService";
 import { global, theme } from "../theme";
 import { useThemeContext } from "../Theme.provider";
+import { Pub } from "../types";
 import { useUserContext } from "../User.provider";
 
 export const ChoosePub: React.FC = ({ route, navigation }: any) => {
@@ -14,11 +15,11 @@ export const ChoosePub: React.FC = ({ route, navigation }: any) => {
   const { themeStyle } = useThemeContext();
 
   useEffect(() => {
-    getAllPubs(user!.id);
-    
+    getAllPubs(user!.id); 
+
   }, []);
 
-  const { beerId } = route.params;
+  const { beerId, pubsIds } = route.params;
 
   const handleChoose = (pubId: number, ) => {
     createTagging(beerId, pubId).then(
@@ -41,6 +42,10 @@ export const ChoosePub: React.FC = ({ route, navigation }: any) => {
     )
   }
 
+  const isSelected = (pubId: number) => {
+    return pubsIds.includes(pubId);
+  }
+
   return (
     <ScrollView style={[styles.container, {backgroundColor: themeStyle.bg}]}>
       <View style={styles.pubsContainer}>
@@ -52,7 +57,8 @@ export const ChoosePub: React.FC = ({ route, navigation }: any) => {
             <Text style={[global.bold, {color: theme.textDark}]}>
               {pub.name}
             </Text>
-            <SwitchPub 
+            <SwitchPub
+              isSelected={isSelected}
               pubId={pub.id}
               addPub={handleChoose}
               deletePub={removeChoose}

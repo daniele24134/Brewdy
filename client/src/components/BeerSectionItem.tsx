@@ -11,20 +11,24 @@ type BeerSectionProps = {
   item: DbBeer,
   increment: (id: number) => void,
   decrement: (id: number, counter: number) => void,
-  handleForm: (id: number) => void,
+  handleForm: (id: number, pubs: Pub[]) => void,
+  navigation: any
 }
 
-export const BeerSectionItem: React.FC<BeerSectionProps> = ({ item, increment, decrement, handleForm }) => {
+export const BeerSectionItem: React.FC<BeerSectionProps> = ({ item, increment, decrement, handleForm, navigation }) => {
 
   const [open, setOpen] = React.useState(false);
   const [pubs, setPubs] = useState<Pub[]>(item.pubs);
 
   useEffect(()=> {
-    getBeerByBid(item.bid).then(
-      data => {setPubs(data.pubs)},
-      (e:any) => {Alert.alert('Pubs not fetched correctly')}
-    )
-  },[open]);
+    const unsubscribe = navigation.addListener('focus', () => {
+      getBeerByBid(item.bid).then(
+        data => {setPubs(data.pubs)},
+        (e:any) => {Alert.alert('Pubs not fetched correctly')}
+      )
+    });
+    return unsubscribe;
+  },[navigation]);
 
   return (
     <>{
@@ -62,8 +66,7 @@ export const BeerSectionItem: React.FC<BeerSectionProps> = ({ item, increment, d
               <Text style={[global.bold, styles.pubTitle]}>Pubs </Text>
               <Pressable 
                 onPress={() => {
-                  setOpen(prev => !prev)
-                  handleForm(item.id);
+                  handleForm(item.id, pubs);
                 }} 
                 style={[styles.counterButton, styles.incCounter]}
               >
