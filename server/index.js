@@ -3,6 +3,7 @@ const { sequelize, User, Post } = require('./models');
 const cors = require('cors');
 const express = require('express');
 const PORT = process.env.PORT || 3003;
+const DOMAIN = process.env.DOMAIN || "localhost"
 const SECRET = process.env.SECRET_KEY || 'cat';
 const router = require('./router');
 const session = require('express-session');
@@ -41,7 +42,7 @@ app.get('*', (req, res) => {
     console.log('DB connected!!')
 
     app.listen(PORT, async () => {
-      console.log('Server is up on http://localhost:'+PORT);
+      console.log(`Server is up on http://${DOMAIN}:${PORT}`);
     })
   } catch (error) {
     console.error(error)
