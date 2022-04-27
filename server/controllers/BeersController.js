@@ -42,7 +42,7 @@ const destroy = async (req, res) => {
 const toggleWish = async (req, res) => {
   try {
     const {id} = req.params;
-    const beer = await Beer.findByPk(id);
+    const beer = await Beer.findByPk(id, {include: 'pubs'});
     beer.wish = !beer.wish;
     await beer.save();
     res.send(beer);
