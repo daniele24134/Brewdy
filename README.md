@@ -150,3 +150,8 @@ height="500px"
   src='./screenshots/colorStatistic.png'
   alt='profile color statistic'
 />
+<img
+height="500px"
+  src='./screenshots/pub.png'
+  alt='pub page'
+/>
