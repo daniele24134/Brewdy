@@ -126,22 +126,27 @@ Creator: [Daniele Capano](https://github.com/daniele24134/)
 ## Screenshots
 
 <img
+height="500px"
   src='./screenshots/profile.png'
   alt='Profile Page'
 />
 <img
+height="500px"
   src='./screenshots/home.png'
   alt='home page'
 />
 <img
+height="500px"
   src='./screenshots/beerPage.png'
   alt='beer page'
 />
 <img
+height="500px"
   src='./screenshots/profile.png'
   alt='profile'
 />
 <img
+height="500px"
   src='./screenshots/colorStatistic.png'
   alt='profile color statistic'
 />
