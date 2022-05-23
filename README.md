@@ -122,3 +122,26 @@ Creator: [Daniele Capano](https://github.com/daniele24134/)
 ## Acknowledgements
 
 - [Punk API](https://punkapi.com/documentation/v2)
+
+## Screenshots
+
+<img
+  src='./screenshots/profile.png'
+  alt='Profile Page'
+/>
+<img
+  src='./screenshots/home.png'
+  alt='home page'
+/>
+<img
+  src='./screenshots/beerPage.png'
+  alt='beer page'
+/>
+<img
+  src='./screenshots/profile.png'
+  alt='profile'
+/>
+<img
+  src='./screenshots/colorStatistic.png'
+  alt='profile color statistic'
+/>
